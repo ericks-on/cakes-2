@@ -46,4 +46,5 @@ class DBStorage:
 
     def count(self, cls):
         """counts all items on the table based on cls"""
+        return len(self.__session.query(cls).all())
 
