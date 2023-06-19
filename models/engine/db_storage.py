@@ -7,11 +7,11 @@ from models.base_model import Base
 from models.user import User
 from models.cash import Cash
 from models.mpesa import Mpesa
-from models.transaction import Transaction
+#from models.transaction import Transaction
 
 
-models = {'User': User, 'Transaction': Transaction, 'Cash': Cash,
-          'Mpesa': Mpesa}
+#models = {'User': User, 'Transaction': Transaction, 'Cash': Cash,
+#          'Mpesa': Mpesa}
 class DBStorage:
     """This is the db storage model"""
     __session = None
@@ -21,11 +21,11 @@ class DBStorage:
         """initialization"""
         user = os.environ.get('CAKES_USER')
         password = os.environ.get('CAKES_PWD')
-        host = os.envoron.get('CAKES_HOST')
+        host = os.environ.get('CAKES_HOST')
         db = os.environ.get('CAKES_DB')
-        port = os.environ.get('CAKES_PORT')
+        port = 3306
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:{}/{}'.format
-                                      (password, user, host, port, db),
+                                      (user, password, host, port, db),
                                       pool_pre_ping=True)
 
     def add(self, obj):
@@ -47,4 +47,9 @@ class DBStorage:
     def count(self, cls):
         """counts all items on the table based on cls"""
         return len(self.__session.query(cls).all())
+
+    def save(self):
+        """saves all the changes to the storage"""
+        session = self.__session()
+        session.commit()
 

@@ -2,6 +2,8 @@
 """This contains the user model"""
 from models.base_model import Basemodel, Base
 from sqlalchemy import Column, String, Integer
+from models.transaction import Transaction
+from sqlalchemy.orm import relationship
 
 
 class User(Basemodel, Base):
@@ -12,3 +14,5 @@ class User(Basemodel, Base):
     password = Column(String(128), nullable=False)
     phone = Column(String(60), nullable=False)
     user_type = Column(String(60), default="normal")
+    transactions = relationship(Transaction, back_populates='users',
+                                cascade='all, delete')
