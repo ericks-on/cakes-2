@@ -14,5 +14,5 @@ class User(Basemodel, Base):
     password = Column(String(128), nullable=False)
     phone = Column(String(60), nullable=False)
     user_type = Column(String(60), default="normal")
-    transactions = relationship(Transaction, back_populates='users',
+    transactions = relationship(Transaction, backref='users',
                                 cascade='all, delete')

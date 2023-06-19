@@ -7,11 +7,9 @@ from models.base_model import Base
 from models.user import User
 from models.cash import Cash
 from models.mpesa import Mpesa
-#from models.transaction import Transaction
 
 
-#models = {'User': User, 'Transaction': Transaction, 'Cash': Cash,
-#          'Mpesa': Mpesa}
+models = {'User': User, 'Cash': Cash, 'Mpesa': Mpesa}
 class DBStorage:
     """This is the db storage model"""
     __session = None
