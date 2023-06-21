@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Contains model for inputs"""
 from models.base_model import Basemodel, Base
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, CheckConstraint
 
 
 class Input(Basemodel, Base):
