@@ -5,6 +5,7 @@ from sqlalchemy import Column, String, Integer
 from models.transaction import Transaction
 from sqlalchemy.orm import relationship
 from models.sale import Sale
+from models.expenditure import Expenditure
 
 
 class User(Basemodel, Base):
@@ -18,3 +19,5 @@ class User(Basemodel, Base):
     transactions = relationship(Transaction, backref='users',
                                 cascade='all, delete')
     sales = relationship(Sale, backref='users', cascade='all, delete')
+    expenditures = relationship(Expenditure, backref='user',
+                                cascade='all, delete')
