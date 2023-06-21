@@ -9,7 +9,10 @@ class Input(Basemodel, Base):
     __tablename__ = 'inputs'
     name = Column(String(60), nullable-False)
     price = Column(Integer, nullable=False)
+    quantity = Column(Integer, nullable=False)
+    uom = Column(String(60), nullable=False)
 
     __table_arg__ = (
-            CheckConstraint('price >= 0', name='positive_constraint'),
+            CheckConstraint('price >= 0', name='positive_price'),
+            CheckConstraint('quantity <= 0', name='positive_quantity')
             )
