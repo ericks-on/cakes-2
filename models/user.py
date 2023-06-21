@@ -4,6 +4,7 @@ from models.base_model import Basemodel, Base
 from sqlalchemy import Column, String, Integer
 from models.transaction import Transaction
 from sqlalchemy.orm import relationship
+from models.sale import Sale
 
 
 class User(Basemodel, Base):
@@ -16,3 +17,4 @@ class User(Basemodel, Base):
     user_type = Column(String(60), default="normal")
     transactions = relationship(Transaction, backref='users',
                                 cascade='all, delete')
+    sales = relationship(Sale, backref='users', cascade='all, delete')
