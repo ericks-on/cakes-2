@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Contains the Transaction model"""
 from models.base_model import Basemodel, Base
-from sqlalchemy import String, Integer, Column, ForeignKey
+from sqlalchemy import String, Integer, Column, ForeignKey, CheckConstraint
 from sqlalchemy.orm import relationship
 from models.cash import Cash
 from models.mpesa import Mpesa
@@ -15,3 +15,7 @@ class Transaction(Basemodel, Base):
     amount = Column(Integer, nullable=False)
     cash = relationship(Cash, backref='transactions', cascade='all, delete')
     mpesa = relationship(Mpesa, backref='transactions', cascade='all, delete')
+
+    __table_args__ = (
+            CheckConstraint('amount >= 0', name='positive_amount'),
+            )
