@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Contains the sales model"""
 from models.base_model import Basemodel, Base
-from sqlalchemy import Column, String, ForeignKey, CheckConstraint
+from sqlalchemy import Column, String, ForeignKey, CheckConstraint, Integer
 
 
 class Sale(Basemodel, Base):

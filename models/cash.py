@@ -13,4 +13,4 @@ class Cash(Basemodel, Base):
     amount = Column(Integer, nullable=False)
 
     __table_args__ = (
-            CheckConstraint('amount >= 0', name='positive_constraint'), )
+            CheckConstraint('amount >= 0', name='positive_cash'), )

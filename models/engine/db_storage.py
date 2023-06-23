@@ -7,9 +7,17 @@ from models.base_model import Base
 from models.user import User
 from models.cash import Cash
 from models.mpesa import Mpesa
+from models.transaction import Transaction
+from models.expenditure import Expenditure
+from models.item import Item
+from models.input import Input
+from models.sale import Sale
 
 
-models = {'User': User, 'Cash': Cash, 'Mpesa': Mpesa}
+models = {'User': User, 'Cash': Cash, 'Mpesa': Mpesa,
+          'Transaction': Transaction, 'Item': Item,
+          'Expenditure': Expenditure, 'Input': Input,
+          'Sale': Sale}
 class DBStorage:
     """This is the db storage model"""
     __session = None
@@ -27,7 +35,7 @@ class DBStorage:
                                       pool_pre_ping=True)
 
     def add(self, obj):
-        """adding new object to db"""
+        """adding new object to session"""
         session = self.__session()
         session.add(obj)
 
@@ -42,12 +50,28 @@ class DBStorage:
         session_factory = sessionmaker(bind=self.__engine)
         self.__session = scoped_session(session_factory)
 
+    def all(self, cls):
+        """Getting all objects on a table specified"""
+        session = self.__session()
+        objects = session.query(cls).all()
+        return objects
+
+    def get(self, cls, obj_id):
+        """used to get object by id"""
+        session = self.__session()
+        obj = session.query(cls).filter_by(id=obj_id).first()
+        return obj
+
     def count(self, cls):
         """counts all items on the table based on cls"""
-        return len(self.__session.query(cls).all())
+        return self.__session.query(cls).count()
 
     def save(self):
         """saves all the changes to the storage"""
         session = self.__session()
         session.commit()
+
+    def close(self):
+        """removes current session"""
+        self.__session.remove()
 

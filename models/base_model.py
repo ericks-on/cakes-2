@@ -24,6 +24,7 @@ class Basemodel:
                     setattr(self, k, v)
                 except AttributeError:
                     print("The Attribute: {} does not exist".format(k))
+                    raise AttributeError
         if not self.id:
             self.id = str(uuid.uuid4())
         if not self.created_at:
