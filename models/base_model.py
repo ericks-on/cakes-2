@@ -35,7 +35,7 @@ class Basemodel:
     def __str__(self):
         """The string representation"""
         return "[{}].({}): {}".format(self.__class__.__name__, self.id,
-                                      self.__dict__)
+                                      self.to_dict())
 
     def to_dict(self):
         """creates a json serializable dict containing all attributes"""
@@ -46,7 +46,7 @@ class Basemodel:
                 my_dict["created_at"] = temp_dict["created_at"].strftime(time_format)
             elif k == "updated_at":
                 my_dict["updated_at"] = temp_dict["updated_at"].strftime(time_format)
-            if k == "password":
+            if k == "password" or k == '_sa_instance_state':
                 pass
             else:
                 my_dict[k] = v
