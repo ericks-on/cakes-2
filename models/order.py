@@ -11,7 +11,7 @@ class Order(Basemodel, Base):
     status = Column(String(60), nullable=False)
     quantity = Column(Integer, nullable=False)
     order_value = Column(Integer, nullable=False)
-    uom = Column(String(60), nullable=False)
+    uom = Column(String(60), nullable=False, default='packets')
 
     __table_args__ = (
             CheckConstraint('quantity >= 0', name='positive_quantity'),

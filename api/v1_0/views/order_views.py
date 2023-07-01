@@ -23,6 +23,16 @@ def all_orders():
         return storage.all(Order)
     return user.orders
 
+@order_bp.route('/', methods=['POST'])
+@jwt_required
+@swag_from('documentation/order/add_order.yml')
+def add_order():
+    """ Adds new order"""
+    username = get_jwt_identity()
+    user_id = storage.get_user(username).id
+    order_value = request.json.get("order_value")
+    quantity = request.json.get("quantity")
+
 @orders_bp.route('/<order_id>', methods=['GET'])
 @swag_from('documentation/order/get_order_by_id.yml')
 def get_order_by_id(order_id):
@@ -30,4 +40,4 @@ def get_order_by_id(order_id):
     order = storage.get(Order, order_id)
     return jsonify(order.to_dict())
 
-
+@orders_bp.ruoute('/<order_id>', methods=['PUT'])

@@ -15,10 +15,10 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 Swagger(app)
 app.config['SWAGGER'] = {
-        'title': 'Donuts RESTFull API'
+        'title': 'Kimuka RESTFull API'
         }
 jwt = JWTManager(app)
-app.config['JWT_SECRET_KEY'] = "Erickson254#jwt"
+app.config['JWT_SECRET_KEY'] = os.environ.get('KIMUKA_API_SEC_KEY')
 app.register_blueprint(app_views)
 
 
