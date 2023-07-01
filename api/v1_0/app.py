@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """This module contains the Donuts RESTFull API"""
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, request
 from flask_cors import CORS
 from flasgger import Swagger
 from models import storage
@@ -8,6 +8,7 @@ from api.v1_0.views import app_views
 import os
 from flask_jwt_extended import create_access_token, JWTManager
 from passlib.hash import bcrypt
+from models.user import User
 
 
 app = Flask(__name__)

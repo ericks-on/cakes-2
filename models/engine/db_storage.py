@@ -60,7 +60,7 @@ class DBStorage:
     def get_user(self, username):
         """gets user if the username exists"""
         session = self.__session()
-        user = session.query(user).filter_by(username == username).first()
+        user = session.query(User).filter_by(username=username).first()
         return user
 
     def count(self, cls):

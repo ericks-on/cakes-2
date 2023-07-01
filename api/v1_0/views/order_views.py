@@ -12,22 +12,19 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
 
 
-@orders_bp.route('/<user_id>', methods=['GET'])
-@swag_from('documentation/orders.yml')
-def index(user_id):
+@orders_bp.route('/', methods=['GET'])
+@jwt_required
+@swag_from('documentation/order/all_orders.yml')
+def all_orders():
     """To obtain all orders"""
-    user = storage.get(User, user_id)
-    obj_dicts = []
+    username = get_jwt_identity()
+    user = storage.get_user(username)
     if user.user_type == 'admin':
-        orders = storage.all(Order)
-    else:
-        orders = user.orders
-    for obj in orders:
-        obj_dicts.append(obj.to_dict())
-    return jsonify(obj_dicts)
+        return storage.all(Order)
+    return user.orders
 
 @orders_bp.route('/<order_id>', methods=['GET'])
-@swag_from('documentation/orders.yml')
+@swag_from('documentation/order/get_order_by_id.yml')
 def get_order_by_id(order_id):
     """Getting order by id from url"""
     order = storage.get(Order, order_id)
