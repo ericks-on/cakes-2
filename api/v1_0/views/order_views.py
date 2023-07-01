@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Contains views for orders"""
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, abort
 from flasgger.utils import swag_from
 from models import storage
 from models.order import Order
@@ -32,12 +32,60 @@ def add_order():
     user_id = storage.get_user(username).id
     order_value = request.json.get("order_value")
     quantity = request.json.get("quantity")
+    new_order = Order(user_id=user_id, order_value=order_value, quantity=quantity)
+    storage.add(new_order)
+    storage.save()
 
 @orders_bp.route('/<order_id>', methods=['GET'])
+@jwt_required
 @swag_from('documentation/order/get_order_by_id.yml')
 def get_order_by_id(order_id):
     """Getting order by id from url"""
-    order = storage.get(Order, order_id)
-    return jsonify(order.to_dict())
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type == 'admin':
+        order = storage.get(Order, order_id)
+    else:
+        orders = user.orders
+        for obj in orders:
+            if obj.id == order_id:
+                order = obj
+            else:
+                order = None
+    if order:
+        r_order = order.to_dict()
+        if r_order.status == 'completedd':
+            r_order.status = 'settled'
+        return jsonify(r_order)
+    else:
+        abort(404)
 
-@orders_bp.ruoute('/<order_id>', methods=['PUT'])
+@orders_bp.route('/<order_id>', methods=['PUT'])
+@jwt_required
+@swag_from('documentation/order/update_order.yml')
+def update_order(order_id):
+    """updates order"""
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type == 'admin':
+        order = storage.get(Order, order_id)
+    else:
+        orders = user.orders
+        for obj in orders:
+            if obj.id == order_id:
+                order = obj
+            else:
+                order = None
+    if order:
+        try:
+            data = request.get_json()
+        except exception:
+            return jsonify({'error': 'Invalid JSON data'}), 400
+        for k, v in data.items():
+            if k not in ['pending', 'confirmed', 'delivered', 'completedd']:
+                return jsonify({'error': 'Bad Request'}), 400
+            else:
+                setattr(order, k, v)
+        storage.save()
+    else:
+        abort(404)
