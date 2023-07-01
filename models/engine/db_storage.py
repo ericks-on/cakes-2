@@ -61,6 +61,7 @@ class DBStorage:
         """gets user if the username exists"""
         session = self.__session()
         user = session.query(user).filter_by(username == username).first()
+        return user
 
     def count(self, cls):
         """counts all items on the table based on cls"""
