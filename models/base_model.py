@@ -4,6 +4,7 @@ import uuid
 from datetime import datetime
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
+from passlib import bcrypt
 
 
 Base = declarative_base()
@@ -21,7 +22,10 @@ class Basemodel:
         if kwargs:
             for k, v in kwargs.items():
                 try:
-                    setattr(self, k, v)
+                    if k == 'password':
+                        self.password = bcrypt.hash(v)
+                    else:
+                        setattr(self, k, v)
                 except AttributeError:
                     print("The Attribute: {} does not exist".format(k))
                     raise AttributeError

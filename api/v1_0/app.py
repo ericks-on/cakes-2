@@ -4,6 +4,7 @@ from flask import Flask, jsonify, make_response
 from flask_cors import CORS
 from flasgger import Swagger
 from models import storage
+from api.v1_0.views import app_views
 import os
 
 
@@ -13,6 +14,7 @@ Swagger(app)
 app.config['SWAGGER'] = {
         'title': 'Donuts RESTFull API'
         }
+app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
@@ -27,10 +29,10 @@ def not_found_error(error):
 
 
 if __name__ == "__main__":
-    hst = os.environ.get('CAKES_API_HOST')
+    hst = os.environ.get('KIMUKA_API_HOST')
     if not hst:
         hst = '0.0.0.0'
-    prt = os.environ.get('CAKES_API_PORT')
+    prt = os.environ.get('KIMUKA_API_PORT')
     if not prt:
         prt = 5000
     app.run(host=hst, port = prt)

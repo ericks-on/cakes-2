@@ -11,13 +11,8 @@ from models.transaction import Transaction
 from models.expenditure import Expenditure
 from models.item import Item
 from models.input import Input
-from models.sale import Sale
 
 
-models = {'User': User, 'Cash': Cash, 'Mpesa': Mpesa,
-          'Transaction': Transaction, 'Item': Item,
-          'Expenditure': Expenditure, 'Input': Input,
-          'Sale': Sale}
 class DBStorage:
     """This is the db storage model"""
     __session = None
@@ -25,10 +20,10 @@ class DBStorage:
 
     def __init__(self):
         """initialization"""
-        user = os.environ.get('CAKES_USER')
-        password = os.environ.get('CAKES_PWD')
-        host = os.environ.get('CAKES_HOST')
-        db = os.environ.get('CAKES_DB')
+        user = os.environ.get('KIMUKA_SQL_USER')
+        password = os.environ.get('KIMUKA_SQL_PWD')
+        host = os.environ.get('KIMUKA_SQL_HOST')
+        db = os.environ.get('KIMUKA_SQL_DB')
         port = 3306
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:{}/{}'.format
                                       (user, password, host, port, db),
@@ -61,6 +56,11 @@ class DBStorage:
         session = self.__session()
         obj = session.query(cls).filter_by(id=obj_id).first()
         return obj
+
+    def get_user(self, username):
+        """gets user if the username exists"""
+        session = self.__session()
+        user = session.query(user).filter_by(username == username).first()
 
     def count(self, cls):
         """counts all items on the table based on cls"""
