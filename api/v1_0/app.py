@@ -6,6 +6,8 @@ from flasgger import Swagger
 from models import storage
 from api.v1_0.views import app_views
 import os
+from flask_jwt_extended import create_access_token, JWTManager
+from passlib.hash import bcrypt
 
 
 app = Flask(__name__)
@@ -14,8 +16,27 @@ Swagger(app)
 app.config['SWAGGER'] = {
         'title': 'Donuts RESTFull API'
         }
+jwt = JWTManager(app)
+app.config['JWT_SECRET_KEY'] = "Erickson254#jwt"
 app.register_blueprint(app_views)
 
+
+@app.route('/login', methods=['POST'])
+def login():
+    """authenticates user and creates an access token"""
+    all_users = storage.all(User)
+    all_usernames = [user.username for user in all_users]
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    if username not in all_usernames:
+        return jsonify({"msg": "Wrong Username or Password"}), 401
+    else:
+        user = storage.get_user(username)
+        hashed_pwd = user.password
+        if bcrypt.verify(password, hashed_pwd) is False:
+            return jsonify({"msg": "Wrong Username or Password"}), 401
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token)
 
 @app.teardown_appcontext
 def teardown(exception=None):
