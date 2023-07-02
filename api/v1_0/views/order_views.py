@@ -82,7 +82,10 @@ def update_order(order_id):
         except exception:
             return jsonify({'error': 'Invalid JSON data'}), 400
         for k, v in data.items():
-            if k not in ['pending', 'confirmed', 'delivered', 'completedd']:
+            if k == 'status' and v not in ['pending',
+                                           'confirmed',
+                                           'delivered',
+                                           'completedd']:
                 return jsonify({'error': 'Bad Request'}), 400
             else:
                 setattr(order, k, v)

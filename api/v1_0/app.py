@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """This module contains the Donuts RESTFull API"""
-from flask import Flask, jsonify, make_response, request
+from flask import Flask, jsonify, make_response, request, redirect, url_for
 from flask_cors import CORS
 from flasgger import Swagger
 from models import storage
@@ -37,7 +37,9 @@ def login():
         if bcrypt.verify(password, hashed_pwd) is False:
             return jsonify({"msg": "Wrong Username or Password"}), 401
     access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token)
+    response = make_response(redirect(url_for('user_page')))
+    response.headers["Authorization"] = "Bearer " + access_token
+    return response
 
 @app.teardown_appcontext
 def teardown(exception=None):
