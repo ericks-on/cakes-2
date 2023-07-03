@@ -6,7 +6,33 @@
     {% endblock %}
 </head>
 <body>
-    <div id="side-nav"></div>
+    <div id="sidebar">
+        <div class="sidebar-logo"><img src="../static/images/cakes_logo.png" alt="logo"></div>
+        <div class="sidebar-item">
+            <div class="sidebar-icon"><img src="../static/icons/icons8-dashboard-96.png" alt="dash"></div>
+            <a href="{{ urlFor('index') }}">Dashboard</a>
+        </div>
+        <div class="sidebar-item">
+            <div class="sidebar-icon"><img src="../static/icons/icons8-purchase-order-96.png" alt="order"></div>
+            <a href="{{ urlFor('index') }}">Orders</a>
+        </div>
+        <div class="sidebar-item">
+            <div class="sidebar-icon"><img src="../static/icons/messages.png" alt="messages"></div>
+            <a href="{{ urlFor('index') }}">Messages</a>
+        </div>
+        <div class="sidebar-item">
+            <div class="sidebar-icon"><img src="../static/icons/icons8-banknotes-96.png" alt="payments"></div>
+            <a href="{{ urlFor('index') }}">Payments</a>
+        </div>
+        <div class="sidebar-item">
+            <div class="sidebar-icon"><img src="../static/icons/icons8-support-96.png" alt="support"></div>
+            <a href="{{ urlFor('index') }}">Support</a>
+        </div>
+        <div class="sidebar-item sidebar-item-bottom">
+            <div class="sidebar-icon"><img src="../static/icons/icons8-logout-96.png" alt="logout"></div>
+            <a href="{{ urlFor('index') }}">Logout</a>
+        </div>
+    </div>
     <div id="content">
         <div class="main-content">
             {% block content %}

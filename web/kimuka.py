@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """This is the route for landing page"""
-    return render_template('index.html')
+    return render_template('default.html', urlFor=url_for)
 
 @app.route('/login', methods=['POST'])
 def login():
