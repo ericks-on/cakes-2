@@ -13,8 +13,8 @@ orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
 
 
 @orders_bp.route('/', methods=['GET'])
-@jwt_required
 @swag_from('documentation/order/all_orders.yml')
+@jwt_required()
 def all_orders():
     """To obtain all orders"""
     username = get_jwt_identity()
@@ -24,8 +24,8 @@ def all_orders():
     return jsonify(user.orders)
 
 @orders_bp.route('/', methods=['POST'])
-@jwt_required
 @swag_from('documentation/order/add_order.yml')
+@jwt_required()
 def add_order():
     """ Adds new order"""
     username = get_jwt_identity()
@@ -38,8 +38,8 @@ def add_order():
     return jsonify(new_order.to_dict()), 200
 
 @orders_bp.route('/<order_id>', methods=['GET'])
-@jwt_required
 @swag_from('documentation/order/get_order_by_id.yml')
+@jwt_required()
 def get_order_by_id(order_id):
     """Getting order by id from url"""
     username = get_jwt_identity()
@@ -61,8 +61,8 @@ def get_order_by_id(order_id):
         abort(404)
 
 @orders_bp.route('/<order_id>', methods=['PUT'])
-@jwt_required
 @swag_from('documentation/order/update_order.yml')
+@jwt_required()
 def update_order(order_id):
     """updates order"""
     username = get_jwt_identity()
@@ -94,8 +94,8 @@ def update_order(order_id):
         abort(404)
 
 @orders_bp.route('/<order_id>', methods=['DELETE'])
-@jwt_required
 @swag_from('documentation/order/delete_order.yml')
+@jwt_required()
 def delete_order(order_id):
     """Deleting order"""
     username = get_jwt_identity()

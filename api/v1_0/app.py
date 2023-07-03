@@ -28,7 +28,7 @@ app.config['JWT_SECRET_KEY'] = os.environ.get('KIMUKA_API_SEC_KEY')
 app.register_blueprint(app_views)
 
 
-@app.route('api/v1_0/login', methods=['POST'])
+@app.route('/api/v1_0/login', methods=['POST'])
 def login():
     """authenticates user and creates an access token"""
     all_users = storage.all(User)
