@@ -11,6 +11,10 @@ from models.transaction import Transaction
 from models.expenditure import Expenditure
 from models.item import Item
 from models.input import Input
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 class DBStorage:
@@ -25,6 +29,7 @@ class DBStorage:
         host = os.environ.get('KIMUKA_SQL_HOST')
         db = os.environ.get('KIMUKA_SQL_DB')
         port = 3306
+        print('mysql+mysqldb://{}:{}@{}:{}/{}'.format(user, password, host, port, db))
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:{}/{}'.format
                                       (user, password, host, port, db),
                                       pool_pre_ping=True)

@@ -10,6 +10,10 @@ from flask_jwt_extended import create_access_token, JWTManager
 from passlib.hash import bcrypt
 from models.user import User
 from datetime import timedelta
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 
 app = Flask(__name__)
