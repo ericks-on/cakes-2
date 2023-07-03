@@ -1,0 +1,20 @@
+body {
+    height: 1rem;
+    display: flex;
+}
+
+#content {
+    flex-basis: 80%;
+    height: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#footer {
+    flex-basis: 10%;
+}
+
+#sidebar {
+    flex-basis: 20%;
+}
