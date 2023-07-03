@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Contains views for orders"""
-from flask import Blueprint, jsonify, abort
+from flask import Blueprint, jsonify, abort, request
 from flasgger.utils import swag_from
 from models import storage
 from models.order import Order
@@ -79,7 +79,7 @@ def update_order(order_id):
     if order:
         try:
             data = request.get_json()
-        except exception:
+        except BadRequest:
             return jsonify({'error': 'Invalid JSON data'}), 400
         for k, v in data.items():
             if k == 'status' and v not in ['pending',
@@ -112,6 +112,7 @@ def delete_order(order_id):
     if order:
         storage.delete(order)
         storage.save()
+        return jsonify({}), 204
     else:
         abort(404)
 
