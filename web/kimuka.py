@@ -19,9 +19,11 @@ def login():
     payload = {}
     payload["username"] = request.form["username"]
     payload["password"] = request.form["password"]
-    response = requests.post(url=url, data=payload)
-    if response.status_code == 200:
-        
+    api_response = requests.post(url=url, data=payload)
+    if api_response.status_code == 200:
+        response = redirect("http://0.0.0.0:5000/api.v1_0/user")
+        response.headers["Authorization"] = "Bearer " + api_response.text()
+        return response
 
 
 if __name__ == "__main__":
