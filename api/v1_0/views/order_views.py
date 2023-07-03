@@ -21,9 +21,9 @@ def all_orders():
     user = storage.get_user(username)
     if user.user_type == 'admin':
         return storage.all(Order)
-    return user.orders
+    return jsonify(user.orders)
 
-@order_bp.route('/', methods=['POST'])
+@orders_bp.route('/', methods=['POST'])
 @jwt_required
 @swag_from('documentation/order/add_order.yml')
 def add_order():
@@ -35,6 +35,7 @@ def add_order():
     new_order = Order(user_id=user_id, order_value=order_value, quantity=quantity)
     storage.add(new_order)
     storage.save()
+    return jsonify(new_order.to_dict()), 200
 
 @orders_bp.route('/<order_id>', methods=['GET'])
 @jwt_required
@@ -46,12 +47,11 @@ def get_order_by_id(order_id):
     if user.user_type == 'admin':
         order = storage.get(Order, order_id)
     else:
-        orders = user.orders
-        for obj in orders:
-            if obj.id == order_id:
-                order = obj
-            else:
-                order = None
+        orders = [order for order in user.orders if order.id == order_id]
+        if orders[0]:
+            order = orders[0]
+        else:
+            order = None
     if order:
         r_order = order.to_dict()
         if r_order.status == 'completedd':
