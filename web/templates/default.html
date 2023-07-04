@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="../static/styles/main_style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" rel="stylesheet">
     {% block head %}
     {% endblock %}
 </head>
@@ -35,7 +38,14 @@
     </div>
     <div id="content">
         <div class="header-container">
-            <div id="header"></div>
+            <div id="header" class="d-flex">
+                <b><h1>RETAILER</h1></b>
+                <div class="header-items">
+                    <div class="header-item"></div>
+                    <div class="header-item"></div>
+                    <div class="header-item"></div>
+                </div>
+            </div>
         </div>
         <div class="main-content">
             {% block content %}

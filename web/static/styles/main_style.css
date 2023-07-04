@@ -1,24 +1,63 @@
+:root {
+    --primary-color: #f5f5dc;
+    --secondary-color: #ffdab9;
+    --button-color: #ff6f61;
+    --dash-hover-color: #d2b48c;
+    --table-bg-color: #d2b48c;
+}
+* {
+    font-family: 'Raleway', sans-serif;
+}
 body {
     height: 100vh;
     display: flex;
     margin: 0;
     overflow-y: hidden;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: var(--secondary-color);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--dash-hover-color);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+
+.d-flex {
+    display: flex;
+}
+.d-flex-column {
+    display: flex;
+    flex-direction: column;
 }
 
 #content {
     flex-basis: 85%;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     position: relative;
+    background-color: var(--primary-color);
 }
 
 #footer {
-    flex-basis: 5%;
+    flex-basis: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #ffdab9;
+    background-color: var(--secondary-color);
     margin: 0 auto;
     border-radius: 10px;
     width: 90%;
@@ -26,10 +65,12 @@ body {
 
 #sidebar {
     flex-basis: 15%;
-    background-color: #ffdab9;
+    background-color: var(--secondary-color);
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
 
 }
 
@@ -44,7 +85,7 @@ body {
 }
 
 .sidebar-item:hover {
-    background-color: #d2b48c;
+    background-color: var(--dash-hover-color);
     border-radius: 0 10px 10px 0;
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
 }
@@ -81,15 +122,22 @@ body {
 }
 
 .header-container {
-    flex-basis: 10%;
+    flex-basis: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
 }
 #header {
-    flex-basis: 85%;
-    display: flex;
-    
+    height: 90%;
+    width: 90%;
+    justify-content: space-between;
+    border-radius: 10px;
+    background-color: var(--secondary-color);
+    align-items: center;
+}
 
+#header h1 {
+    margin: 0;
+    margin-left: 20px;
 }
