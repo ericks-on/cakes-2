@@ -68,6 +68,7 @@ body {
     background-color: var(--secondary-color);
     display: flex;
     flex-direction: column;
+    align-items: center;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -75,13 +76,20 @@ body {
 }
 
 .sidebar-item {
-    width: 100%;
-    flex-basis: 80px;
     display: flex;
+    width : 80%;
     align-items: center;
     text-decoration: none;
     margin-left: 5px;
     color: black;
+}
+.sidebar-item p {
+    margin-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .sidebar-item:hover {
@@ -90,17 +98,6 @@ body {
     box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
 }
 
-.sidebar-icon {
-    flex-basis: 20%;
-    width: 100px;
-    height: 70px;
-    margin-right: 20px;
-}
-
-.sidebar-icon img {
-    width: 100%;
-    height: 100%;
-}
 
 .sidebar-logo {
     width: 70%;
@@ -140,4 +137,57 @@ body {
 #header h1 {
     margin: 0;
     margin-left: 20px;
+}
+
+.header-items {
+    flex-basis: 20%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.header-item {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+}
+.user-name {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    flex-basis: 100px;
+}
+.user-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: var(--primary-color);
+}
+
+.not-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    position: relative;
+}
+
+.not-count {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: var(--button-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
 }
