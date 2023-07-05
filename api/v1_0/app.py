@@ -11,6 +11,7 @@ from passlib.hash import bcrypt
 from models.user import User
 from datetime import timedelta
 from dotenv import load_dotenv
+from werkzeug.exceptions import BadRequest
 
 
 load_dotenv()
@@ -34,24 +35,26 @@ def login():
     all_users = storage.all(User)
     all_usernames = [user.username for user in all_users]
     try:
-        username = request.get_json("username")
+        username = request.get_json().get("username")
     except BadRequest:
         return jsonify({"msg": "Missing username parameter"}), 400
     try:
-        password = request.get_json("password")
+        password = request.get_json().get("password")
     except BadRequest:
         return jsonify({"msg": "Missing password parameter"}), 400
 
-    if username not in all_usernames:
-        return jsonify({"msg": "Wrong Username or Password"}), 401
-    else:
+    if username in all_usernames:
         user = storage.get_user(username)
         hashed_pwd = user.password
-        if bcrypt.verify(password, hashed_pwd) is False:
+        if bcrypt.verify(password, hashed_pwd) is True:
+            access_token = create_access_token(identity=username,
+                                               expires_delta=timedelta(hours=1))
+            return jsonify(access_token=access_token), 200
+        else:
             return jsonify({"msg": "Wrong Username or Password"}), 401
-    access_token = create_access_token(identity=username,
-                                       expires_delta=timedelta(hours=1))
-    return jsonify(access_token=access_token), 200
+    else:
+        return jsonify({"msg": "Wrong Username or Password"}), 401
+
 
 @app.teardown_appcontext
 def teardown(exception=None):

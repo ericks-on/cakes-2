@@ -12,6 +12,7 @@ from models.expenditure import Expenditure
 from models.item import Item
 from models.input import Input
 from dotenv import load_dotenv
+from passlib.hash import bcrypt
 
 
 load_dotenv()
@@ -35,6 +36,11 @@ class DBStorage:
 
     def add(self, obj):
         """adding new object to session"""
+        try:
+            password = obj.password
+            obj.password = bcrypt.hash(password)
+        except AttributeError:
+            pass
         session = self.__session()
         session.add(obj)
 

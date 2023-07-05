@@ -36,6 +36,8 @@
 #error-notification {
     display: none;
     font-size: 12px;
+    justify-content: center;
+    align-items: center;
     margin: 0;
     position: absolute;
     margin-top: 5px;
@@ -48,9 +50,7 @@
 }
 
 .show-error {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: flex !important;
 }
 
 .error-message {
@@ -61,6 +61,8 @@
     height: 100px;
     background-color: var(--primary-color);
     font-weight: bold;
+    font-size: 15px;
+    color: red;
 }
 #lError-ok-button {
     position: absolute;
@@ -72,6 +74,7 @@
     margin: 10px;
     width: 30px;
     height: 20px;
+    color: white;
     border-radius: 5px;
     background-color: var(--button-color);
 }

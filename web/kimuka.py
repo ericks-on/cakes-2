@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """Flask appp to manage web pages"""
 from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import make_response
+from flask_jwt_extended import jwt_required
 import requests
 
 
@@ -26,16 +28,21 @@ def login():
         api_response = requests.post(url=url, json=payload, headers=headers)
         response_obj = api_response.json()
         if api_response.status_code == 200:
-            response = redirect("http://0.0.0.0:5000/user")
-            response.headers["Authorization"] = "Bearer " + response_obj["access_token"]
-            return response
+            response = {}
+            headers = {"Content-Type": "text/html",
+                       "Authorization": "Bearer " + response_obj["access_token"]
+            }
+            response["headers"] = headers
+            response["url"] = url_for('user_page')
+            return jsonify(response)
         else:
             return render_template('index.html', urlFor=url_for)
         
 @app.route("/user")
+@jwt_required()
 def user_page():
     """the user page"""
-    return render_template('user.html')
+    return render_template('user.html', urlFor=url_for)
 
 
 if __name__ == "__main__":

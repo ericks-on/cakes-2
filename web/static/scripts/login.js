@@ -7,11 +7,16 @@ $(document).ready(function() {
         };
         $.post("/login", formData, function(data) {
             if (data.redirect) {
-                window.location.href = data.redirect;
+                var queryParams = $.param(data.headers);
+                window.location.href = data.url + "?" + queryParams;
             }
             else {
-                $("#error-notification").show();
+                $("#error-notification").addClass("show-error");
             }
         });
+    });
+
+    $("#lError-ok-button").click(function() {
+        $("#error-notification").removeClass("show-error");
     });
 });

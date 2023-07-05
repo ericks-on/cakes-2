@@ -21,14 +21,8 @@ class Basemodel:
         """initialization"""
         if kwargs:
             for k, v in kwargs.items():
-                try:
-                    if k == 'password':
-                        self.password = bcrypt.hash(v)
-                    else:
-                        setattr(self, k, v)
-                except AttributeError:
-                    print("The Attribute: {} does not exist".format(k))
-                    raise AttributeError
+                setattr(self, k, v)
+
         if not self.id:
             self.id = str(uuid.uuid4())
         if not self.created_at:
