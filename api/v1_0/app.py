@@ -51,7 +51,7 @@ def login():
             return jsonify({"msg": "Wrong Username or Password"}), 401
     access_token = create_access_token(identity=username,
                                        expires_delta=timedelta(hours=1))
-    return jsonify(access_token=access_token)
+    return jsonify(access_token=access_token), 200
 
 @app.teardown_appcontext
 def teardown(exception=None):
