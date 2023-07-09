@@ -1,19 +1,12 @@
 $(document).ready(function() {
     $("#loginForm").submit(function(event) {
-        event.preventDefault();
-        var formData = {
-            username: $("#username").val(),
-            password: $("#password").val()
-        };
-        $.post("/login", formData, function(data) {
-            if (data.redirect) {
-                var queryParams = $.param(data.headers);
-                window.location.href = data.url + "?" + queryParams;
-            }
-            else {
-                $("#error-notification").addClass("show-error");
-            }
+        formData = $(this).serialize()
+        $.post("/login", formData, function(header){
+            console.log("Login successful")
+        }).fail(function(){
+            $("#error-notification").addClass("show-error");
         });
+
     });
 
     $("#lError-ok-button").click(function() {
