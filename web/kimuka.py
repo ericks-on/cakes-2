@@ -43,6 +43,11 @@ def user_page():
     """the user page"""
     return render_template('user.html', urlFor=url_for)
 
+@app.route("/order", methods=['GET'])
+def order_page():
+    """the order page"""
+    return render_template('orders.html', urlFor=url_for)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -7,13 +7,13 @@
 }
 * {
     font-family: 'Raleway', sans-serif;
+    box-sizing: border-box;
 }
 body {
     height: 100vh;
     display: flex;
     margin: 0;
     overflow-y: hidden;
-    box-sizing: border-box;
 }
 
 ::-webkit-scrollbar {
@@ -43,6 +43,10 @@ body {
 .d-flex-column {
     display: flex;
     flex-direction: column;
+}
+.flex-cc {
+    justify-content: center;
+    align-items: center;
 }
 
 #content {
@@ -118,9 +122,7 @@ body {
     margin-top: auto;
 }
 
-.main-content {
-    
-}
+
 
 .header-container {
     flex-basis: 100px;
@@ -131,11 +133,12 @@ body {
 }
 #header {
     height: 90%;
-    width: 90%;
+    width: 100%;
     justify-content: space-between;
     border-radius: 10px;
     background-color: var(--secondary-color);
     align-items: center;
+    margin: 0 20px;
 }
 
 #header h1 {

@@ -4,4 +4,36 @@
 <link rel="stylesheet" href="../static/styles/orders.css"/>
 {% endblock %}
 {% block content %}
-
+<div class="search-orders">
+    <div class="search-container d-flex">
+        <div class="search-field"></div>
+        <div class="search-btn"></div>
+    </div>
+    <div class="order-insights-container d-flex">
+        <div class="order-insight d-flex-column">
+            <div class="insight-headline d-flex">
+                <span class="material-symbols-outlined">
+                    shopping_cart
+                </span>
+                <p>AVERAGE ORDER VALUE</p>
+            </div>
+            <div class="insight-values d-flex">
+                <P>KSH</P>
+                <span id="aov">2000</span>
+            </div>
+        </div>
+        <div class="order-insight d-flex-column">
+            <div class="insight-headline d-flex ">
+                <span><i class="bi bi-graph-up"></i></span>
+                <p>TOTAL SALES</p>
+            </div>
+            <div class="insight-values d-flex">
+                <P>KSH</P>
+                <span id="aov">2000</span>
+            </div>
+        </div>
+        <div class="new-order-btn d-flex flex-cc">NEW ORDER</div>
+    </div>
+</div>
+<div class="center-logo"></div>
+{% endblock %}
