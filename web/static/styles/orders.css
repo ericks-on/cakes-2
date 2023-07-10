@@ -6,6 +6,8 @@
     height: 100%;
     width: 100%;
     padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .center-logo {
@@ -20,12 +22,14 @@
     background-repeat: no-repeat;
 }
 
+/* Insights and the search */
+
 .search-orders {
     grid-column-start: 1;
     grid-column-end: 3;
 }
 .order-insights-container {
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 .order-insight {
@@ -72,15 +76,15 @@
 }
 
 .search-container {
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
     height: 30%;
 }
 .search-field {
     flex-basis: 70%;
-    height: 70%;
-    border-radius: 10px;
+    height: 40%;
+    border-radius: 30px;
     background-color: var(--secondary-color);
     border: none;
     padding: 10px;
@@ -88,8 +92,8 @@
     font-weight: bold;
 }
 .search-btn {
-    flex-basis: 25%;
-    height: 70%;
+    flex-basis: 20%;
+    height: 40%;
     border-radius: 30px;
     background-color: var(--button-color);
     border: none;
@@ -98,6 +102,9 @@
     font-weight: bold;
 }
 
+
+/* order history Table*/
+
 .order-history {
     grid-column: 3;
     grid-row: 1 / 3;
@@ -105,6 +112,9 @@
     padding: 20px;
     border-radius: 10px;
     align-items: center;
+}
+.order-history h2 {
+    margin: 0;
 }
 .order-status-container {
     justify-content: space-evenly;
@@ -165,4 +175,77 @@
     color: white;
     cursor: pointer;
     background-color: var(--button-color);
+}
+
+/* Sales table */
+
+.sales-container {
+    grid-column: 1;
+    grid-row: 2 / 4;
+    background-color: var(--secondary-color);
+    padding: 20px;
+    border-radius: 10px;
+    align-items: center;
+}
+.sales-container h2 {
+    margin: 0;
+}
+#sales-table {
+    width: 100%;
+    background-color: var(--dash-hover-color);
+    border-collapse: collapse;
+    border: 1px solid grey;
+}
+#sales-table th {
+    font-size: 20px;
+    color: var(--button-color);
+}
+#sales-table td {
+    height: 30px;
+    border-top: 1px solid grey;
+    font-size: 15px;
+    color: grey;
+    border-left: 1px solid grey;
+}
+#sales-table tbody tr:hover {
+    background-color: var(--button-color);
+    cursor: pointer;
+}
+#sales-table tbody tr:hover td {
+    color: white;
+}
+#sales-table tbody tr:hover td:first-child {
+    border-left: 1px solid white;
+}
+#sales-table tbody tr:hover td:last-child {
+    border-right: 1px solid white;
+}
+#sales-table tfoot tr td {
+    font-size: 20px;
+    color: var(--button-color);
+    text-align: center;
+    font-weight: bold;
+}
+#sales-table tfoot tr td:hover {
+    color: white;
+    cursor: pointer;
+    background-color: var(--button-color);
+}
+
+
+/* Orders graph */
+.orders-graph-container {
+    grid-column: 2 / 4;
+    grid-row: 3;
+    background-color: var(--secondary-color);
+    padding: 20px;
+    border-radius: 10px;
+    align-items: center;
+}
+#orders-graph {
+    width: 100%;
+    height: 100%;
+    background-color: var(--dash-hover-color);
+    border-collapse: collapse;
+    border: 1px solid grey;
 }

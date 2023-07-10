@@ -51,23 +51,12 @@ body {
 
 #content {
     flex-basis: 85%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    position: relative;
     background-color: var(--primary-color);
     height: 100%;
 }
 
 #footer {
-    flex-basis: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: var(--secondary-color);
-    margin: 0 auto;
-    margin-top: auto;
     width: 100%;
 }
 
