@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: auto 25% auto;
     grid-template-rows: auto 20% auto;
+    grid-gap: 20px;
     height: 100%;
     width: 100%;
     padding: 20px;
@@ -95,4 +96,73 @@
     color: white;
     font-size: 20px;
     font-weight: bold;
+}
+
+.order-history {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    background-color: var(--secondary-color);
+    padding: 20px;
+    border-radius: 10px;
+    align-items: center;
+}
+.order-status-container {
+    justify-content: space-evenly;
+    padding: 10px;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+}
+.order-status {
+    flex-basis: 100px;
+    border-radius: 10px;
+    background-color: var(--button-color);
+    border: none;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+.order-status:hover {
+    cursor: pointer;
+}
+#order-hist-table {
+    width: 100%;
+    background-color: var(--dash-hover-color);
+    border-collapse: collapse;
+    border: 1px solid grey;
+}
+#order-hist-table th {
+    font-size: 20px;
+    color: var(--button-color);
+}
+#order-hist-table td {
+    height: 30px;
+    border-top: 1px solid grey;
+    font-size: 15px;
+    color: grey;
+    border-left: 1px solid grey;
+}
+#order-hist-table tbody tr:hover {
+    background-color: var(--button-color);
+    cursor: pointer;
+}
+#order-hist-table tbody tr:hover td {
+    color: white;
+}
+#order-hist-table tbody tr:hover td:first-child {
+    border-left: 1px solid white;
+}
+#order-hist-table tbody tr:hover td:last-child {
+    border-right: 1px solid white;
+}
+#order-hist-table tfoot tr td {
+    font-size: 20px;
+    color: var(--button-color);
+    text-align: center;
+    font-weight: bold;
+}
+#order-hist-table tfoot tr td:hover {
+    color: white;
+    cursor: pointer;
+    background-color: var(--button-color);
 }
