@@ -1,16 +1,16 @@
 $(document).ready(function() {
     $('#more-orders-btn').click(function() {
         $('#popups-container').css('display', 'flex');
-        $('#orders-popup-container').css('display', 'flex');
+        $('.orders-popup').css('display', 'block');
     });
 
-    $('#more-sales-btn').click(function() {
+    $('#more-pdts-btn').click(function() {
         $('#popups-container').css('display', 'flex');
-        $('#sales-popup-container').css('display', 'flex');
+        $('.pdt-analysis-popup').css('display', 'block');
     });
 
     $('#exit-btn').click(function() {
-        $('#orders-popup-container').css('display', 'none');
-        $('#sales-popup-container').css('display', 'none');
+        $('.orders-popup').css('display', 'none');
+        $('.pdt-analysis-popup').css('display', 'none');
     });
 });

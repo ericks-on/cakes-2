@@ -33,23 +33,16 @@
     align-items: center;
 }
 .order-insight {
-    flex-basis: auto;
-    height: 90%;
+    height: 120px;
     background-color: var(--secondary-color);
     width: 200px;
     border-radius: 10px;
-    padding: 20px;
-}
-.new-order-btn {
-    flex-basis: 100px;
-    height: 70px;
-    border-radius: 30px;
-    background-color: var(--button-color);
-    color: white;
+    padding: 10px;
 }
 .insight-headline {
     justify-content: space-between;
     align-items: center;
+    flex-basis: 50%;
 }
 .insight-headline p {
     max-width: 100px;
@@ -62,6 +55,7 @@
 .insight-values {
     justify-content: space-between;
     align-items: center;
+    flex-basis: 50%;
 }
 .insight-values p {
     font-weight: bolder;
@@ -82,24 +76,26 @@
     height: 30%;
 }
 .search-field {
-    flex-basis: 70%;
+    flex-basis: 60%;
     height: 40%;
     border-radius: 30px;
     background-color: var(--secondary-color);
     border: none;
     padding: 10px;
-    font-size: 20px;
     font-weight: bold;
 }
 .search-btn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     flex-basis: 20%;
     height: 40%;
     border-radius: 30px;
     background-color: var(--button-color);
     border: none;
     color: white;
-    font-size: 20px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 
@@ -180,7 +176,7 @@
 
 /* -----------------------------------------------Sales table--------------------------------------- */
 
-.sales-container {
+.pdt-analysis-container {
     grid-column: 1;
     grid-row: 2 / 4;
     background-color: var(--secondary-color);
@@ -188,46 +184,46 @@
     border-radius: 10px;
     align-items: center;
 }
-.sales-container h2 {
-    margin: 0;
+.pdt-analysis-container h2 {
+    margin-bottom: 20px;
 }
-#sales-table {
+#pdt-analysis-table {
     width: 100%;
     background-color: var(--dash-hover-color);
     border-collapse: collapse;
     border: 1px solid grey;
 }
-#sales-table th {
+#pdt-analysis-table th {
     font-size: 20px;
     color: var(--button-color);
 }
-#sales-table td {
+#pdt-analysis-table td {
     height: 30px;
     border-top: 1px solid grey;
     font-size: 15px;
     color: grey;
     border-left: 1px solid grey;
 }
-#sales-table tbody tr:hover {
+#pdt-analysis-table tbody tr:hover {
     background-color: var(--button-color);
     cursor: pointer;
 }
-#sales-table tbody tr:hover td {
+#pdt-analysis-table tbody tr:hover td {
     color: white;
 }
-#sales-table tbody tr:hover td:first-child {
+#pdt-analysis-table tbody tr:hover td:first-child {
     border-left: 1px solid white;
 }
-#sales-table tbody tr:hover td:last-child {
+#pdt-analysis-table tbody tr:hover td:last-child {
     border-right: 1px solid white;
 }
-#sales-table tfoot tr td {
+#pdt-analysis-table tfoot tr td {
     font-size: 20px;
     color: var(--button-color);
     text-align: center;
     font-weight: bold;
 }
-#sales-table tfoot tr td:hover {
+#pdt-analysis-table tfoot tr td:hover {
     color: white;
     cursor: pointer;
     background-color: var(--button-color);
@@ -253,7 +249,7 @@
 
 /* --------------------------------------------------Popups------------------------------------------ */
 
-.orders-popup, .sales-popup {
+.orders-popup, .pdt-analysis-popup {
     background-color: var(--primary-color);
     width: 50%;
     height: 70%;
@@ -261,20 +257,10 @@
     overflow-x: hidden;
     border-radius: 10px;
     padding: 20px;
-    display: block;
+    display: none;
 }
 
-#sales-popup-container, #orders-popup-container {
-    display: none;
-    font-size: 12px;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    padding: 0;
-    text-align: center;
-    height: 100%;
-    width: 100%;
-}
+
 
 /* ----------------------------------------order status info----------------------------------------- */
 .order-status-info-btn {

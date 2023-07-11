@@ -6,17 +6,22 @@
 {% endblock %}
 {% block content %}
 <div class="search-orders">
-    <div class="search-container d-flex">
-        <div class="search-field"></div>
-        <div class="search-btn"></div>
+    <form class="search-container d-flex" id="order-search">
+        <input class="search-field" type="text" placeholder="Enter order id">
+        <div class="search-btn" type="submit">
+            <span class="material-symbols-outlined">
+                search
+            </span>
+            <p>SEARCH</p>
     </div>
+    </form>
     <div class="order-insights-container d-flex">
         <div class="order-insight d-flex-column">
             <div class="insight-headline d-flex">
+                <p>AVERAGE ORDER VALUE</p>
                 <span class="material-symbols-outlined">
                     shopping_cart
                 </span>
-                <p>AVERAGE ORDER VALUE</p>
             </div>
             <div class="insight-values d-flex">
                 <P>KSH</P>
@@ -25,15 +30,25 @@
         </div>
         <div class="order-insight d-flex-column">
             <div class="insight-headline d-flex ">
-                <span><i class="bi bi-graph-up"></i></span>
                 <p>TOTAL SALES</p>
+                <span><i class="bi bi-graph-up"></i></span>
             </div>
             <div class="insight-values d-flex">
                 <P>KSH</P>
                 <span id="aov">2000</span>
             </div>
         </div>
-        <div class="new-order-btn d-flex flex-cc">NEW ORDER</div>
+        <div class="order-insight d-flex-column">
+            <div class="insight-headline d-flex ">
+                <p>TOP SELLING</p>
+                <span class="material-symbols-outlined">
+                    star
+                </span>
+            </div>
+            <div class="insight-values d-flex">
+                <P>Product 1</P>
+            </div>
+        </div>
     </div>
 </div>
 <div class="center-logo"></div>
@@ -192,6 +207,223 @@
     <table id="pdt-analysis-table">
         <thead>
             <tr>
+                <th>order Id</th>
+                <th>Date</th>
+                <th>Product name</th>
+                <th>%</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2023-07-01</td>
+                <td>Product 1</td>
+                <td>10%</td>
+                <td>5</td>
+                <td>$50.00</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2023-07-02</td>
+                <td>Product 2</td>
+                <td>15%</td>
+                <td>3</td>
+                <td>$75.00</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2023-07-03</td>
+                <td>Product 3</td>
+                <td>5%</td>
+                <td>2</td>
+                <td>$20.00</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>2023-07-04</td>
+                <td>Product 4</td>
+                <td>20%</td>
+                <td>1</td>
+                <td>$30.00</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>2023-07-05</td>
+                <td>Product 5</td>
+                <td>10%</td>
+                <td>4</td>
+                <td>$80.00</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>2023-07-06</td>
+                <td>Product 6</td>
+                <td>8%</td>
+                <td>2</td>
+                <td>$40.00</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>2023-07-07</td>
+                <td>Product 7</td>
+                <td>12%</td>
+                <td>3</td>
+                <td>$60.00</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>2023-07-08</td>
+                <td>Product 8</td>
+                <td>6%</td>
+                <td>1</td>
+                <td>$10.00</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>2023-07-09</td>
+                <td>Product 9</td>
+                <td>10%</td>
+                <td>2</td>
+                <td>$30.00</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>2023-07-10</td>
+                <td>Product 10</td>
+                <td>15%</td>
+                <td>4</td>
+                <td>$100.00</td>
+            </tr>
+        </tbody>
+        
+        <tfoot>
+            <tr>
+                <td colspan="6" id="more-pdts-btn">show more...</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div class="orders-graph-container">
+    <canvas id="orders-graph"></canvas>
+</div>
+{% endblock %}
+{% block popups %}
+<div class="pdt-analysis-popup d-flex-column">
+    <h2>PRODUCT ANALYSIS</h2>
+    <table id="pdt-analysis-table">
+        <thead>
+            <tr>
+                <th>order Id</th>
+                <th>Date</th>
+                <th>Product name</th>
+                <th>%</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>2023-07-01</td>
+                <td>Product 1</td>
+                <td>10%</td>
+                <td>5</td>
+                <td>$50.00</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2023-07-02</td>
+                <td>Product 2</td>
+                <td>15%</td>
+                <td>3</td>
+                <td>$75.00</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2023-07-03</td>
+                <td>Product 3</td>
+                <td>5%</td>
+                <td>2</td>
+                <td>$20.00</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>2023-07-04</td>
+                <td>Product 4</td>
+                <td>20%</td>
+                <td>1</td>
+                <td>$30.00</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>2023-07-05</td>
+                <td>Product 5</td>
+                <td>10%</td>
+                <td>4</td>
+                <td>$80.00</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>2023-07-06</td>
+                <td>Product 6</td>
+                <td>8%</td>
+                <td>2</td>
+                <td>$40.00</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>2023-07-07</td>
+                <td>Product 7</td>
+                <td>12%</td>
+                <td>3</td>
+                <td>$60.00</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>2023-07-08</td>
+                <td>Product 8</td>
+                <td>6%</td>
+                <td>1</td>
+                <td>$10.00</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>2023-07-09</td>
+                <td>Product 9</td>
+                <td>10%</td>
+                <td>2</td>
+                <td>$30.00</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>2023-07-10</td>
+                <td>Product 10</td>
+                <td>15%</td>
+                <td>4</td>
+                <td>$100.00</td>
+            </tr>
+        </tbody>
+        
+        <tfoot>
+            <tr>
+                <td colspan="6" id="more-pdts-btn">show more...</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<div class="orders-popup">
+    <h2>ORDER HISTORY</h2>
+    <div class="order-status-container d-flex">
+        <div class="order-status">pending</div>
+        <div class="order-status">confirmed</div>
+        <div class="order-status">delivered</div>
+        <div class="order-status">settled</div>
+    </div>
+    <table id="order-hist-table">
+        <thead>
+            <tr>
                 <th>Id</th>
                 <th>Date</th>
                 <th>Status</th>
@@ -271,204 +503,6 @@
                 <td>2000</td>
             </tr>
         </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5" id="more-sales-btn">show more...</td>
-            </tr>
-        </tfoot>
     </table>
-</div>
-<div class="orders-graph-container">
-    <canvas id="orders-graph"></canvas>
-</div>
-{% endblock %}
-{% block popups %}
-<div id="sales-popup-container">
-    <div class="sales-popup">
-        <h2>ORDER HISTORY</h2>
-        <div class="order-status-container d-flex">
-            <div class="order-status">pending</div>
-            <div class="order-status">confirmed</div>
-            <div class="order-status">delivered</div>
-            <div class="order-status">settled</div>
-        </div>
-        <table id="order-hist-table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Quantity</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div id="orders-popup-container">
-    <div class="orders-popup">
-        <h2>ORDER HISTORY</h2>
-        <div class="order-status-container d-flex">
-            <div class="order-status">pending</div>
-            <div class="order-status">confirmed</div>
-            <div class="order-status">delivered</div>
-            <div class="order-status">settled</div>
-        </div>
-        <table id="order-hist-table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Quantity</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2021</td>
-                    <td>Delivered</td>
-                    <td>2</td>
-                    <td>2000</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
 {% endblock %}

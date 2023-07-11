@@ -2,6 +2,7 @@
 """Contains the Order model"""
 from models.base_model import Basemodel, Base
 from sqlalchemy import Column, String, Integer, CheckConstraint, ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class Order(Basemodel, Base):
@@ -12,6 +13,8 @@ class Order(Basemodel, Base):
     quantity = Column(Integer, nullable=False)
     order_value = Column(Integer, nullable=False)
     uom = Column(String(60), nullable=False, default='packets')
+
+    products = relationship('ProductSales', backref='order')
 
     __table_args__ = (
             CheckConstraint('quantity >= 0', name='positive_quantity'),
