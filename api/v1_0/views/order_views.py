@@ -7,6 +7,7 @@ from models.order import Order
 from models.user import User
 import os
 from flask_jwt_extended import get_jwt_identity, jwt_required
+from werkzeug.exceptions import BadRequest
 
 
 orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
@@ -14,14 +15,19 @@ orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
 
 @orders_bp.route('/', methods=['GET'])
 @swag_from('documentation/order/all_orders.yml')
-@jwt_required()
+# @jwt_required()
 def all_orders():
     """To obtain all orders"""
-    username = get_jwt_identity()
+    # username = get_jwt_identity()
+    username = 'erickson'
     user = storage.get_user(username)
     if user.user_type == 'admin':
-        return storage.all(Order)
-    return jsonify(user.orders)
+        orders = [order.to_dict() for order in storage.all(Order)]
+        return jsonify({"orders": orders}), 200
+    else:
+        orders = [order.to_dict() for order in user.orders]
+        return jsonify({"orders": orders}), 200
+
 
 @orders_bp.route('/', methods=['POST'])
 @swag_from('documentation/order/add_order.yml')

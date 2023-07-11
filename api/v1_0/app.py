@@ -74,4 +74,4 @@ if __name__ == "__main__":
     prt = os.environ.get('KIMUKA_API_PORT')
     if not prt:
         prt = 3000
-    app.run(host=hst, port = prt)
+    app.run(host=hst, port = prt, debug=True)

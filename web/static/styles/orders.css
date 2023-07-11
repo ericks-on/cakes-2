@@ -35,7 +35,7 @@
 .order-insight {
     height: 120px;
     background-color: var(--secondary-color);
-    width: 200px;
+    width: auto;
     border-radius: 10px;
     padding: 10px;
 }
@@ -109,6 +109,7 @@
     border-radius: 10px;
     align-items: center;
     position: relative;
+    max-width: 500px;
 }
 .order-history h2 {
     margin: 0;
@@ -147,6 +148,10 @@
     font-size: 15px;
     color: grey;
     border-left: 1px solid grey;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 70px;
+    overflow: hidden;
 }
 #order-hist-table tbody tr:hover {
     background-color: var(--button-color);
@@ -174,7 +179,7 @@
 }
 
 
-/* -----------------------------------------------Sales table--------------------------------------- */
+/* -----------------------------------------------Product analysis table--------------------------------------- */
 
 .pdt-analysis-container {
     grid-column: 1;
@@ -183,6 +188,7 @@
     padding: 20px;
     border-radius: 10px;
     align-items: center;
+    max-width: 500px;
 }
 .pdt-analysis-container h2 {
     margin-bottom: 20px;
