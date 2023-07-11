@@ -35,7 +35,7 @@
 .order-insight {
     height: 120px;
     background-color: var(--secondary-color);
-    width: auto;
+    width: 200px;
     border-radius: 10px;
     padding: 10px;
 }
