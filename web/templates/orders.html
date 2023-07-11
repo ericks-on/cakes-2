@@ -2,6 +2,7 @@
 {% block title %}Orders{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="../static/styles/orders.css"/>
+<script src="../static/scripts/orders.js"></script>
 {% endblock %}
 {% block content %}
 <div class="search-orders">
@@ -39,10 +40,10 @@
 <div class="order-history d-flex-column">
     <h2>ORDER HISTORY</h2>
     <div class="order-status-container d-flex">
-        <div class="order-status">pending</div>
-        <div class="order-status">confirmed</div>
-        <div class="order-status">delivered</div>
-        <div class="order-status">settled</div>
+        <div class="order-status pending">pending</div>
+        <div class="order-status confirmed">confirmed</div>
+        <div class="order-status delivered">delivered</div>
+        <div class="order-status settled">settled</div>
     </div>
     <table id="order-hist-table">
         <thead>
@@ -128,14 +129,67 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="5">show more...</td>
+                <td colspan="5" id="more-orders-btn">show more...</td>
             </tr>
         </tfoot>
     </table>
+    <div class="order-status-info-btn">
+        <span class="material-symbols-outlined g-light">
+            info
+        </span>
+    </div>
+    <div class="order-status-info">
+        <div class="order-status-info-container d-flex-column">
+            <div class="order-status-info-headline d-flex">
+                <span class="material-symbols-outlined">
+                    info
+                </span>
+                <p>ORDER STATUS INFO</p>
+            </div>
+            <div class="order-status-info-body d-flex-column">
+                <div class="order-status-info-row d-flex">
+                    <div class="order-status-info-row-status d-flex">
+                        <div class="order-status-info-row-status-circle pending"></div>
+                        <p>PENDING:</p>
+                    </div>
+                    <div class="order-status-info-row-description">
+                        <p>Order has been placed but not confirmed</p>
+                    </div>
+                </div>
+                <div class="order-status-info-row d-flex">
+                    <div class="order-status-info-row-status d-flex ">
+                        <div class="order-status-info-row-status-circle confirmed"></div>
+                        <p>CONFIRMED:</p>
+                    </div>
+                    <div class="order-status-info-row-description">
+                        <p>Order has been confirmed and is being processed</p>
+                    </div>
+                </div>
+                <div class="order-status-info-row d-flex">
+                    <div class="order-status-info-row-status d-flex">
+                        <div class="order-status-info-row-status-circle delivered"></div>
+                        <p>DELIVERED:</p>
+                    </div>
+                    <div class="order-status-info-row-description">
+                        <p>Order has been delivered to the customer</p>
+                    </div>
+                </div>
+                <div class="order-status-info-row d-flex">
+                    <div class="order-status-info-row-status d-flex">
+                        <div class="order-status-info-row-status-circle settled"></div>
+                        <p>SETTLED:</p>
+                    </div>
+                    <div class="order-status-info-row-description">
+                        <p>Order has been settled and payment received</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="sales-container d-flex-column">
-    <h2>SALES</h2>
-    <table id="sales-table">
+<div class="pdt-analysis-container d-flex-column">
+    <h2>PRODUCT ANALYSIS</h2>
+    <table id="pdt-analysis-table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -219,12 +273,202 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="5">show more...</td>
+                <td colspan="5" id="more-sales-btn">show more...</td>
             </tr>
         </tfoot>
     </table>
 </div>
 <div class="orders-graph-container">
     <canvas id="orders-graph"></canvas>
+</div>
+{% endblock %}
+{% block popups %}
+<div id="sales-popup-container">
+    <div class="sales-popup">
+        <h2>ORDER HISTORY</h2>
+        <div class="order-status-container d-flex">
+            <div class="order-status">pending</div>
+            <div class="order-status">confirmed</div>
+            <div class="order-status">delivered</div>
+            <div class="order-status">settled</div>
+        </div>
+        <table id="order-hist-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="orders-popup-container">
+    <div class="orders-popup">
+        <h2>ORDER HISTORY</h2>
+        <div class="order-status-container d-flex">
+            <div class="order-status">pending</div>
+            <div class="order-status">confirmed</div>
+            <div class="order-status">delivered</div>
+            <div class="order-status">settled</div>
+        </div>
+        <table id="order-hist-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12/12/2021</td>
+                    <td>Delivered</td>
+                    <td>2</td>
+                    <td>2000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

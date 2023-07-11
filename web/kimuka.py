@@ -35,7 +35,7 @@ def login():
             response.headers["Authorization"] = "Bearer " + response_obj["access_token"]
             return response
         elif api_response.status_code == 401:
-            return redirect(url_for('/'))
+            return redirect(url_for('index'))
         
 @app.route("/user", methods=['GET'])
 @jwt_required()

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../static/styles/google-fonts.css"/>
     <script src="../static/scripts/jquery_3.7.0.js"></script>
+    <script src="../static/scripts/main.js"></script>
     <title>{% block title %}{% endblock %}</title>
     {% block head %}
     {% endblock %}
@@ -80,10 +81,17 @@
             {% block content %}
             {% endblock %}
         </div>
-        {% block popups %}
-        {% endblock %}
         <div id="footer" class="flex-cc d-flex">
             &copy; KIMUKA 2023
+        </div>
+    </div>
+    <div id="popups-container">
+        {% block popups %}
+        {% endblock %}
+        <div id="exit-btn">
+            <span class="material-symbols-outlined">
+                close
+            </span>
         </div>
     </div>
 </body>

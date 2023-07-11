@@ -5,3 +5,11 @@
   'GRAD' 200,
   'opsz' 48
 }
+
+.g-light {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 700,
+  'GRAD' 200,
+  'opsz' 48
+}

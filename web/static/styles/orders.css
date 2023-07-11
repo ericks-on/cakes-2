@@ -1,7 +1,7 @@
 .main-content {
     display: grid;
-    grid-template-columns: auto 25% auto;
-    grid-template-rows: auto 20% auto;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
     grid-gap: 20px;
     height: 100%;
     width: 100%;
@@ -22,7 +22,7 @@
     background-repeat: no-repeat;
 }
 
-/* Insights and the search */
+/*----------------------------------------------- Insights and the search -------------------------------*/
 
 .search-orders {
     grid-column-start: 1;
@@ -103,7 +103,7 @@
 }
 
 
-/* order history Table*/
+/*------------------------------------------- order history Table--------------------------------------*/
 
 .order-history {
     grid-column: 3;
@@ -112,6 +112,7 @@
     padding: 20px;
     border-radius: 10px;
     align-items: center;
+    position: relative;
 }
 .order-history h2 {
     margin: 0;
@@ -126,7 +127,6 @@
 .order-status {
     flex-basis: 100px;
     border-radius: 10px;
-    background-color: var(--button-color);
     border: none;
     color: white;
     text-align: center;
@@ -177,7 +177,8 @@
     background-color: var(--button-color);
 }
 
-/* Sales table */
+
+/* -----------------------------------------------Sales table--------------------------------------- */
 
 .sales-container {
     grid-column: 1;
@@ -233,7 +234,7 @@
 }
 
 
-/* Orders graph */
+/* ---------------------------------------------------------Orders graph --------------------------------------*/
 .orders-graph-container {
     grid-column: 2 / 4;
     grid-row: 3;
@@ -249,3 +250,86 @@
     border-collapse: collapse;
     border: 1px solid grey;
 }
+
+/* --------------------------------------------------Popups------------------------------------------ */
+
+.orders-popup, .sales-popup {
+    background-color: var(--primary-color);
+    width: 50%;
+    height: 70%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 10px;
+    padding: 20px;
+    display: block;
+}
+
+#sales-popup-container, #orders-popup-container {
+    display: none;
+    font-size: 12px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    padding: 0;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+/* ----------------------------------------order status info----------------------------------------- */
+.order-status-info-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    margin: 20px;
+}
+.order-status-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    margin-top: 50px;
+    border-radius: 10px;
+    padding: 20px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-right: 20px;
+    font-size: smaller;
+}
+
+.order-status-info-btn:hover + .order-status-info {
+    display: flex;
+}
+
+.order-status-info-headline {
+    font-weight: bold;
+    margin-bottom: 20px;
+    justify-content: space-around;
+    align-items: center;
+}
+.order-status-info-row {
+    margin-bottom: 10px;
+}
+.order-status-info-row-status-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.order-status-info-row-status {
+    margin-right: 5px;
+}
+.order-status-info-row-status p {
+    font-weight: bold;
+}
+
+
+
