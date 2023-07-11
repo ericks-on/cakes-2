@@ -13,10 +13,10 @@ class User(Basemodel, Base):
     first_name = Column(String(60), nullable=False)
     last_name = Column(String(60), nullable=False)
     email = Column(String(128), nullable=False, unique=True)
-    username = Column(String(60), nullable=False, unique=True)
-    password = Column(String(128), nullable=False)
     phone = Column(String(60), nullable=False)
     user_type = Column(String(60), default="normal")
+    username = Column(String(60), nullable=False, unique=True)
+    password = Column(String(128), nullable=False)
     transactions = relationship(Transaction, backref='users',
                                 cascade='all, delete')
     expenditures = relationship(Expenditure, backref='user',

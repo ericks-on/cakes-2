@@ -3,6 +3,7 @@
 from models.base_model import Basemodel, Base
 from sqlalchemy import Column, String, Integer, CheckConstraint, ForeignKey
 from sqlalchemy.orm import relationship
+from models.product_sales import ProductSales
 
 
 class Order(Basemodel, Base):
@@ -11,10 +12,10 @@ class Order(Basemodel, Base):
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     status = Column(String(60), nullable=False)
     quantity = Column(Integer, nullable=False)
-    order_value = Column(Integer, nullable=False)
     uom = Column(String(60), nullable=False, default='packets')
+    order_value = Column(Integer, nullable=False)
 
-    products = relationship('ProductSales', backref='order')
+    products = relationship(ProductSales, backref='order')
 
     __table_args__ = (
             CheckConstraint('quantity >= 0', name='positive_quantity'),

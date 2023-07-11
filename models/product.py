@@ -11,8 +11,8 @@ class Product(Basemodel, Base):
     name = Column(String(60), nullable=False)
     price = Column(Integer, nullable=False)
 
-    orders = relationship('ProductSales', backref='product')
+    orders = relationship(ProductSales, backref='product')
 
     __table_args__ = (
-            CheckConstraint('price >= 0', name='positive_price'),
+            CheckConstraint('price >= 0', name='positive_pd_price'),
     )
