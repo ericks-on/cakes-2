@@ -46,7 +46,10 @@ def user_page():
 @app.route("/order", methods=['GET'])
 def order_page():
     """the order page"""
-    return render_template('orders.html', urlFor=url_for)
+    url = "http://192.168.0.34:3000/api/v1_0/orders"
+    api_response = requests.get(url=url).json()
+    orders = api_response["orders"]
+    return render_template('orders.html', urlFor=url_for, orders=orders)
 
 
 if __name__ == "__main__":

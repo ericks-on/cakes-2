@@ -71,6 +71,15 @@
             </tr>
         </thead>
         <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.date }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.order_value }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
         <tfoot>
             <tr>
@@ -362,6 +371,15 @@
             </tr>
         </thead>
         <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.date }}</td>
+                <td>{{ order.status }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.order_value }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
