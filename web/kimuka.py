@@ -49,7 +49,7 @@ def order_page():
     url = "http://192.168.0.34:3000/api/v1_0/orders"
     api_response = requests.get(url=url).json()
     orders = api_response["orders"]
-    order_history = orders[0:9]
+    order_history = orders[0:10]
     return render_template('orders.html', urlFor=url_for, orders=orders, order_history=order_history)
 
 

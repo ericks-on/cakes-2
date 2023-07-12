@@ -9,6 +9,9 @@
     --delivered-color: #2196F3;
     --settled-color: #8BC34A;
     --table-color: #000000;
+    --table-row-odd-color: #ffdab9;
+    --table-row-even-color: #ECECEC;
+    --table-header-color: #BFBFBF;
 }
 * {
     font-family: 'Raleway', sans-serif;

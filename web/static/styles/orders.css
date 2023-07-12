@@ -138,19 +138,13 @@
     width: 100%;
     background-color: var(--secondary-color);
     border-collapse: collapse;
-    border-radius: 10px;
 }
 #order-hist-table th {
     font-size: 20px;
     color: var(--button-color);
-    background-color: var(--dash-hover-color);
+    background-color: var(--table-header-color);
 }
-#order-hist-table th:first-child {
-    border-top-left-radius: 10px;
-}
-#order-hist-table th:last-child {
-    border-top-right-radius: 10px;
-}
+
 #order-hist-table td {
     height: 30px;
     font-size: 15px;
@@ -161,6 +155,12 @@
     text-align: center;
     overflow: hidden;
     padding: 5px;
+}
+#order-hist-table tbody tr:nth-child(odd) {
+    background-color: var(--table-row-odd-color);
+}
+#order-hist-table tbody tr:nth-child(even) {
+    background-color: var(--table-row-even-color);
 }
 #order-hist-table tbody tr:hover {
     background-color: var(--button-color);
@@ -181,12 +181,7 @@
     text-align: center;
     font-weight: bold;
 }
-#order-hist-table tfoot tr td:first-child {
-    border-bottom-left-radius: 10px;
-}
-#order-hist-table tfoot tr td:last-child {
-    border-bottom-right-radius: 10px;
-}
+
 #order-hist-table tfoot tr td:hover {
     color: white;
     cursor: pointer;
@@ -199,7 +194,7 @@
 .pdt-analysis-container {
     grid-column: 1;
     grid-row: 2 / 4;
-    padding: 20px;
+    padding: 10px;
     align-items: center;
     max-width: 500px;
 }
@@ -208,21 +203,27 @@
 }
 #pdt-analysis-table {
     width: 100%;
-    background-color: var(--dash-hover-color);
     border-collapse: collapse;
-    border: 1px solid grey;
 }
 #pdt-analysis-table th {
     font-size: 20px;
     color: var(--button-color);
+    background-color: var(--table-header-color);
 }
 #pdt-analysis-table td {
     height: 30px;
-    border-top: 1px solid grey;
     font-size: 15px;
     color: var(--table-color);
-    border-left: 1px solid grey;
+    text-align: center;
 }
+#pdt-analysis-table tbody tr:nth-child(odd) {
+    background-color: var(--table-row-odd-color);
+}
+#pdt-analysis-table tbody tr:nth-child(even) {
+    background-color: var(--table-row-even-color);
+}
+
+
 #pdt-analysis-table tbody tr:hover {
     background-color: var(--button-color);
     cursor: pointer;
