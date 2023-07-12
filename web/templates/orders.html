@@ -75,7 +75,15 @@
             <tr>
                 <td>{{ order.id }}</td>
                 <td>{{ order.created_at }}</td>
-                <td class="order-status-col">{{ order.status }}</td>
+                {% if order.status == 'pending' %}
+                <td class="pending">{{ order.status }}</td>
+                {% elif order.status == 'confirmed' %}
+                <td class="confirmed">{{ order.status }}</td>
+                {% elif order.status == 'delivered' %}
+                <td class="delivered">{{ order.status }}</td>
+                {% elif order.status == 'settled' %}
+                <td class="settled">{{ order.status }}</td>
+                {% endif %}
                 <td>{{ order.quantity }}</td>
                 <td>{{ order.order_value }}</td>
             </tr>
@@ -370,7 +378,15 @@
             <tr>
                 <td>{{ order.id }}</td>
                 <td>{{ order.created_at }}</td>
-                <td>{{ order.status }}</td>
+                {% if order.status == 'pending' %}
+                <td class="pending">{{ order.status }}</td>
+                {% elif order.status == 'confirmed' %}
+                <td class="confirmed">{{ order.status }}</td>
+                {% elif order.status == 'delivered' %}
+                <td class="delivered">{{ order.status }}</td>
+                {% elif order.status == 'settled' %}
+                <td class="settled">{{ order.status }}</td>
+                {% endif %}
                 <td>{{ order.quantity }}</td>
                 <td>{{ order.order_value }}</td>
             </tr>

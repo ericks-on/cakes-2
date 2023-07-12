@@ -39,6 +39,10 @@
     border-radius: 10px;
     padding: 10px;
 }
+.order-insight:hover {
+    cursor: pointer;
+    box-shadow: var(--float-box-shadow);
+}
 .insight-headline {
     justify-content: space-between;
     align-items: center;
@@ -136,8 +140,10 @@
 }
 #order-hist-table {
     width: 100%;
-    background-color: var(--secondary-color);
     border-collapse: collapse;
+}
+#order-hist-table:hover {
+    box-shadow: var(--float-box-shadow);
 }
 #order-hist-table th {
     font-size: 20px;
@@ -205,6 +211,11 @@
     width: 100%;
     border-collapse: collapse;
 }
+
+#pdt-analysis-table:hover {
+    box-shadow: var(--float-box-shadow);
+}
+
 #pdt-analysis-table th {
     font-size: 20px;
     color: var(--button-color);
@@ -285,27 +296,30 @@
     border-collapse: collapse;
     height: 70%;
 }
+#all-orders-table:hover {
+    box-shadow: var(--float-box-shadow);
+}
 #all-orders-table th {
     font-size: 20px;
     color: var(--button-color);
-    background-color: var(--dash-hover-color);
+    background-color: var(--table-header-color);
 }
-#all-orders-table th:first-child {
-    border-top-left-radius: 10px;
-}
-#all-orders-table th:last-child {
-    border-top-right-radius: 10px;
-}
+
 #all-orders-table td {
     height: 20px;
     font-size: 15px;
     color: var(--table-color);
     white-space: nowrap;
-    background-color: var(--secondary-color);
     text-overflow: ellipsis;
     max-width: 70px;
     overflow: hidden;
     padding: 5px;
+}
+#all-orders-table tbody tr:nth-child(odd) {
+    background-color: var(--table-row-odd-color);
+}
+#all-orders-table tbody tr:nth-child(even) {
+    background-color: var(--table-row-even-color);
 }
 #all-orders-table tbody tr:hover {
     background-color: var(--button-color);
