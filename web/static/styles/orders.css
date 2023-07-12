@@ -104,54 +104,63 @@
 .order-history {
     grid-column: 3;
     grid-row: 1 / 3;
-    background-color: var(--secondary-color);
     padding: 20px;
-    border-radius: 10px;
     align-items: center;
     position: relative;
+    width: 100%;
     max-width: 500px;
+    height: 500px;
 }
 .order-history h2 {
     margin: 0;
 }
 .order-status-container {
-    justify-content: space-evenly;
+    justify-content: space-around;
     padding: 10px;
     align-items: center;
     width: 100%;
     height: 30px;
+    margin: 20px 0;
 }
 .order-status {
-    flex-basis: 100px;
-    border-radius: 10px;
+    flex-basis: 70px;
+    border-radius: 5px;
     border: none;
     color: white;
     text-align: center;
     font-weight: bold;
+    font-size: small;
 }
 .order-status:hover {
     cursor: pointer;
 }
 #order-hist-table {
     width: 100%;
-    background-color: var(--dash-hover-color);
+    background-color: var(--secondary-color);
     border-collapse: collapse;
-    border: 1px solid grey;
+    border-radius: 10px;
 }
 #order-hist-table th {
     font-size: 20px;
     color: var(--button-color);
+    background-color: var(--dash-hover-color);
+}
+#order-hist-table th:first-child {
+    border-top-left-radius: 10px;
+}
+#order-hist-table th:last-child {
+    border-top-right-radius: 10px;
 }
 #order-hist-table td {
     height: 30px;
-    border-top: 1px solid grey;
     font-size: 15px;
-    color: grey;
-    border-left: 1px solid grey;
+    color: var(--table-color);
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width: 70px;
+    text-align: center;
     overflow: hidden;
+    padding: 5px;
 }
 #order-hist-table tbody tr:hover {
     background-color: var(--button-color);
@@ -172,6 +181,12 @@
     text-align: center;
     font-weight: bold;
 }
+#order-hist-table tfoot tr td:first-child {
+    border-bottom-left-radius: 10px;
+}
+#order-hist-table tfoot tr td:last-child {
+    border-bottom-right-radius: 10px;
+}
 #order-hist-table tfoot tr td:hover {
     color: white;
     cursor: pointer;
@@ -184,9 +199,7 @@
 .pdt-analysis-container {
     grid-column: 1;
     grid-row: 2 / 4;
-    background-color: var(--secondary-color);
     padding: 20px;
-    border-radius: 10px;
     align-items: center;
     max-width: 500px;
 }
@@ -207,7 +220,7 @@
     height: 30px;
     border-top: 1px solid grey;
     font-size: 15px;
-    color: grey;
+    color: var(--table-color);
     border-left: 1px solid grey;
 }
 #pdt-analysis-table tbody tr:hover {
@@ -258,13 +271,73 @@
 .orders-popup, .pdt-analysis-popup {
     background-color: var(--primary-color);
     width: 50%;
-    height: 70%;
+    height: 80%;
     overflow-y: auto;
     overflow-x: hidden;
     border-radius: 10px;
     padding: 20px;
     display: none;
 }
+
+#all-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    height: 70%;
+}
+#all-orders-table th {
+    font-size: 20px;
+    color: var(--button-color);
+    background-color: var(--dash-hover-color);
+}
+#all-orders-table th:first-child {
+    border-top-left-radius: 10px;
+}
+#all-orders-table th:last-child {
+    border-top-right-radius: 10px;
+}
+#all-orders-table td {
+    height: 20px;
+    font-size: 15px;
+    color: var(--table-color);
+    white-space: nowrap;
+    background-color: var(--secondary-color);
+    text-overflow: ellipsis;
+    max-width: 70px;
+    overflow: hidden;
+    padding: 5px;
+}
+#all-orders-table tbody tr:hover {
+    background-color: var(--button-color);
+    cursor: pointer;
+}
+#all-orders-table tbody tr:hover td {
+    background-color: var(--button-color);
+    color: white;
+}
+#all-orders-table tbody tr:hover td:first-child {
+    border-left: 1px solid white;
+}
+#all-orders-table tbody tr:hover td:last-child {
+    border-right: 1px solid white;
+}
+#all-orders-table tfoot tr td {
+    font-size: 20px;
+    color: var(--button-color);
+    text-align: center;
+    font-weight: bold;
+}
+#all-orders-table tfoot tr td:first-child {
+    border-bottom-left-radius: 10px;
+}
+#all-orders-table tfoot tr td:last-child {
+    border-bottom-right-radius: 10px;
+}
+#all-orders-table tfoot tr td:hover {
+    color: white;
+    cursor: pointer;
+    background-color: var(--button-color);
+}
+
 
 
 

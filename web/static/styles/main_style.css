@@ -8,6 +8,7 @@
     --confirmed-color: #4CAF50;
     --delivered-color: #2196F3;
     --settled-color: #8BC34A;
+    --table-color: #000000;
 }
 * {
     font-family: 'Raleway', sans-serif;

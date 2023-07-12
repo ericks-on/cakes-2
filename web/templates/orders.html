@@ -71,11 +71,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for order in orders %}
+            {% for order in order_history %}
             <tr>
                 <td>{{ order.id }}</td>
-                <td>{{ order.date }}</td>
-                <td>{{ order.status }}</td>
+                <td>{{ order.created_at }}</td>
+                <td class="order-status-col">{{ order.status }}</td>
                 <td>{{ order.quantity }}</td>
                 <td>{{ order.order_value }}</td>
             </tr>
@@ -355,12 +355,12 @@
 <div class="orders-popup">
     <h2>ORDER HISTORY</h2>
     <div class="order-status-container d-flex">
-        <div class="order-status">pending</div>
-        <div class="order-status">confirmed</div>
-        <div class="order-status">delivered</div>
-        <div class="order-status">settled</div>
+        <div class="order-status pending">pending</div>
+        <div class="order-status confirmed">confirmed</div>
+        <div class="order-status delivered">delivered</div>
+        <div class="order-status settled">settled</div>
     </div>
-    <table id="order-hist-table">
+    <table id="all-orders-table">
         <thead>
             <tr>
                 <th>Id</th>
@@ -374,7 +374,7 @@
             {% for order in orders %}
             <tr>
                 <td>{{ order.id }}</td>
-                <td>{{ order.date }}</td>
+                <td>{{ order.created_at }}</td>
                 <td>{{ order.status }}</td>
                 <td>{{ order.quantity }}</td>
                 <td>{{ order.order_value }}</td>
