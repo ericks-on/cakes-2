@@ -218,6 +218,12 @@
     font-weight: bolder;
     margin-right: 20px;
 }
+
+.pa-date {
+    color: grey;
+    font-size: 20px;
+    font-weight: bold;
+}
 .pa-body {
     justify-content: center;
     align-items: center;
@@ -281,7 +287,7 @@
 
 /* --------------------------------------------------Popups------------------------------------------ */
 
-.orders-popup, .pdt-analysis-popup {
+.orders-popup {
     background-color: var(--primary-color);
     width: 50%;
     height: 80%;
@@ -352,6 +358,22 @@
     color: white;
     cursor: pointer;
     background-color: var(--button-color);
+}
+
+
+/* ====================product analysis popup==================== */
+.pa-popup {
+    background-color: var(--primary-color);
+    width: 50%;
+    height: auto;
+    border-radius: 10px;
+    padding: 20px;
+    display: none;
+}
+#pa-graph {
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
 }
 
 
