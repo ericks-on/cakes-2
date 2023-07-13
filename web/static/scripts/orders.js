@@ -1,7 +1,7 @@
 $(document).ready(function() {
     $('#more-orders-btn').click(function() {
         $('#popups-container').css('display', 'flex');
-        $('.orders-popup').css('display', 'block');
+        $('.orders-popup, .orders-popup *').show();
     });
 
     $('.product').click(function() {
@@ -28,15 +28,9 @@ $(document).ready(function() {
               }
             }
           });
-        $('.pa-popup').show();
-        $('pa-graph').show();
+          $('.pa-popup, .pa-popup *').show();
+          $('pa-graph, .pa-graph *').show();
     });
 
-    $('#exit-btn').click(function() {
-        $('#popups-container').hide();
-        $('.pa-popup').hide();
-        $('pa-graph').hide();
-        $('.orders-popup').hide();
-    });
 
 });
