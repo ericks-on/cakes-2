@@ -150,211 +150,50 @@
     </div>
 </div>
 <div class="pdt-analysis-container d-flex-column">
-    <h2>PRODUCT ANALYSIS</h2>
-    <table id="pdt-analysis-table">
-        <thead>
-            <tr>
-                <th>order Id</th>
-                <th>Date</th>
-                <th>Product name</th>
-                <th>%</th>
-                <th>Quantity</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>2023-07-01</td>
-                <td>Product 1</td>
-                <td>10%</td>
-                <td>5</td>
-                <td>$50.00</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>2023-07-02</td>
-                <td>Product 2</td>
-                <td>15%</td>
-                <td>3</td>
-                <td>$75.00</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>2023-07-03</td>
-                <td>Product 3</td>
-                <td>5%</td>
-                <td>2</td>
-                <td>$20.00</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>2023-07-04</td>
-                <td>Product 4</td>
-                <td>20%</td>
-                <td>1</td>
-                <td>$30.00</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>2023-07-05</td>
-                <td>Product 5</td>
-                <td>10%</td>
-                <td>4</td>
-                <td>$80.00</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>2023-07-06</td>
-                <td>Product 6</td>
-                <td>8%</td>
-                <td>2</td>
-                <td>$40.00</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>2023-07-07</td>
-                <td>Product 7</td>
-                <td>12%</td>
-                <td>3</td>
-                <td>$60.00</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>2023-07-08</td>
-                <td>Product 8</td>
-                <td>6%</td>
-                <td>1</td>
-                <td>$10.00</td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>2023-07-09</td>
-                <td>Product 9</td>
-                <td>10%</td>
-                <td>2</td>
-                <td>$30.00</td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td>2023-07-10</td>
-                <td>Product 10</td>
-                <td>15%</td>
-                <td>4</td>
-                <td>$100.00</td>
-            </tr>
-        </tbody>
-        
-        <tfoot>
-            <tr>
-                <td colspan="6" id="more-pdts-btn">show more...</td>
-            </tr>
-        </tfoot>
-    </table>
+    <div class="pa-headline d-flex">
+        <span class="material-symbols-outlined g-light" id="pa-info-btn">
+            trending_up
+        </span>
+        <h2>PRODUCT ANALYSIS</h2>
+    </div>
+    <div class="pa-body d-flex-column">
+        <div class="product">
+            <div class="pdt-name">12-PACK</div>
+            <div class="pdt-growth-rate">
+                <span class="material-symbols-outlined">
+                    arrow_downward
+                </span>
+                <p>12%</p>
+            </div>
+            <div class="pdt-sales">125 sales</div>
+        </div>
+        <div class="product">
+            <div class="pdt-name">15-PACK</div>
+            <div class="pdt-growth-rate">
+                <span class="material-symbols-outlined">
+                    arrow_upward
+                </span>
+                <p>9%</p>
+            </div>
+            <div class="pdt-sales">8 sales</div>
+        </div>
+        <div class="product">
+            <div class="pdt-name">7-PACK</div>
+            <div class="pdt-growth-rate">
+                <span class="material-symbols-outlined">
+                    arrow_downward
+                </span>
+                <p>6%</p>
+            </div>
+            <div class="pdt-sales">20 sales</div>
+        </div>
+    </div>
 </div>
 <div class="orders-graph-container">
     <canvas id="orders-graph"></canvas>
 </div>
 {% endblock %}
 {% block popups %}
-<div class="pdt-analysis-popup d-flex-column">
-    <h2>PRODUCT ANALYSIS</h2>
-    <table id="pdt-analysis-table">
-        <thead>
-            <tr>
-                <th>order Id</th>
-                <th>Date</th>
-                <th>Product name</th>
-                <th>%</th>
-                <th>Quantity</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>2023-07-01</td>
-                <td>Product 1</td>
-                <td>10%</td>
-                <td>5</td>
-                <td>$50.00</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>2023-07-02</td>
-                <td>Product 2</td>
-                <td>15%</td>
-                <td>3</td>
-                <td>$75.00</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>2023-07-03</td>
-                <td>Product 3</td>
-                <td>5%</td>
-                <td>2</td>
-                <td>$20.00</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>2023-07-04</td>
-                <td>Product 4</td>
-                <td>20%</td>
-                <td>1</td>
-                <td>$30.00</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>2023-07-05</td>
-                <td>Product 5</td>
-                <td>10%</td>
-                <td>4</td>
-                <td>$80.00</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>2023-07-06</td>
-                <td>Product 6</td>
-                <td>8%</td>
-                <td>2</td>
-                <td>$40.00</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>2023-07-07</td>
-                <td>Product 7</td>
-                <td>12%</td>
-                <td>3</td>
-                <td>$60.00</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td>2023-07-08</td>
-                <td>Product 8</td>
-                <td>6%</td>
-                <td>1</td>
-                <td>$10.00</td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td>2023-07-09</td>
-                <td>Product 9</td>
-                <td>10%</td>
-                <td>2</td>
-                <td>$30.00</td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td>2023-07-10</td>
-                <td>Product 10</td>
-                <td>15%</td>
-                <td>4</td>
-                <td>$100.00</td>
-            </tr>
-        </tbody>
-        
-    </table>
-</div>
 <div class="orders-popup">
     <h2>ORDER HISTORY</h2>
     <div class="order-status-container d-flex">

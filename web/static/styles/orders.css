@@ -203,61 +203,62 @@
     padding: 10px;
     align-items: center;
     max-width: 500px;
+    justify-content: center;
+    position: relative;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
 }
-.pdt-analysis-container h2 {
-    margin-bottom: 20px;
-}
-#pdt-analysis-table {
+.pa-headline {
     width: 100%;
-    border-collapse: collapse;
+    justify-content: center;
+    align-items: center;
 }
-
-#pdt-analysis-table:hover {
+.pa-headline span {
+    font-size: 50px;
+    font-weight: bolder;
+    margin-right: 20px;
+}
+.pa-body {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70%;
+    overflow: auto;
+}
+.product {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--table-row-even-color);
+    width: 80%;
+    flex-basis: 20%;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px 0;
+}
+.product:hover {
+    cursor: pointer;
     box-shadow: var(--float-box-shadow);
 }
 
-#pdt-analysis-table th {
+.pdt-name {
     font-size: 20px;
-    color: var(--button-color);
-    background-color: var(--table-header-color);
+    font-weight: bolder;
+    flex-basis: 30%;
 }
-#pdt-analysis-table td {
-    height: 30px;
-    font-size: 15px;
-    color: var(--table-color);
-    text-align: center;
+.pdt-growth-rate {
+    display: flex;
+    flex-basis: 20%;
+    color: #00FF00;
 }
-#pdt-analysis-table tbody tr:nth-child(odd) {
-    background-color: var(--table-row-odd-color);
-}
-#pdt-analysis-table tbody tr:nth-child(even) {
-    background-color: var(--table-row-even-color);
-}
-
-
-#pdt-analysis-table tbody tr:hover {
-    background-color: var(--button-color);
-    cursor: pointer;
-}
-#pdt-analysis-table tbody tr:hover td {
-    color: white;
-}
-#pdt-analysis-table tbody tr:hover td:first-child {
-    border-left: 1px solid white;
-}
-#pdt-analysis-table tbody tr:hover td:last-child {
-    border-right: 1px solid white;
-}
-#pdt-analysis-table tfoot tr td {
+.pdt-growth-rate span {
     font-size: 20px;
-    color: var(--button-color);
-    text-align: center;
+}
+.pdt-growth-rate p {
     font-weight: bold;
 }
-#pdt-analysis-table tfoot tr td:hover {
-    color: white;
-    cursor: pointer;
-    background-color: var(--button-color);
+
+.pdt-sales {
+    flex-basis: 30%;
 }
 
 
