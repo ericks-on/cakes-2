@@ -4,6 +4,8 @@ from models.base_model import Basemodel, Base
 from sqlalchemy import Column, String, Integer, CheckConstraint, ForeignKey
 from sqlalchemy.orm import relationship
 from models.product_sales import ProductSales
+from models.order import Order
+
 
 class Product(Basemodel, Base):
     """The model for products"""
@@ -11,7 +13,6 @@ class Product(Basemodel, Base):
     name = Column(String(60), nullable=False, unique=True)
     price = Column(Integer, nullable=False)
 
-    orders = relationship(ProductSales, backref='product')
     sales = relationship(ProductSales, backref='products')
 
     __table_args__ = (

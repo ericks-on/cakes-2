@@ -82,5 +82,5 @@ def get_sales():
         abort(404)
     sales = {}
     for product in products:
-        sales[product.name] = product.sales
-    return jsonify(sales), 200
+        sales[product.name] = [sale.to_dict() for sale in product.sales]
+    return jsonify({"sales":sales}), 200
