@@ -140,7 +140,7 @@ def get_total_sales(year, month=None):
     products = storage.all(Product)
     if not products:
         abort(404)
-        
+
     if month:
         sales = {}
         for product in products:
@@ -154,12 +154,12 @@ def get_total_sales(year, month=None):
         sales = {}
         for product in products:
             pdt_monthly_sales = {}
-            for m in months:
+            for mon in months:
                 total_sales = sum([sale.quantity for sale in product.sales
                                    if sale.created_at.year == int(year)
                                    and sale.created_at.month == 
-                                   months.index(m)+1])
-                pdt_monthly_sales[m] = total_sales
+                                   months.index(mon)+1])
+                pdt_monthly_sales[mon] = total_sales
             sales[product.name] = pdt_monthly_sales
         return jsonify({"monthly_sales": sales}), 200
         

@@ -58,11 +58,11 @@ def order_page():
                            orders=orders, order_history=order_history
                            )
 
-@app.route("/sales/<product>/<year>/<month>", methods=['GET'])
-def get_sales(product, year, month):
+@app.route("/sales", methods=['GET'])
+def get_sales():
     """get sales for popup"""
-    url = f"http://{host}:{port}/api/v1_0/products/sales" \
-           f"/{product}/{year}/{month}"
+    year = datetime.now().year
+    url = f"http://{host}:{port}/api/v1_0/products/sales/total/{year}"
     api_response = requests.get(url=url, timeout=5).json()
     return jsonify(api_response)
 
