@@ -370,6 +370,12 @@
     padding: 20px;
     display: none;
 }
+.pa-popup h2 {
+    color: var(--button-color);
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
 #pa-graph {
     width: 100%;
     height: 100%;

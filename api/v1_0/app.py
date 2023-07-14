@@ -3,7 +3,6 @@
 from flask import Flask, jsonify, make_response, request
 from flask_cors import CORS
 from flasgger import Swagger
-from models import storage
 from api.v1_0.views import app_views
 import os
 from flask_jwt_extended import create_access_token, JWTManager
@@ -12,6 +11,7 @@ from models.user import User
 from datetime import timedelta
 from dotenv import load_dotenv
 from werkzeug.exceptions import BadRequest
+from models import storage
 
 
 load_dotenv()

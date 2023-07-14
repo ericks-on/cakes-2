@@ -14,6 +14,7 @@
     --table-header-color: #BFBFBF;
     --increase-color: #00FF00;
     --decline-color: #FF0000;
+    --no-change-color: #000000;
     --float-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 * {
@@ -71,6 +72,15 @@ body {
 }
 .settled {
     background-color: var(--settled-color);
+}
+.increase {
+    color: var(--increase-color);
+}
+.decline {
+    color: var(--decline-color);
+}
+.no-change {
+    color: var(--no-change-color);
 }
 
 #content {

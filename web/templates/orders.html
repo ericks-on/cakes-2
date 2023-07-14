@@ -156,38 +156,30 @@
         </span>
         <h2>PRODUCT ANALYSIS</h2>
     </div>
-    <div class="pa-date">JULY, 2023</div>
+    <div class="pa-date">{{ month }}, {{ year }}</div>
     <div class="pa-body d-flex-column">
+        {% for product, sales in products_sales.items() %}
         <div class="product">
-            <div class="pdt-name">12-PACK</div>
+            <div class="pdt-name">{{ product }}</div>
             <div class="pdt-growth-rate">
-                <span class="material-symbols-outlined">
-                    arrow_downward
-                </span>
-                <p>12%</p>
-            </div>
-            <div class="pdt-sales">125 sales</div>
-        </div>
-        <div class="product">
-            <div class="pdt-name">15-PACK</div>
-            <div class="pdt-growth-rate">
-                <span class="material-symbols-outlined">
+                {% if sales_comparison[product].change == "up" %}
+                <span class="material-symbols-outlined increase">
                     arrow_upward
                 </span>
-                <p>9%</p>
-            </div>
-            <div class="pdt-sales">8 sales</div>
-        </div>
-        <div class="product">
-            <div class="pdt-name">7-PACK</div>
-            <div class="pdt-growth-rate">
-                <span class="material-symbols-outlined">
+                {% elif sales_comparison[product].change == "down" %}
+                <span class="material-symbols-outlined decline">
                     arrow_downward
                 </span>
-                <p>6%</p>
+                {% else %}
+                <span class="material-symbols-outlined no-change">
+                    trending_flat
+                </span>
+                {% endif %}
+                <p>{{ sales_comparison[product].percent * 100 }}%</p>
             </div>
-            <div class="pdt-sales">20 sales</div>
+            <div class="pdt-sales">{{ sales }} sales</div>
         </div>
+        {% endfor %}
     </div>
 </div>
 <div class="orders-graph-container">
@@ -235,6 +227,7 @@
     </table>
 </div>
 <div class="pa-popup">
+    <h2></h2>
     <canvas id="pa-graph"></canvas>
 </div>
 {% endblock %}

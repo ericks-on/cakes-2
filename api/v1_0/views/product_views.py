@@ -162,26 +162,3 @@ def get_total_sales(year, month=None):
                 pdt_monthly_sales[mon] = total_sales
             sales[product.name] = pdt_monthly_sales
         return jsonify({"monthly_sales": sales}), 200
-        
-# @products_bp.route('/sales/total/<product_name>/<year>/<month>', methods=['GET'])
-# @products_bp.route('/sales/total/<product_name>/<year>', methods=['GET'])
-# def get_total_sales_by_name(product_name, year, month=None):
-#     """Getting total sales by name"""
-#     product = storage.get_product(product_name)
-#     if not product:
-#         abort(404)
-#     if month:
-#         total_sales = sum([sale.quantity for sale in product.sales
-#                            if sale.created_at.year == int(year)
-#                            and sale.created_at.month == int(month)])
-#         return jsonify({"total_sales":total_sales}), 200
-#     else:
-#         months = calendar.month_name[1:]
-#         sales = {}
-#         for m in months:
-#             total_sales = sum([sale.quantity for sale in product.sales
-#                                if sale.created_at.year == int(year)
-#                                and sale.created_at.month == 
-#                                months.index(m)+1])
-#             sales[m] = total_sales
-#         return jsonify({"monthly_sales":sales}), 200

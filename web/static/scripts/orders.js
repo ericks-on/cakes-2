@@ -10,6 +10,8 @@ $(document).ready(function() {
         product = $(this).find('.pdt-name').text().toLowerCase();
         $.get( '/sales', function( data ) {
             var sales = data.monthly_sales[product];
+            $('.pa-popup h2').text(product.toUpperCase() + ' ' +
+            'SALES' + ' ' + data.year);
             var lineChart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -17,7 +19,7 @@ $(document).ready(function() {
                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                   datasets: [{
                     label: 'Sales',
-                    data: Object.values(sales),
+                    data: sales,
                     borderColor: 'blue',
                     fill: false
                   }]

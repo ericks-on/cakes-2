@@ -2,12 +2,12 @@
 """Contains views for orders"""
 from flask import Blueprint, jsonify, abort, request
 from flasgger.utils import swag_from
-from models import storage
 from models.order import Order
 from models.user import User
 import os
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from werkzeug.exceptions import BadRequest
+from models import storage
 
 
 orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
@@ -87,14 +87,14 @@ def update_order(order_id):
             data = request.get_json()
         except BadRequest:
             return jsonify({'error': 'Invalid JSON data'}), 400
-        for k, v in data.items():
-            if k == 'status' and v not in ['pending',
-                                           'confirmed',
-                                           'delivered',
-                                           'completedd']:
+        for key, val in data.items():
+            if key == 'status' and val not in ['pending',
+                                               'confirmed',
+                                               'delivered',
+                                               'completedd']:
                 return jsonify({'error': 'Bad Request'}), 400
             else:
-                setattr(order, k, v)
+                setattr(order, key, val)
         storage.save()
     else:
         abort(404)

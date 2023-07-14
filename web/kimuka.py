@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 """Flask appp to manage web pages"""
-from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask import make_response
 from flask_jwt_extended import jwt_required, JWTManager
 import requests
 import os
 from datetime import datetime
+import calendar
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+from collections import OrderedDict
 
 
 app = Flask(__name__)
@@ -50,21 +52,89 @@ def user_page():
 @app.route("/order", methods=['GET'])
 def order_page():
     """the order page"""
+    month = datetime.now().month
+    month_str = calendar.month_name[month]
+    year = datetime.now().year
+
+    # get orders history
     orders_url = f"http://{host}:{port}/api/v1_0/orders"
     orders_response = requests.get(url=orders_url, timeout=5).json()
     orders = orders_response["orders"]
     order_history = orders[0:10]
+
+    # get products sales for the month
+    products_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{year}/{month}"
+    products_response = requests.get(url=products_url, timeout=5).json()
+    products_sales = products_response["sales"]
+
+    # get sales for previous month so as to compare
+    if month == 1:
+        prev_month = 12
+        prev_year = year - 1
+    else:
+        prev_month = month - 1
+        prev_year = year
+    prev_products_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{prev_year}/{prev_month}"
+    prev_products_response = requests.get(url=prev_products_url, timeout=5).json()
+    prev_products_sales = prev_products_response["sales"]
+
+    # comparing sales
+    sales_comparison = {}
+    for product, sales in products_sales.items():
+        if product in prev_products_sales:
+            prev_sales = prev_products_sales[product]
+            current_sales = sales
+            if prev_sales == 0:
+                if current_sales == 0:
+                    sales_comparison[product] = {}
+                    sales_comparison[product]["change"] = "same"
+                    sales_comparison[product]["percent"] = 0
+                else:
+                    sales_comparison[product] = {}
+                    sales_comparison[product]["change"] = "up"
+                    sales_comparison[product]["percent"] = 1
+            elif prev_sales > 0:
+                if prev_sales > current_sales:
+                    sales_comparison[product] = {}
+                    sales_comparison[product]["change"] = "down"
+                    diff = prev_sales - current_sales
+                    sales_comparison[product]["percent"] = diff / prev_sales
+                elif prev_sales < current_sales:
+                    sales_comparison[product] = {}
+                    sales_comparison[product]["change"] = "up"
+                    diff = current_sales - prev_sales
+                    sales_comparison[product]["percent"] = diff / prev_sales
+                else:
+                    sales_comparison[product] = {}
+                    sales_comparison[product]["change"] = "same"
+                    sales_comparison[product]["percent"] = 0
+        else:
+            sales_comparison[product] = {}
+            sales_comparison[product]["change"] = "up"
+            sales_comparison[product]["percent"] = 1
+
     return render_template('orders.html', urlFor=url_for,
-                           orders=orders, order_history=order_history
+                           orders=orders, order_history=order_history,
+                            products_sales=products_sales, month=month_str,
+                            year=year, sales_comparison=sales_comparison
                            )
 
 @app.route("/sales", methods=['GET'])
 def get_sales():
     """get sales for popup"""
     year = datetime.now().year
+    month = datetime.now().month
     url = f"http://{host}:{port}/api/v1_0/products/sales/total/{year}"
     api_response = requests.get(url=url, timeout=5).json()
-    return jsonify(api_response)
+    sales = api_response["monthly_sales"]
+    current_sales = OrderedDict()
+    months = calendar.month_name[1:month+1]
+    for key, value in sales.items():
+        curr_sales = []
+        for mon in months:
+            curr_sales.append(value[mon])
+        current_sales[key] = curr_sales
+    return jsonify({"monthly_sales": current_sales, "year": year})
 
 
 if __name__ == "__main__":
