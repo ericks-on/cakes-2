@@ -52,6 +52,11 @@ def order_page():
     order_history = orders[0:10]
     return render_template('orders.html', urlFor=url_for, orders=orders, order_history=order_history)
 
+@app.route("/sales/<year>/<month>", methods=['GET'])
+def get_sales(year, month):
+    """get sales for popup"""
+    url = "http://192.168.0.34:3000/api/v1_0/products/sales"
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -84,3 +84,50 @@ def get_sales():
     for product in products:
         sales[product.name] = [sale.to_dict() for sale in product.sales]
     return jsonify({"sales":sales}), 200
+
+@products_bp.route('/sales/date/<year>', methods=['GET'])
+@products_bp.route('/sales/date/<year>/<month>', methods=['GET'])
+@swag_from('documentation/product/get_sales_by_year_month.yml')
+def get_sales_by_year_month(year, month=None):
+    """Getting sales by year and month"""
+    products = storage.all(Product)
+    if not products:
+        abort(404)
+    sales = {}
+    for product in products:
+        if month:
+            sales[product.name] = [sale.to_dict() for sale in product.sales
+                                   if sale.created_at.year == int(year)
+                                   and sale.created_at.month == int(month)]
+        else:
+            sales[product.name] = [sale.to_dict() for sale in product.sales
+                                   if sale.created_at.year == int(year)]
+    return jsonify({"sales":sales}), 200
+
+@products_bp.route('/sales/<product_name>', methods=['GET'])
+@swag_from('documentation/product/get_sales_by_name.yml')
+def get_sales_by_name(product_name):
+    """Getting sales by name"""
+    product = storage.get_product(product_name)
+    if not product:
+        abort(404)
+    sales = [sale.to_dict() for sale in product.sales]
+    return jsonify({product_name:sales}), 200
+
+@products_bp.route('/sales/<product_name>/<year>', methods=['GET'])
+@products_bp.route('/sales/<product_name>/<year>/<month>', methods=['GET'])
+@swag_from('documentation/product/get_sales_by_name_year_month.yml')
+def get_sales_by_name_year_month(product_name, year, month=None):
+    """Getting sales by name, year and month"""
+    product = storage.get_product(product_name)
+    if not product:
+        abort(404)
+    if month:
+        sales = [sale.to_dict() for sale in product.sales
+                 if sale.created_at.year == int(year)
+                 and sale.created_at.month == int(month)]
+    else:
+        sales = [sale.to_dict() for sale in product.sales
+                 if sale.created_at.year == int(year)]
+    return jsonify({product_name:sales}), 200
+
