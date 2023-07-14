@@ -5,11 +5,14 @@ from flask import make_response
 from flask_jwt_extended import jwt_required, JWTManager
 import requests
 import os
+from datetime import datetime
 
 
 app = Flask(__name__)
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.environ.get('KIMUKA_API_SEC_KEY')
+host = os.environ.get('KIMUKA_API_HOST')
+port = os.environ.get('KIMUKA_API_PORT')
 
 
 @app.route('/')
@@ -23,12 +26,13 @@ def login():
     if request.method == 'GET':
         return render_template('index.html', urlFor=url_for)
     else:
-        url = "http://127.0.0.1:3000/api/v1_0/login"
+        url = f"http://{host}:{port}/api/v1_0/login"
         payload = {}
         payload["username"] = request.form["username"]
         payload["password"] = request.form["password"]
         headers = {"Content-Type": "application/json"}
-        api_response = requests.post(url=url, json=payload, headers=headers)
+        api_response = requests.post(url=url, json=payload,
+                                     headers=headers, timeout=5)
         response_obj = api_response.json()
         if api_response.status_code == 200:
             response = make_response(redirect(url_for('user_page')))
@@ -46,16 +50,21 @@ def user_page():
 @app.route("/order", methods=['GET'])
 def order_page():
     """the order page"""
-    url = "http://192.168.0.34:3000/api/v1_0/orders"
-    api_response = requests.get(url=url).json()
-    orders = api_response["orders"]
+    orders_url = f"http://{host}:{port}/api/v1_0/orders"
+    orders_response = requests.get(url=orders_url, timeout=5).json()
+    orders = orders_response["orders"]
     order_history = orders[0:10]
-    return render_template('orders.html', urlFor=url_for, orders=orders, order_history=order_history)
+    return render_template('orders.html', urlFor=url_for,
+                           orders=orders, order_history=order_history
+                           )
 
-@app.route("/sales/<year>/<month>", methods=['GET'])
-def get_sales(year, month):
+@app.route("/sales/<product>/<year>/<month>", methods=['GET'])
+def get_sales(product, year, month):
     """get sales for popup"""
-    url = "http://192.168.0.34:3000/api/v1_0/products/sales"
+    url = f"http://{host}:{port}/api/v1_0/products/sales" \
+           f"/{product}/{year}/{month}"
+    api_response = requests.get(url=url, timeout=5).json()
+    return jsonify(api_response)
 
 
 if __name__ == "__main__":
