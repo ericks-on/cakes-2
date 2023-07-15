@@ -7,7 +7,6 @@ $(document).ready(function() {
 
     // ====================================popups for product analysis======================================
     $('.product').click(function() {
-        $('#popups-container').css('display', 'flex');
         var ctx = $('#pa-graph')
         product = $(this).find('.pdt-name').text().toLowerCase();
         $.get( '/sales', function( data ) {
@@ -36,6 +35,7 @@ $(document).ready(function() {
                 }
               });
         });
+          $('#popups-container').css('display', 'flex');
           $('.pa-popup, .pa-popup *').show();
           $('pa-graph, .pa-graph *').show();
     });
@@ -61,7 +61,7 @@ $(document).ready(function() {
   });
 
   // =====================================insights popup======================================  
-  $('.order-insight').click(function() {
+  $('.aov-insight').click(function() {
     $.get( '/monthly_aov', function( data ) {
       var ctx = $('#aov-graph')
       var monthly_aov = data.monthly_aov;
@@ -91,6 +91,7 @@ $(document).ready(function() {
 
     $('#popups-container').css('display', 'flex');
     $('.aov-popup').css('display', 'flex');
+    $('.aov-popup *').show();
   });
 
 
