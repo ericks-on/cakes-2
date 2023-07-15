@@ -1,9 +1,11 @@
 $(document).ready(function() {
+  // ===========================================show more orders=================================
     $('#more-orders-btn').click(function() {
         $('#popups-container').css('display', 'flex');
         $('.orders-popup, .orders-popup *').show();
     });
 
+    // ====================================popups for product analysis======================================
     $('.product').click(function() {
         $('#popups-container').css('display', 'flex');
         var ctx = $('#pa-graph')
@@ -38,6 +40,7 @@ $(document).ready(function() {
           $('pa-graph, .pa-graph *').show();
     });
 
+    // ==================================== popus for order info=================================
     $('.orders-row').click(function() {
       $('#popups-container').css('display', 'flex');
       $('.order-detailed-popup').css('display', 'flex');
@@ -55,6 +58,39 @@ $(document).ready(function() {
           $('#order-amount').text($(this).text());
         }
     });
+  });
+
+  // =====================================insights popup======================================  
+  $('.order-insight').click(function() {
+    $.get( '/monthly_aov', function( data ) {
+      var ctx = $('#aov-graph')
+      var monthly_aov = data.monthly_aov;
+      $('.aov-popup h2').text('Average Order Value, ' + data.year);
+      var lineChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+              label: 'AOV',
+              data: monthly_aov,
+              borderColor: 'blue',
+              fill: false
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+  });
+
+    $('#popups-container').css('display', 'flex');
+    $('.aov-popup').css('display', 'flex');
   });
 
 

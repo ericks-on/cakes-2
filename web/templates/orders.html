@@ -255,4 +255,24 @@
     <h2></h2>
     <canvas id="pa-graph"></canvas>
 </div>
+<div class="aov-popup">
+    <div class="aov-popup-container d-flex-column">
+        <div class="aov-popup-row d-flex">
+            <div class="aov-popup-row-label">Average Order Value:</div>
+            <div class="aov-popup-row-value" id="aov-value">KSH {{ aov_info.aov }}</div>
+        </div>
+        <div class="aov-popup-row d-flex">
+            <div class="aov-popup-row-label">Total Order Value:</div>
+            <div class="aov-popup-row-value" id="tov-value">KSH {{ aov_info.total_order_value }}</div>
+        </div>
+        <div class="aov-popup-row d-flex">
+            <div class="aov-popup-row-label">Total Orders:</div>
+            <div class="aov-popup-row-value" id="to-value"> {{ aov_info.total_orders }} Orders</div>
+        </div>
+    </div>
+    <div class="aov-popup-graph-container">
+        <h2></h2>
+        <canvas id="aov-graph"></canvas>
+    </div>
+</div>
 {% endblock %}

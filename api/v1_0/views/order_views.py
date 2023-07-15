@@ -2,11 +2,12 @@
 """Contains views for orders"""
 from flask import Blueprint, jsonify, abort, request
 from flasgger.utils import swag_from
+from flask_jwt_extended import get_jwt_identity, jwt_required
+from werkzeug.exceptions import BadRequest
 from models.order import Order
 from models.user import User
 import os
-from flask_jwt_extended import get_jwt_identity, jwt_required
-from werkzeug.exceptions import BadRequest
+import calendar
 from models import storage
 
 
@@ -119,6 +120,71 @@ def delete_order(order_id):
         storage.delete(order)
         storage.save()
         return jsonify({}), 204
+    else:
+        abort(404)
+
+@orders_bp.route('/period/<year>/<month>', methods=['GET'])
+@orders_bp.route('/period/<year>/', methods=['GET'])
+@swag_from('documentation/order/get_order_by_period.yml')
+# @jwt_required()
+def get_order_by_period(year, month=None):
+    """Getting order by period"""
+    # username = get_jwt_identity()
+    username = 'erickson'
+    user = storage.get_user(username)
+    if user.user_type == 'admin':
+        orders = storage.all(Order)
+    else:
+        orders = user.orders
+
+    if not orders:
+        abort(404)
+
+    if month:
+        orders = [order for order in orders if
+                  order.created_at.year == int(year)
+                  and order.created_at.month == int(month)]
+    else:
+        orders = [order for order in orders
+                  if order.created_at.year == int(year)]
+    if orders:
+        orders = [order.to_dict() for order in orders]
+        return jsonify({"orders": orders}), 200
+    else:
+        abort(404)
+
+@orders_bp.route('/totals/<year>', methods=['GET'])
+@swag_from('documentation/order/get_order_totals.yml')
+# @jwt_required()
+def get_order_totals(year):
+    """Getting order totals"""
+    # username = get_jwt_identity()
+    username = 'erickson'
+    user = storage.get_user(username)
+    if user.user_type == 'admin':
+        orders = storage.all(Order)
+    else:
+        orders = user.orders
+    if not orders:
+        abort(404)
+    orders = [order for order in orders if
+              order.created_at.year == int(year)]
+    if orders:
+        months = calendar.month_name[1:]
+        monthly_totals = {}
+        for mon in months:
+            month_totals = {}
+            month_orders_total = len([order for order in orders if
+                                      months[order.created_at.month - 1] ==
+                                      mon])
+            month_orders_value = sum([order.order_value for order in orders
+                                      if months[order.created_at.month - 1] ==
+                                      mon])
+            month_totals["total_orders"] = month_orders_total
+            month_totals["total_value"] = month_orders_value
+            monthly_totals[mon] = month_totals
+
+        return jsonify({"monthly_totals": monthly_totals}), 200
     else:
         abort(404)
 

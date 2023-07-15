@@ -56,7 +56,7 @@ def order_page():
     month_str = calendar.month_name[month]
     year = datetime.now().year
 
-    # get orders history
+    # =================================get orders history================================
     orders_url = f"http://{host}:{port}/api/v1_0/orders"
     orders_response = requests.get(url=orders_url, timeout=5).json()
     orders = orders_response["orders"]
@@ -67,7 +67,7 @@ def order_page():
     products_response = requests.get(url=products_url, timeout=5).json()
     products_sales = products_response["sales"]
 
-    # get sales for previous month so as to compare
+    # =============================get sales for previous month so as to compare============
     if month == 1:
         prev_month = 12
         prev_year = year - 1
@@ -78,7 +78,7 @@ def order_page():
     prev_products_response = requests.get(url=prev_products_url, timeout=5).json()
     prev_products_sales = prev_products_response["sales"]
 
-    # comparing sales
+    # ==================================comparing sales===================================
     sales_comparison = {}
     for product, sales in products_sales.items():
         if product in prev_products_sales:
@@ -113,10 +113,24 @@ def order_page():
             sales_comparison[product]["change"] = "up"
             sales_comparison[product]["percent"] = 1
 
+    # ==================================AOV===================================
+    total_orders = len(orders)
+    total_order_value = 0
+    for order in orders:
+        order_value = int(order["order_value"])
+        total_order_value += order_value
+    aov = total_order_value / total_orders
+    aov_info = {}
+    aov_info["total_orders"] = total_orders
+    aov_info["total_order_value"] = total_order_value
+    aov_info["aov"] = aov
+
+
     return render_template('orders.html', urlFor=url_for,
                            orders=orders, order_history=order_history,
                             products_sales=products_sales, month=month_str,
-                            year=year, sales_comparison=sales_comparison
+                            year=year, sales_comparison=sales_comparison,
+                            aov_info=aov_info
                            )
 
 @app.route("/sales", methods=['GET'])
@@ -135,6 +149,30 @@ def get_sales():
             curr_sales.append(value[mon])
         current_sales[key] = curr_sales
     return jsonify({"monthly_sales": current_sales, "year": year})
+
+@app.route("/monthly_aov", methods=['GET'])
+def get_monthly_aov():
+    """get monthly aov"""
+    year = datetime.now().year
+    month = datetime.now().month
+    yearly_orders_url = f"http://{host}:{port}/api/v1_0/orders/totals/{year}"
+    yearly_orders_response = requests.get(url=yearly_orders_url,
+                                          timeout=5).json()
+    monthly_totals = yearly_orders_response["monthly_totals"]
+    monthly_orders_totals = []
+    monthly_order_values = []
+    months = calendar.month_name[1:month+1]
+    for mon in months:
+        monthly_orders_totals.append(monthly_totals[mon]["total_orders"])
+        monthly_order_values.append(monthly_totals[mon]["total_value"])
+    monthly_aov = []
+    for i in range(len(monthly_orders_totals)):
+        if monthly_orders_totals[i] == 0:
+            monthly_aov.append(0)
+        else:
+            monthly_aov.append(monthly_order_values[i] /
+                               monthly_orders_totals[i])
+    return jsonify({"monthly_aov": monthly_aov, "year": year})
 
 
 if __name__ == "__main__":
