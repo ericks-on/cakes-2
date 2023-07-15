@@ -137,6 +137,7 @@
 }
 .order-status:hover {
     cursor: pointer;
+    box-shadow: var(--float-box-shadow);
 }
 #order-hist-table {
     width: 100%;
@@ -174,6 +175,7 @@
 }
 #order-hist-table tbody tr:hover td {
     color: white;
+    background-color: var(--button-color);
 }
 #order-hist-table tbody tr:hover td:first-child {
     border-left: 1px solid white;
@@ -188,10 +190,9 @@
     font-weight: bold;
 }
 
-#order-hist-table tfoot tr td:hover {
+#order-hist-table tfoot tr:hover {
     color: white;
     cursor: pointer;
-    background-color: var(--button-color);
 }
 
 
@@ -358,6 +359,47 @@
     color: white;
     cursor: pointer;
     background-color: var(--button-color);
+}
+
+
+/* ====================order details popup==================== */
+.order-detailed-popup {
+    background-color: var(--primary-color);
+    width: auto;
+    height: 80%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 10px;
+    padding: 20px;
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+}
+.order-detailed-popup h2 {
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.order-detailed-popup-row {
+    width: 100%;
+    height: 20%;
+    margin: 10px 0;
+}
+.order-detailed-popup-row-label {
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--button-color);
+    flex-basis: 20%;
+    text-align: left;
+}
+.order-detailed-popup-row-value {
+    font-size: 15px;
+    flex-basis: 80%;
+    white-space: nowrap;
+    text-align: left;
+    color: var(--table-color);
+    width: 80%;
 }
 
 

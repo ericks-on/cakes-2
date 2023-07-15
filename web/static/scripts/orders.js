@@ -38,5 +38,24 @@ $(document).ready(function() {
           $('pa-graph, .pa-graph *').show();
     });
 
+    $('.orders-row').click(function() {
+      $('#popups-container').css('display', 'flex');
+      $('.order-detailed-popup').css('display', 'flex');
+      $('.order-detailed-popup *').show();
+      $(this).find('td').each(function(index) {
+        if (index == 0) {
+          $('#order-id').text($(this).text());
+        } else if (index == 1) {
+          $('#order-date').text($(this).text());
+        } else if (index == 2) {
+          $('#order-status').text($(this).text());
+        } else if (index == 3) {
+          $('#order-quantity').text($(this).text());
+        } else if (index == 4) {
+          $('#order-amount').text($(this).text());
+        }
+    });
+  });
+
 
 });

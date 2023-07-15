@@ -72,7 +72,7 @@
         </thead>
         <tbody>
             {% for order in order_history %}
-            <tr>
+            <tr class="orders-row">
                 <td>{{ order.id }}</td>
                 <td>{{ order.created_at }}</td>
                 {% if order.status == 'pending' %}
@@ -207,7 +207,7 @@
         </thead>
         <tbody>
             {% for order in orders %}
-            <tr>
+            <tr class="orders-row">
                 <td>{{ order.id }}</td>
                 <td>{{ order.created_at }}</td>
                 {% if order.status == 'pending' %}
@@ -225,6 +225,31 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
+<div class="order-detailed-popup">
+    <h2>ORDER DETAILS</h2>
+    <div class="order-detailed-popup-container d-flex-column">
+        <div class="order-detailed-popup-row d-flex">
+            <div class="order-detailed-popup-row-label">Order Id:</div>
+            <div class="order-detailed-popup-row-value" id="order-id"></div>
+        </div>
+        <div class="order-detailed-popup-row d-flex">
+            <div class="order-detailed-popup-row-label">Date:</div>
+            <div class="order-detailed-popup-row-value" id="order-date"></div>
+        </div>
+        <div class="order-detailed-popup-row d-flex">
+            <div class="order-detailed-popup-row-label">Status:</div>
+            <div class="order-detailed-popup-row-value" id="order-status"></div>
+        </div>
+        <div class="order-detailed-popup-row d-flex">
+            <div class="order-detailed-popup-row-label">Quantity:</div>
+            <div class="order-detailed-popup-row-value" id="order-quantity"></div>
+        </div>
+        <div class="order-detailed-popup-row d-flex">
+            <div class="order-detailed-popup-row-label">Amount:</div>
+            <div class="order-detailed-popup-row-value" id="order-amount"></div>
+        </div>
+    </div>
 </div>
 <div class="pa-popup">
     <h2></h2>
