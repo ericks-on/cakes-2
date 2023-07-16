@@ -123,14 +123,40 @@ def order_page():
     aov_info = {}
     aov_info["total_orders"] = total_orders
     aov_info["total_order_value"] = total_order_value
-    aov_info["aov"] = aov
+    aov_info["aov"] = round(aov, 2)
 
+    # ===================================sales contribution============================
+    sales_url = f"http://{host}:{port}/api/v1_0/products/sales/total"
+    sales_response = requests.get(url=sales_url, timeout=5).json()
+    sales_totals = sales_response["sales"]
+    all_sales_sum = 0
+    all_sales_value = 0
+    for product, value in sales_totals.items():
+        all_sales_sum += value["total_sales"]
+        all_sales_value += value["total_sales"] * value["price"]
+    sales_contribution = {}
+    for product, sales in sales_totals.items():
+        sales_contribution[product] = {}
+        sales_contribution[product]["sales"] = sales["total_sales"]
+        sales_contribution[product]["percent"] = round((sales["total_sales"] /
+                                                        all_sales_sum) * 100, 2)
+
+    most_sales = max([value["total_sales"] for value in sales_totals.values()])
+    sales_values_totals = {}
+    for product, value in sales_totals.items():
+        sales_values_totals[product] = value["total_sales"]
+    indices = [index for index, value in
+               enumerate(list(sales_values_totals.values()))
+               if value == most_sales]
+    most_popular = [list(sales_totals.keys())[index] for index in indices]
 
     return render_template('orders.html', urlFor=url_for,
                            orders=orders, order_history=order_history,
-                            products_sales=products_sales, month=month_str,
-                            year=year, sales_comparison=sales_comparison,
-                            aov_info=aov_info
+                           products_sales=products_sales, month=month_str,
+                           year=year, sales_comparison=sales_comparison,
+                           aov_info=aov_info, most_popular=most_popular,
+                           sales_contribution=sales_contribution,
+                           all_sales_value=all_sales_value
                            )
 
 @app.route("/sales", methods=['GET'])
@@ -172,7 +198,7 @@ def get_monthly_aov():
         else:
             monthly_aov.append(monthly_order_values[i] /
                                monthly_orders_totals[i])
-    return jsonify({"monthly_aov": monthly_aov, "year": year})
+    return jsonify({"monthly_aov": monthly_aov, "year": year, "monthly_orders": monthly_orders_totals})
 
 
 if __name__ == "__main__":

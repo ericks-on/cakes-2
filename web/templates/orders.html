@@ -30,23 +30,25 @@
         </div>
         <div class="order-insight d-flex-column">
             <div class="insight-headline d-flex ">
-                <p>TOTAL SALES</p>
-                <span><i class="bi bi-graph-up"></i></span>
+                <p>TOTAL SALES VALUE</p>
+                <span class="material-symbols-outlined g-light">
+                    shopping_bag
+                </span>
             </div>
             <div class="insight-values d-flex">
                 <P>KSH</P>
-                <span id="aov">2000</span>
+                <span id="total_sales_val">{{ all_sales_value }}</span>
             </div>
         </div>
-        <div class="order-insight d-flex-column">
+        <div class="order-insight mp-insight d-flex-column">
             <div class="insight-headline d-flex ">
-                <p>TOP SELLING</p>
+                <p>MOST POPULAR</p>
                 <span class="material-symbols-outlined">
                     star
                 </span>
             </div>
             <div class="insight-values d-flex">
-                <P>Product 1</P>
+                <P>{{ most_popular[0]}}, ...</P>
             </div>
         </div>
     </div>
@@ -182,7 +184,8 @@
         {% endfor %}
     </div>
 </div>
-<div class="orders-graph-container">
+<div class="orders-graph-container d-flex-column">
+    <h2></h2>
     <canvas id="orders-graph"></canvas>
 </div>
 {% endblock %}
@@ -273,6 +276,57 @@
     <div class="aov-popup-graph-container">
         <h2></h2>
         <canvas id="aov-graph"></canvas>
+    </div>
+</div>
+<div class="most-popular-popup">
+    <div class="most-popular-container d-flex-column">
+        <div class="mp-headline d-flex">
+            <span class="material-symbols-outlined">
+                trending_up
+            </span>
+            <h2>Most Popular Products</h2>
+        </div>
+        {% for product, sales in sales_contribution.items() %}
+        {% if product in most_popular %}
+        <div class="mp-body d-flex-column">
+            <div class="mp-body-row d-flex">
+                <div class="mp-body-row-label">Product : </div>
+                <div class="mp-body-row-value" id="mp-product">{{ product }}</div>
+            </div>
+            <div class="mp-body-row d-flex">
+                <div class="mp-body-row-label">Sales : </div>
+                <div class="mp-body-row-value" id="mp-sales">{{ sales.sales }}</div>
+            </div>
+            <div class="mp-body-row d-flex">
+                <div class="mp-body-row-label">Sales Contribution : </div>
+                <div class="mp-body-row-value" id="mp-sales-contribution">{{ sales.percent }}%</div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="other-products-container">
+        <div class="op-headline">
+            <h2>Other Products</h2>
+        </div>
+        {% for product, sales in sales_contribution.items() %}
+        {% if product not in most_popular %}
+        <div class="op-body d-flex-column">
+            <div class="op-body-row d-flex">
+                <div class="op-body-row-label">Product :</div>
+                <div class="op-body-row-value" id="op-product"> {{ product }}</div>
+            </div>
+            <div class="op-body-row d-flex">
+                <div class="op-body-row-label">Sales :</div>
+                <div class="op-body-row-value" id="op-sales"> {{ sales.sales }}</div>
+            </div>
+            <div class="op-body-row d-flex">
+                <div class="op-body-row-label">Sales Contribution :</div>
+                <div class="op-body-row-value" id="op-sales-contribution">{{ sales.percent }}%</div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

@@ -132,10 +132,26 @@ def get_sales_by_name_year_month(product_name, year, month=None):
                  if sale.created_at.year == int(year)]
     return jsonify({product_name: sales}), 200
 
+@products_bp.route('/sales/total', methods=['GET'])
+@swag_from('documentation/product/get_total_sales.yml')
+def get_total_sales():
+    """Getting total sales"""
+    products = storage.all(Product)
+    if not products:
+        abort(404)
+    sales = {}
+    for product in products:
+        tsales_price = {}
+        total_sales = sum([sale.quantity for sale in product.sales])
+        tsales_price["total_sales"] = total_sales
+        tsales_price["price"] = product.price
+        sales[product.name] = tsales_price
+    return jsonify({"sales": sales}), 200
+
 @products_bp.route('/sales/total/<year>/<month>', methods=['GET'])
 @products_bp.route('/sales/total/<year>', methods=['GET'])
-@swag_from('documentation/product/get_total_sales.yml')
-def get_total_sales(year, month=None):
+@swag_from('documentation/product/get_total_sales_within_period.yml')
+def get_total_sales_within_period(year, month=None):
     """Getting total sales"""
     products = storage.all(Product)
     if not products:

@@ -94,5 +94,39 @@ $(document).ready(function() {
     $('.aov-popup *').show();
   });
 
+  // ===============================most popular popup ======================================
+  $('.mp-insight').click(function() {
+    $('#popups-container').css('display', 'flex');
+    $('.most-popular-popup').css('display', 'flex');
+    $('.most-popular-popup *').show();
+  });
 
+  // ===============================Orders Graph ======================================
+
+  $.get( '/monthly_aov', function( data ) {
+    $('.orders-graph-container h2').text('Orders, ' + data.year)
+    var ctx = $('#orders-graph')
+    var monthly_orders = data.monthly_orders;
+    var ordesLineChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        datasets: [{
+          label: 'Orders',
+          data: monthly_orders,
+          borderColor: 'blue',
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
 });
