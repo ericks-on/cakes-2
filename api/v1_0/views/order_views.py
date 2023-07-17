@@ -16,11 +16,11 @@ orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
 
 @orders_bp.route('/', methods=['GET'])
 @swag_from('documentation/order/all_orders.yml')
-# @jwt_required()
+@jwt_required()
 def all_orders():
     """To obtain all orders"""
-    # username = get_jwt_identity()
-    username = 'erickson'
+    username = get_jwt_identity()
+    # username = 'erickson'
     user = storage.get_user(username)
     if user.user_type == 'admin':
         orders = [order.to_dict() for order in storage.all(Order)]
@@ -126,11 +126,10 @@ def delete_order(order_id):
 @orders_bp.route('/period/<year>/<month>', methods=['GET'])
 @orders_bp.route('/period/<year>/', methods=['GET'])
 @swag_from('documentation/order/get_order_by_period.yml')
-# @jwt_required()
+@jwt_required()
 def get_order_by_period(year, month=None):
     """Getting order by period"""
-    # username = get_jwt_identity()
-    username = 'erickson'
+    username = get_jwt_identity()
     user = storage.get_user(username)
     if user.user_type == 'admin':
         orders = storage.all(Order)
@@ -155,11 +154,10 @@ def get_order_by_period(year, month=None):
 
 @orders_bp.route('/totals/<year>', methods=['GET'])
 @swag_from('documentation/order/get_order_totals.yml')
-# @jwt_required()
+@jwt_required()
 def get_order_totals(year):
     """Getting order totals"""
-    # username = get_jwt_identity()
-    username = 'erickson'
+    username = get_jwt_identity()
     user = storage.get_user(username)
     if user.user_type == 'admin':
         orders = storage.all(Order)
@@ -187,4 +185,3 @@ def get_order_totals(year):
         return jsonify({"monthly_totals": monthly_totals}), 200
     else:
         abort(404)
-

@@ -1,18 +1,23 @@
 #!/usr/bin/python3
 """Flask appp to manage web pages"""
+import os
+import calendar
+from datetime import datetime
+import requests
+from collections import OrderedDict
 from flask import make_response
 from flask_jwt_extended import jwt_required, JWTManager
-import requests
-import os
-from datetime import datetime
-import calendar
+from flask_jwt_extended import  set_access_cookies, unset_jwt_cookies
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from collections import OrderedDict
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.environ.get('KIMUKA_API_SEC_KEY')
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 host = os.environ.get('KIMUKA_API_HOST')
 port = os.environ.get('KIMUKA_API_PORT')
 
@@ -32,17 +37,27 @@ def login():
         payload = {}
         payload["username"] = request.form["username"]
         payload["password"] = request.form["password"]
-        headers = {"Content-Type": "application/json"}
-        api_response = requests.post(url=url, json=payload,
-                                     headers=headers, timeout=5)
+        api_response = requests.post(url=url, json=payload, timeout=5)
         response_obj = api_response.json()
         if api_response.status_code == 200:
-            response = make_response(redirect(url_for('user_page')))
-            response.headers["Authorization"] = "Bearer " + response_obj["access_token"]
+            response = make_response(redirect(url_for('order_page')))
+            # headers = {'Content-Type': 'text/html',
+            #            'Authorization': f"Bearer {response_obj['access_token']}"
+            # }
+            # response.headers = headers
+            set_access_cookies(response, response_obj['access_token'])
             return response
         elif api_response.status_code == 401:
             return redirect(url_for('index'))
-        
+
+@app.route('/logout')
+def logout():
+    """Handles logout"""
+    response = jsonify({'logout': True})
+    response = make_response(response)
+    unset_jwt_cookies(response)
+    return response
+
 @app.route("/user", methods=['GET'])
 @jwt_required()
 def user_page():
@@ -50,21 +65,28 @@ def user_page():
     return render_template('user.html', urlFor=url_for)
 
 @app.route("/order", methods=['GET'])
+@jwt_required()
 def order_page():
     """the order page"""
     month = datetime.now().month
     month_str = calendar.month_name[month]
     year = datetime.now().year
+    access_token = request.cookies.get('access_token_cookie') 
+    headers = {'Content-Type': 'application/json',
+               'Authorization': f"Bearer {access_token}"
+    }
 
     # =================================get orders history================================
     orders_url = f"http://{host}:{port}/api/v1_0/orders"
-    orders_response = requests.get(url=orders_url, timeout=5).json()
+    orders_response = requests.get(url=orders_url, headers=headers,
+                                   timeout=5).json()
     orders = orders_response["orders"]
     order_history = orders[0:10]
 
     # =======================get products sales for the month============================
-    products_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{year}/{month}"
-    products_response = requests.get(url=products_url, timeout=5).json()
+    products_url = f"""http://{host}:{port}/api/v1_0/products/sales/total/{year}/{month}"""
+    products_response = requests.get(url=products_url, headers=headers,
+                                     timeout=5).json()
     products_sales = products_response["sales"]
 
     # =============================get sales for previous month so as to compare============
@@ -75,7 +97,8 @@ def order_page():
         prev_month = month - 1
         prev_year = year
     prev_products_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{prev_year}/{prev_month}"
-    prev_products_response = requests.get(url=prev_products_url, timeout=5).json()
+    prev_products_response = requests.get(url=prev_products_url, headers=headers,
+                                          timeout=5).json()
     prev_products_sales = prev_products_response["sales"]
 
     # ================================comparing sales btn current and previous month===========================
@@ -127,7 +150,8 @@ def order_page():
 
     # ===================================Calculating sales contribution============================
     sales_url = f"http://{host}:{port}/api/v1_0/products/sales/total"
-    sales_response = requests.get(url=sales_url, timeout=5).json()
+    sales_response = requests.get(url=sales_url, headers=headers,
+                                  timeout=5).json()
     sales_totals = sales_response["sales"]
     all_sales_sum = 0
     all_sales_value = 0
@@ -181,8 +205,10 @@ def get_monthly_aov():
     """get monthly aov"""
     year = datetime.now().year
     month = datetime.now().month
+    access_token = request.cookies.get('access_token_cookie')
+    headers = {"Authorization": f"Bearer {access_token}"}
     yearly_orders_url = f"http://{host}:{port}/api/v1_0/orders/totals/{year}"
-    yearly_orders_response = requests.get(url=yearly_orders_url,
+    yearly_orders_response = requests.get(url=yearly_orders_url, headers=headers,
                                           timeout=5).json()
     monthly_totals = yearly_orders_response["monthly_totals"]
     monthly_orders_totals = []
