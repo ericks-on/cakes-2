@@ -1,17 +1,19 @@
 #!/usr/bin/python3
 """This module contains the Donuts RESTFull API"""
+import os
+from dotenv import load_dotenv
+from datetime import timedelta, datetime, timezone
 from flask import Flask, jsonify, make_response, request
 from flask_cors import CORS
 from flasgger import Swagger
-from api.v1_0.views import app_views
-import os
 from flask_jwt_extended import create_access_token, JWTManager
+from flask_jwt_extended import get_jwt_identity, get_jwt, jwt_required
+from flask_jwt_extended import set_access_cookies
 from passlib.hash import bcrypt
 from models.user import User
-from datetime import timedelta
-from dotenv import load_dotenv
 from werkzeug.exceptions import BadRequest
 from models import storage
+from api.v1_0.views import app_views
 
 
 load_dotenv()
@@ -26,10 +28,11 @@ app.config['SWAGGER'] = {
         }
 jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.environ.get('KIMUKA_API_SEC_KEY')
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.register_blueprint(app_views)
 
 
-@app.route('/api/v1_0/login', methods=['POST'])
+@app.route('/api/v1_0/token/auth', methods=['POST'])
 def login():
     """authenticates user and creates an access token"""
     all_users = storage.all(User)
@@ -47,13 +50,36 @@ def login():
         user = storage.get_user(username)
         hashed_pwd = user.password
         if bcrypt.verify(password, hashed_pwd) is True:
-            access_token = create_access_token(identity=username,
-                                               expires_delta=timedelta(hours=1))
-            return jsonify(access_token=access_token), 200
+            access_token = create_access_token(identity=username, fresh=True)
+            refresh_token = create_access_token(identity=username)
+            return jsonify(access_token=access_token,
+                           refresh_token=refresh_token), 200
         else:
             return jsonify({"msg": "Wrong Username or Password"}), 401
     else:
         return jsonify({"msg": "Wrong Username or Password"}), 401
+    
+@app.route('/api/v1_0/token/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    """refreshes access token"""
+    current_user = get_jwt_identity()
+    access_token = create_access_token(identity=current_user)
+    return jsonify(access_token=access_token), 200
+
+@app.after_request
+def refresh_expiring_jwts(response):
+    """refreshes access token if it is about to expire"""
+    try:
+        exp_timestamp = get_jwt()["exp"]
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            set_access_cookies(response, access_token)
+        return response
+    except (RuntimeError, KeyError):
+        return response
 
 
 @app.teardown_appcontext

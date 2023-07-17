@@ -18,6 +18,7 @@ jwt = JWTManager(app)
 app.config['JWT_SECRET_KEY'] = os.environ.get('KIMUKA_API_SEC_KEY')
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False
+# app.config["JWT_COOKIE_SECURE"] = True
 host = os.environ.get('KIMUKA_API_HOST')
 port = os.environ.get('KIMUKA_API_PORT')
 
@@ -33,7 +34,7 @@ def login():
     if request.method == 'GET':
         return render_template('index.html', urlFor=url_for)
     else:
-        url = f"http://{host}:{port}/api/v1_0/login"
+        url = f"http://{host}:{port}/api/v1_0/token/auth"
         payload = {}
         payload["username"] = request.form["username"]
         payload["password"] = request.form["password"]
