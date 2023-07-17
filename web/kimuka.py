@@ -23,6 +23,12 @@ host = os.environ.get('KIMUKA_API_HOST')
 port = os.environ.get('KIMUKA_API_PORT')
 
 
+@jwt.expired_token_loader
+@jwt.invalid_token_loader
+def handle_invalid_token_callback(error):
+    """Handles invalid token"""
+    return redirect(url_for('index'))
+
 @app.route('/')
 def index():
     """This is the route for landing page"""
@@ -54,7 +60,7 @@ def login():
 @app.route('/logout')
 def logout():
     """Handles logout"""
-    response = jsonify({'logout': True})
+    response = redirect(url_for('index'))
     response = make_response(response)
     unset_jwt_cookies(response)
     return response

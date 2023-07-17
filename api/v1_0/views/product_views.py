@@ -2,6 +2,7 @@
 """Contains views for products"""
 from flask import Blueprint, jsonify, abort, request
 from flasgger.utils import swag_from
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from models import storage
 from models.product import Product
 from models.user import User
@@ -13,6 +14,7 @@ products_bp = Blueprint('products', __name__, url_prefix='/products')
 
 @products_bp.route('/', methods=['GET'])
 @swag_from('documentation/product/all_products.yml')
+@jwt_required()
 def all_products():
     """To obtain all products"""
     products = [product.to_dict() for product in storage.all(Product)]
@@ -20,6 +22,7 @@ def all_products():
 
 @products_bp.route('/', methods=['POST'])
 @swag_from('documentation/product/add_product.yml')
+@jwt_required()
 def add_product():
     """ Adds new product"""
     # filter name and price
@@ -38,6 +41,7 @@ def add_product():
 
 @products_bp.route('/<product_id>', methods=['GET'])
 @swag_from('documentation/product/get_product_by_id.yml')
+@jwt_required()
 def get_product_by_id(product_id):
     """Getting product by id from url"""
     product = storage.get(Product, product_id)
@@ -47,6 +51,7 @@ def get_product_by_id(product_id):
 
 @products_bp.route('/<product_id>', methods=['DELETE'])
 @swag_from('documentation/product/delete_product_by_id.yml')
+@jwt_required()
 def delete_product_by_id(product_id):
     """Deleting product by id from url"""
     product = storage.get(Product, product_id)
@@ -58,6 +63,7 @@ def delete_product_by_id(product_id):
 
 @products_bp.route('/<product_id>', methods=['PUT'])
 @swag_from('documentation/product/update_product_by_id.yml')
+@jwt_required()
 def update_product_by_id(product_id):
     """Updating product by id from url"""
     product = storage.get(Product, product_id)
@@ -76,6 +82,7 @@ def update_product_by_id(product_id):
 
 @products_bp.route('/sales', methods=['GET'])
 @swag_from('documentation/product/get_sales.yml')
+@jwt_required()
 def get_sales():
     """Getting sales"""
     products = storage.all(Product)
@@ -89,6 +96,7 @@ def get_sales():
 @products_bp.route('/sales/date/<year>', methods=['GET'])
 @products_bp.route('/sales/date/<year>/<month>', methods=['GET'])
 @swag_from('documentation/product/get_sales_by_year_month.yml')
+@jwt_required()
 def get_sales_by_year_month(year, month=None):
     """Getting sales by year and month"""
     products = storage.all(Product)
@@ -107,6 +115,7 @@ def get_sales_by_year_month(year, month=None):
 
 @products_bp.route('/sales/<product_name>', methods=['GET'])
 @swag_from('documentation/product/get_sales_by_name.yml')
+@jwt_required()
 def get_sales_by_name(product_name):
     """Getting sales by name"""
     product = storage.get_product(product_name)
@@ -118,6 +127,7 @@ def get_sales_by_name(product_name):
 @products_bp.route('/sales/<product_name>/<year>', methods=['GET'])
 @products_bp.route('/sales/<product_name>/<year>/<month>', methods=['GET'])
 @swag_from('documentation/product/get_sales_by_name_year_month.yml')
+@jwt_required()
 def get_sales_by_name_year_month(product_name, year, month=None):
     """Getting sales by name, year and month"""
     product = storage.get_product(product_name)
@@ -134,6 +144,7 @@ def get_sales_by_name_year_month(product_name, year, month=None):
 
 @products_bp.route('/sales/total', methods=['GET'])
 @swag_from('documentation/product/get_total_sales.yml')
+@jwt_required()
 def get_total_sales():
     """Getting total sales"""
     products = storage.all(Product)
@@ -151,6 +162,7 @@ def get_total_sales():
 @products_bp.route('/sales/total/<year>/<month>', methods=['GET'])
 @products_bp.route('/sales/total/<year>', methods=['GET'])
 @swag_from('documentation/product/get_total_sales_within_period.yml')
+@jwt_required()
 def get_total_sales_within_period(year, month=None):
     """Getting total sales"""
     products = storage.all(Product)
