@@ -139,6 +139,15 @@
     cursor: pointer;
     box-shadow: var(--float-box-shadow);
 }
+
+.reset-filters-table, .reset-filters-history {
+    background-color: var(--button-color);
+    color: white;
+    font-weight: bold;
+    font-size: small;
+    border: none;
+    cursor: pointer;
+}
 #order-hist-table {
     width: 100%;
     border-collapse: collapse;

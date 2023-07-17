@@ -1,12 +1,17 @@
 $(document).ready(function() {
 
   var ordersTable = $('#all-orders-table');
-  ordersTable.DataTable({
+  var allOrdersTable = ordersTable.DataTable({
     "paging": true,
     "ordering": true,
     "info": true,
     "searching": true,
     "lengthChange": false,
+    "search": {
+      "search": "",
+      "smart": true,
+    },
+
   });
 
   // ===========================================show more orders=================================
@@ -149,24 +154,47 @@ $(document).ready(function() {
       var ordersTable = $('.order-history #order-hist-table');
       ordersBody = ordersTable.find('tbody');
       ordersBody.empty();
-      for (var i = 0; i < orders.length; i++) {
-        if (ordersBody.find('tr').length == 10) {
-          break;
-        }
-        if (orders[i].status == status) {
+      if (status == 'reset') {
+        for (var i = 0; i <= 10; i++) {
           var row = `
           <tr class="orders-row">
             <td>${orders[i].id}</td>
             <td>${orders[i].created_at}</td>
-            <td class=${status}>${orders[i].status}</td>
+            <td class=${orders[i].status}>${orders[i].status}</td>
             <td>${orders[i].quantity}</td>
             <td>${orders[i].order_value}</td>
           </tr>
           `
           ordersBody.append(row);
-        }
-      }
+        };
+      }else {
+        for (var i = 0; i < orders.length; i++) {
+          if (ordersBody.find('tr').length == 10) {
+            break;
+          }
+          if (orders[i].status == status) {
+            var row = `
+            <tr class="orders-row">
+              <td>${orders[i].id}</td>
+              <td>${orders[i].created_at}</td>
+              <td class=${orders[i].status}>${orders[i].status}</td>
+              <td>${orders[i].quantity}</td>
+              <td>${orders[i].order_value}</td>
+            </tr>
+            `
+            ordersBody.append(row);
+          };
+        };
+      };
     });
+  });
+
+  // ==================Sorting with order status btns in all orders table=======================
+  $('.orders-popup .order-status').click(function() {
+    allOrdersTable.search($(this).text()).draw();
+  });
+  $('.reset-filters-table').click(function() {
+    allOrdersTable.search('').draw();
   });
 
 });
