@@ -62,7 +62,7 @@ def order_page():
     orders = orders_response["orders"]
     order_history = orders[0:10]
 
-    # get products sales for the month
+    # =======================get products sales for the month============================
     products_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{year}/{month}"
     products_response = requests.get(url=products_url, timeout=5).json()
     products_sales = products_response["sales"]
@@ -78,7 +78,7 @@ def order_page():
     prev_products_response = requests.get(url=prev_products_url, timeout=5).json()
     prev_products_sales = prev_products_response["sales"]
 
-    # ==================================comparing sales===================================
+    # ================================comparing sales btn current and previous month===========================
     sales_comparison = {}
     for product, sales in products_sales.items():
         if product in prev_products_sales:
@@ -113,7 +113,7 @@ def order_page():
             sales_comparison[product]["change"] = "up"
             sales_comparison[product]["percent"] = 1
 
-    # ==================================AOV===================================
+    # ==================================Calculating AOV===================================
     total_orders = len(orders)
     total_order_value = 0
     for order in orders:
@@ -125,7 +125,7 @@ def order_page():
     aov_info["total_order_value"] = total_order_value
     aov_info["aov"] = round(aov, 2)
 
-    # ===================================sales contribution============================
+    # ===================================Calculating sales contribution============================
     sales_url = f"http://{host}:{port}/api/v1_0/products/sales/total"
     sales_response = requests.get(url=sales_url, timeout=5).json()
     sales_totals = sales_response["sales"]
@@ -159,7 +159,7 @@ def order_page():
                            all_sales_value=all_sales_value
                            )
 
-@app.route("/sales", methods=['GET'])
+@app.route("/api/sales", methods=['GET'])
 def get_sales():
     """get sales for popup"""
     year = datetime.now().year
@@ -176,7 +176,7 @@ def get_sales():
         current_sales[key] = curr_sales
     return jsonify({"monthly_sales": current_sales, "year": year})
 
-@app.route("/monthly_aov", methods=['GET'])
+@app.route("/api/monthly_aov", methods=['GET'])
 def get_monthly_aov():
     """get monthly aov"""
     year = datetime.now().year
@@ -199,6 +199,14 @@ def get_monthly_aov():
             monthly_aov.append(monthly_order_values[i] /
                                monthly_orders_totals[i])
     return jsonify({"monthly_aov": monthly_aov, "year": year, "monthly_orders": monthly_orders_totals})
+
+@app.route('/api/orders', methods=['GET'])
+def get_orders():
+    """get all orders"""
+    orders_url = f"http://{host}:{port}/api/v1_0/orders"
+    orders_response = requests.get(url=orders_url, timeout=5).json()
+    orders = orders_response["orders"]
+    return jsonify({"orders": orders})
 
 
 if __name__ == "__main__":

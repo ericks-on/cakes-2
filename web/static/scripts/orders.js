@@ -1,15 +1,26 @@
 $(document).ready(function() {
+
+  var ordersTable = $('#all-orders-table');
+  ordersTable.DataTable({
+    "paging": true,
+    "ordering": true,
+    "info": true,
+    "searching": true,
+    "lengthChange": false,
+  });
+
   // ===========================================show more orders=================================
     $('#more-orders-btn').click(function() {
         $('#popups-container').css('display', 'flex');
         $('.orders-popup, .orders-popup *').show();
+
     });
 
     // ====================================popups for product analysis======================================
     $('.product').click(function() {
         var ctx = $('#pa-graph')
         product = $(this).find('.pdt-name').text().toLowerCase();
-        $.get( '/sales', function( data ) {
+        $.get( '/api/sales', function( data ) {
             var sales = data.monthly_sales[product];
             $('.pa-popup h2').text(product.toUpperCase() + ' ' +
             'SALES' + ' ' + data.year);
@@ -41,7 +52,7 @@ $(document).ready(function() {
     });
 
     // ==================================== popus for order info=================================
-    $('.orders-row').click(function() {
+    $('#order-hist-table, #all-orders-table').on("click", ".orders-row", function() {
       $('#popups-container').css('display', 'flex');
       $('.order-detailed-popup').css('display', 'flex');
       $('.order-detailed-popup *').show();
@@ -62,7 +73,7 @@ $(document).ready(function() {
 
   // =====================================insights popup======================================  
   $('.aov-insight').click(function() {
-    $.get( '/monthly_aov', function( data ) {
+    $.get( '/api/monthly_aov', function( data ) {
       var ctx = $('#aov-graph')
       var monthly_aov = data.monthly_aov;
       $('.aov-popup h2').text('Average Order Value, ' + data.year);
@@ -103,7 +114,7 @@ $(document).ready(function() {
 
   // ===============================Orders Graph ======================================
 
-  $.get( '/monthly_aov', function( data ) {
+  $.get( '/api/monthly_aov', function( data ) {
     $('.orders-graph-container h2').text('Orders, ' + data.year)
     var ctx = $('#orders-graph')
     var monthly_orders = data.monthly_orders;
@@ -129,4 +140,33 @@ $(document).ready(function() {
       }
     });
   });
+
+  // =============================Sorting with order status=================================
+  $('.order-history .order-status').click(function() {
+    var status = $(this).text();
+    $.get( '/api/orders', function( data ) {
+      var orders = data.orders;
+      var ordersTable = $('.order-history #order-hist-table');
+      ordersBody = ordersTable.find('tbody');
+      ordersBody.empty();
+      for (var i = 0; i < orders.length; i++) {
+        if (ordersBody.find('tr').length == 10) {
+          break;
+        }
+        if (orders[i].status == status) {
+          var row = `
+          <tr class="orders-row">
+            <td>${orders[i].id}</td>
+            <td>${orders[i].created_at}</td>
+            <td class=${status}>${orders[i].status}</td>
+            <td>${orders[i].quantity}</td>
+            <td>${orders[i].order_value}</td>
+          </tr>
+          `
+          ordersBody.append(row);
+        }
+      }
+    });
+  });
+
 });
