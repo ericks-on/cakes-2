@@ -23,11 +23,11 @@ host = os.environ.get('KIMUKA_API_HOST')
 port = os.environ.get('KIMUKA_API_PORT')
 
 
-@jwt.expired_token_loader
-@jwt.invalid_token_loader
-def handle_invalid_token_callback(error):
-    """Handles invalid token"""
-    return redirect(url_for('index'))
+# @jwt.expired_token_loader
+# @jwt.invalid_token_loader
+# def handle_invalid_token_callback(error):
+#     """Handles invalid token"""
+#     return redirect(url_for('index'))
 
 @app.route('/')
 def index():
@@ -48,10 +48,6 @@ def login():
         response_obj = api_response.json()
         if api_response.status_code == 200:
             response = make_response(redirect(url_for('order_page')))
-            # headers = {'Content-Type': 'text/html',
-            #            'Authorization': f"Bearer {response_obj['access_token']}"
-            # }
-            # response.headers = headers
             set_access_cookies(response, response_obj['access_token'])
             return response
         elif api_response.status_code == 401:
@@ -91,7 +87,7 @@ def order_page():
     order_history = orders[0:10]
 
     # =======================get products sales for the month============================
-    products_url = f"""http://{host}:{port}/api/v1_0/products/sales/total/{year}/{month}"""
+    products_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{year}/{month}"
     products_response = requests.get(url=products_url, headers=headers,
                                      timeout=5).json()
     products_sales = products_response["sales"]

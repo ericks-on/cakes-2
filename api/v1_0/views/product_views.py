@@ -26,6 +26,10 @@ def all_products():
 def add_product():
     """ Adds new product"""
     # filter name and price
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type != 'admin':
+        abort(401)
     if not request.json():
         abort(400, "Not a JSON")
     if not request.json().get("name"):
@@ -54,6 +58,10 @@ def get_product_by_id(product_id):
 @jwt_required()
 def delete_product_by_id(product_id):
     """Deleting product by id from url"""
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type != 'admin':
+        abort(401)
     product = storage.get(Product, product_id)
     if not product:
         abort(404)
@@ -66,6 +74,10 @@ def delete_product_by_id(product_id):
 @jwt_required()
 def update_product_by_id(product_id):
     """Updating product by id from url"""
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type != 'admin':
+        abort(401)
     product = storage.get(Product, product_id)
     if not product:
         abort(404)
@@ -85,6 +97,10 @@ def update_product_by_id(product_id):
 @jwt_required()
 def get_sales():
     """Getting sales"""
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type != 'admin':
+        abort(401)
     products = storage.all(Product)
     if not products:
         abort(404)
@@ -99,6 +115,10 @@ def get_sales():
 @jwt_required()
 def get_sales_by_year_month(year, month=None):
     """Getting sales by year and month"""
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type != 'admin':
+        abort(401)
     products = storage.all(Product)
     if not products:
         abort(404)
@@ -118,6 +138,10 @@ def get_sales_by_year_month(year, month=None):
 @jwt_required()
 def get_sales_by_name(product_name):
     """Getting sales by name"""
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type != 'admin':
+        abort(401)
     product = storage.get_product(product_name)
     if not product:
         abort(404)
@@ -130,6 +154,10 @@ def get_sales_by_name(product_name):
 @jwt_required()
 def get_sales_by_name_year_month(product_name, year, month=None):
     """Getting sales by name, year and month"""
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type != 'admin':
+        abort(401)
     product = storage.get_product(product_name)
     if not product:
         abort(404)
@@ -147,6 +175,10 @@ def get_sales_by_name_year_month(product_name, year, month=None):
 @jwt_required()
 def get_total_sales():
     """Getting total sales"""
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type != 'admin':
+        abort(401)
     products = storage.all(Product)
     if not products:
         abort(404)
@@ -165,6 +197,10 @@ def get_total_sales():
 @jwt_required()
 def get_total_sales_within_period(year, month=None):
     """Getting total sales"""
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type != 'admin':
+        abort(401)
     products = storage.all(Product)
     if not products:
         abort(404)
