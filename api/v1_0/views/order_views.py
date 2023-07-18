@@ -227,7 +227,7 @@ def get_sales_totals():
               if order.user_id == user_id]
     months = calendar.month_name[1:]
     all_sales = {}
-    sales = [sale.to_dict() for order in orders for sale in order.products]
+    sales = [sale for order in orders for sale in order.products]
     for product in products:
         tsales_price = {}
         total_sales_quantity = sum([sale.quantity for sale in sales if
@@ -268,11 +268,12 @@ def get_sales_totals_yearly(year, month=None):
     else:
         orders = [order for order in orders
                   if order.created_at.year == int(year)]
-        sales = [sale.to_dict() for order in orders
+        sales = [sale for order in orders
                 for sale in order.products]
         for product in products:
             product_totals = {}
             for mon in months:
+                sales_totals = {}
                 month_sales_total = sum([sale.quantity for sale in sales if
                                         months[sale.created_at.month - 1] ==
                                         mon and sale.product_id == product.id])
@@ -280,7 +281,8 @@ def get_sales_totals_yearly(year, month=None):
                                         if months[sale.created_at.month - 1] ==
                                         mon and sale.product_id ==
                                         product.id])
-                product_totals["total_sales"] = month_sales_total
-                product_totals["total_value"] = month_sales_value
-                monthly_totals[product.name] = product_totals
-        return jsonify({"monthly_totals": monthly_totals}), 200
+                sales_totals["total_sales"] = month_sales_total
+                sales_totals["total_value"] = month_sales_value
+                product_totals[mon] = sales_totals
+            monthly_totals[product.name] = product_totals
+        return jsonify({"monthly_sales": monthly_totals}), 200

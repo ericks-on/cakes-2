@@ -198,7 +198,7 @@ def order_page():
     if user["user_type"] == "admin":
         sales_url = f"http://{host}:{port}/api/v1_0/products/sales/total"
     else:
-        sales_url = f"http://{host}:{port}/api/v1_0/orders/sales/total/"
+        sales_url = f"http://{host}:{port}/api/v1_0/orders/sales/total"
     try:
         sales_response = requests.get(url=sales_url, headers=headers,
                                       timeout=5).json()
@@ -245,15 +245,26 @@ def get_sales():
     """get sales for popup"""
     year = datetime.now().year
     month = datetime.now().month
-    url = f"http://{host}:{port}/api/v1_0/products/sales/total/{year}"
-    api_response = requests.get(url=url, timeout=5).json()
-    sales = api_response["monthly_sales"]
+    access_token = request.cookies.get('access_token_cookie')
+    headers = {"Authorization": f"Bearer {access_token}"}
+    url = f"http://{host}:{port}/api/v1_0/orders/sales/total/{year}"
+    try:
+        api_response = requests.get(url=url, headers=headers,
+                                    timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
+
+    try:
+        sales = api_response["monthly_sales"]
+    except KeyError:
+        error = api_response["error"]
+        abort(500, error)
     current_sales = OrderedDict()
     months = calendar.month_name[1:month+1]
     for key, value in sales.items():
         curr_sales = []
         for mon in months:
-            curr_sales.append(value[mon])
+            curr_sales.append(value[mon]["total_sales"])
         current_sales[key] = curr_sales
     return jsonify({"monthly_sales": current_sales, "year": year})
 
