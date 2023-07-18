@@ -5,10 +5,10 @@ from flasgger.utils import swag_from
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from werkzeug.exceptions import BadRequest
 from models.order import Order
-from models.user import User
 import os
 import calendar
 from models import storage
+from models.product import Product
 
 
 orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
@@ -185,3 +185,98 @@ def get_order_totals(year):
         return jsonify({"monthly_totals": monthly_totals}), 200
     else:
         abort(404)
+
+@orders_bp.route('/sales', methods=['GET'])
+@swag_from('documentation/order/get_sales.yml')
+@jwt_required()
+def get_sales():
+    """getting sales"""
+    user_id = storage.get_user(get_jwt_identity()).id
+    orders = [order in storage.all(Order) if order.user_id == user_id]
+    sales = [sale.to_dict() for order in orders for sale in order.products]
+    return jsonify({"sales": sales}), 200
+
+@orders_bp.route('/sales/<year>', methods=['GET'])
+@orders_bp.route('/sales/<year>/<month>', methods=['GET'])
+@swag_from('documentation/order/get_sales_by_period.yml')
+@jwt_required()
+def get_sales_by_period(year, month=None):
+    """getting sales by period"""
+    user_id = storage.get_user(get_jwt_identity()).id
+    orders = [order in storage.all(Order) if order.user_id == user_id]
+    if month:
+        orders = [order for order in orders if
+                  order.created_at.year == int(year)
+                  and order.created_at.month == int(month)]
+    else:
+        orders = [order for order in orders
+                  if order.created_at.year == int(year)]
+    sales = [sale.to_dict() for order in orders for sale in order.products]
+    return jsonify({"sales": sales}), 200
+
+@orders_bp.route('/sales/totals', methods=['GET'])
+@swag_from('documentation/order/get_sales_totals.yml')
+@jwt_required()
+def get_sales_totals():
+    """getting sales totals"""
+    user_id = storage.get_user(get_jwt_identity()).id
+    products = storage.all(Product)
+    orders = [order in storage.all(Order) if order.user_id == user_id]
+    months = calendar.month_name[1:]
+    all_sales = {}
+    sales = [sale.to_dict() for order in orders for sale in order.products]
+    for product in products:
+        tsales_price = {}
+        total_sales_quantity = sum([sale.quantity for sale in sales if
+                                    sale.product_id == product.id])
+        tsales_price['price'] = product.price
+        tsales_price['total_sales'] = total_sales_quantity
+        all_sales[product.name] = tsales_price
+    return jsonify({"sales": all_sales}), 200
+
+@orders_bp.route('/sales/totals/<year>', methods=['GET'])
+@orders_bp.route('/sales/totals/<year>/<month>', methods=['GET'])
+@swag_from('documentation/order/get_sales_totals.yml')
+@jwt_required()
+def get_sales_totals_yearly(year, month=None):
+    """getting sales totals"""
+    user_id = storage.get_user(get_jwt_identity()).id
+    products = storage.all(Product)
+    orders = [order in storage.all(Order) if order.user_id == user_id]
+    months = calendar.month_name[1:]
+    monthly_totals = {}
+    if month:
+        orders = [order for order in orders if
+                  order.created_at.year == int(year)
+                  and order.created_at.month == int(month)]
+        sales = [sale.to_dict() for order in orders
+                 for sale in order.products]
+        for product in products:
+            product_totals = {}
+            month_sales_total = sum([sale.quantity for sale in sales if
+                                     sale.product_id == product.id])
+            month_sales_value = sum([sale.sale_value for sale in sales if
+                                     sale.product_id == product.id])
+            product_totals["total_sales"] = month_sales_total
+            product_totals["total_value"] = month_sales_value
+            monthly_totals[product.name] = product_totals
+        return jsonify({"monthly_totals": monthly_totals}), 200
+    else:
+        orders = [order for order in orders
+                  if order.created_at.year == int(year)]
+        sales = [sale.to_dict() for order in orders
+                for sale in order.products]
+        for product in products:
+            product_totals = {}
+            for mon in months:
+                month_sales_total = sum([sale.quantity for sale in sales if
+                                        if months[sale.created_at.month - 1] ==
+                                        mon and sale.product_id == product.id])
+                month_sales_value = sum([sale.sale_value for sale in sales
+                                        if months[sale.created_at.month - 1] ==
+                                        mon and sale.product_id ==
+                                        product.id])
+                product_totals["total_sales"] = month_sales_total
+                product_totals["total_value"] = month_sales_value
+                monthly_totals[product.name] = product_totals
+        return jsonify({"monthly_totals": monthly_totals}), 200

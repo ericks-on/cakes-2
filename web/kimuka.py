@@ -5,7 +5,7 @@ import calendar
 from datetime import datetime
 import requests
 from collections import OrderedDict
-from flask import make_response
+from flask import make_response, abort
 from flask_jwt_extended import jwt_required, JWTManager
 from flask_jwt_extended import  set_access_cookies, unset_jwt_cookies
 from flask import Flask, render_template, request, redirect, url_for, jsonify
@@ -90,7 +90,11 @@ def order_page():
     products_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{year}/{month}"
     products_response = requests.get(url=products_url, headers=headers,
                                      timeout=5).json()
-    products_sales = products_response["sales"]
+    try:
+        products_sales = products_response["sales"]
+    except KeyError:
+        error = products_response["error"]
+        abort(500, error)
 
     # =============================get sales for previous month so as to compare============
     if month == 1:
@@ -152,7 +156,10 @@ def order_page():
     aov_info["aov"] = round(aov, 2)
 
     # ===================================Calculating sales contribution============================
-    sales_url = f"http://{host}:{port}/api/v1_0/products/sales/total"
+    if user.type == "admin":
+        sales_url = f"http://{host}:{port}/api/v1_0/products/sales/total"
+    else:
+        sales_url = f"http://{host}:{port}/api/v1_0/orders/sales/total/"
     sales_response = requests.get(url=sales_url, headers=headers,
                                   timeout=5).json()
     sales_totals = sales_response["sales"]
