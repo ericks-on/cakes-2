@@ -92,6 +92,26 @@ def not_found_error(error):
     """defines what happens if code 404 is raised"""
     return make_response(jsonify({'error': 'Not Found'}), 400)
 
+@app.errorhandler(400)
+def bad_request_error(error):
+    """defines what happens if code 400 is raised"""
+    return make_response(jsonify({'error': 'Bad Request'}), 400)
+
+@app.errorhandler(401)
+def unauthorized_error(error):
+    """defines what happens if code 401 is raised"""
+    return make_response(jsonify({'error': 'Unauthorized'}), 401)
+
+@app.errorhandler(403)
+def forbidden_error(error):
+    """defines what happens if code 403 is raised"""
+    return make_response(jsonify({'error': 'Forbidden'}), 403)
+
+@app.errorhandler(405)
+def method_not_allowed_error(error):
+    """defines what happens if code 405 is raised"""
+    return make_response(jsonify({'error': 'Method Not Allowed'}), 405)
+
 
 if __name__ == "__main__":
     hst = os.environ.get('KIMUKA_API_HOST')

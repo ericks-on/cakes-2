@@ -23,11 +23,11 @@ host = os.environ.get('KIMUKA_API_HOST')
 port = os.environ.get('KIMUKA_API_PORT')
 
 
-# @jwt.expired_token_loader
-# @jwt.invalid_token_loader
-# def handle_invalid_token_callback(error):
-#     """Handles invalid token"""
-#     return redirect(url_for('index'))
+@jwt.expired_token_loader
+@jwt.invalid_token_loader
+def handle_invalid_token_callback(error):
+    """Handles invalid token"""
+    return redirect(url_for('index'))
 
 @app.route('/')
 def index():
