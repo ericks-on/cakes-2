@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 from collections import OrderedDict
 from flask import make_response, abort
-from flask_jwt_extended import jwt_required, JWTManager
+from flask_jwt_extended import jwt_required, JWTManager, get_jwt_identity
 from flask_jwt_extended import  set_access_cookies, unset_jwt_cookies
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_cors import CORS
@@ -54,6 +54,7 @@ def login():
             return redirect(url_for('index'))
 
 @app.route('/logout')
+@jwt_required()
 def logout():
     """Handles logout"""
     response = redirect(url_for('index'))
@@ -78,18 +79,44 @@ def order_page():
     headers = {'Content-Type': 'application/json',
                'Authorization': f"Bearer {access_token}"
     }
+    user_url = f"http://{host}:{port}/api/v1_0/users"
+    try:
+        user_response = requests.get(url=user_url, headers=headers,
+                                        timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
+    try:
+        user = user_response["users"]
+    except KeyError:
+        error = user_response["error"]
+        abort(500, error)
 
     # =================================get orders history================================
     orders_url = f"http://{host}:{port}/api/v1_0/orders"
-    orders_response = requests.get(url=orders_url, headers=headers,
-                                   timeout=5).json()
-    orders = orders_response["orders"]
+    try:
+        orders_response = requests.get(url=orders_url, headers=headers,
+                                       timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
+
+    try:
+        orders = orders_response["orders"]
+    except KeyError:
+        error = orders_response["error"]
+        abort(500, error)
     order_history = orders[0:10]
 
     # =======================get products sales for the month============================
-    products_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{year}/{month}"
-    products_response = requests.get(url=products_url, headers=headers,
-                                     timeout=5).json()
+    if user["user_type"] == "admin":
+        products_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{year}/{month}"
+    else:
+        products_url = f"http://{host}:{port}/api/v1_0/orders/sales/total/{year}/{month}"
+
+    try:
+        products_response = requests.get(url=products_url, headers=headers,
+                                         timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
     try:
         products_sales = products_response["sales"]
     except KeyError:
@@ -103,17 +130,29 @@ def order_page():
     else:
         prev_month = month - 1
         prev_year = year
-    prev_products_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{prev_year}/{prev_month}"
-    prev_products_response = requests.get(url=prev_products_url, headers=headers,
-                                          timeout=5).json()
-    prev_products_sales = prev_products_response["sales"]
+    if user["user_type"] == "admin":
+        prev_sales_url = f"http://{host}:{port}/api/v1_0/products/sales/total/{prev_year}/{prev_month}"
+    else:
+        prev_sales_url = f"http://{host}:{port}/api/v1_0/orders/sales/total/{prev_year}/{prev_month}"
+    try:
+        prev_sales_response = requests.get(url=prev_sales_url,
+                                           headers=headers,
+                                           timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
+
+    try:
+        prev_products_sales = prev_sales_response["sales"]
+    except KeyError:
+        error = prev_sales_response["error"]
+        abort(500, error)
 
     # ================================comparing sales btn current and previous month===========================
     sales_comparison = {}
     for product, sales in products_sales.items():
-        if product in prev_products_sales:
-            prev_sales = prev_products_sales[product]
-            current_sales = sales
+        if product in prev_products_sales.keys():
+            prev_sales = prev_products_sales[product]["total_sales"]
+            current_sales = sales["total_sales"]
             if prev_sales == 0:
                 if current_sales == 0:
                     sales_comparison[product] = {}
@@ -156,13 +195,21 @@ def order_page():
     aov_info["aov"] = round(aov, 2)
 
     # ===================================Calculating sales contribution============================
-    if user.type == "admin":
+    if user["user_type"] == "admin":
         sales_url = f"http://{host}:{port}/api/v1_0/products/sales/total"
     else:
         sales_url = f"http://{host}:{port}/api/v1_0/orders/sales/total/"
-    sales_response = requests.get(url=sales_url, headers=headers,
-                                  timeout=5).json()
-    sales_totals = sales_response["sales"]
+    try:
+        sales_response = requests.get(url=sales_url, headers=headers,
+                                      timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
+
+    try:
+        sales_totals = sales_response["sales"]
+    except KeyError:
+        error = sales_response["error"]
+        abort(500, error)
     all_sales_sum = 0
     all_sales_value = 0
     for product, value in sales_totals.items():
