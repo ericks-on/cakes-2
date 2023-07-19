@@ -10,14 +10,19 @@ from flask_jwt_extended import jwt_required, JWTManager, get_jwt_identity
 from flask_jwt_extended import  set_access_cookies, unset_jwt_cookies
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_cors import CORS
+from web.socket_events import socketio
+from dotenv import load_dotenv
 
 
+load_dotenv()
 app = Flask(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 jwt = JWTManager(app)
+app.secret_key = os.environ.get('KIMUKA_API_SEC_KEY')
 app.config['JWT_SECRET_KEY'] = os.environ.get('KIMUKA_API_SEC_KEY')
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False
+socketio.init_app(app)
 # app.config["JWT_COOKIE_SECURE"] = True
 host = os.environ.get('KIMUKA_API_HOST')
 port = os.environ.get('KIMUKA_API_PORT')
@@ -303,5 +308,7 @@ def get_orders():
     return jsonify({"orders": orders})
 
 
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # app.run(host='0.0.0.0', port=5000, debug=True)
+    socketio.run(app)
