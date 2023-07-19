@@ -70,7 +70,7 @@
     border: none;
 }
 
-.chat-send-btn {
+#chat-send-btn {
     flex-basis: 20%;
     height: 30px;
     background-color: var(--button-color);

@@ -307,6 +307,25 @@ def get_orders():
     orders = orders_response["orders"]
     return jsonify({"orders": orders})
 
+@app.route('/api/verify', methods=['GET'])
+def verify():
+    """verify user"""
+    access_token = request.cookies.get('access_token_cookie')
+    headers = {"Authorization": f"Bearer {access_token}"}
+    verify_url = f"http://{host}:{port}/api/v1_0/users/self"
+    try:
+        verify_response = requests.get(url=verify_url, headers=headers,
+                                       timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
+
+    try:
+        user = verify_response["user"]
+    except KeyError:
+        error = verify_response["error"]
+        abort(500, error)
+
+    return jsonify({"user_type": user["user_type"], "username": user["username"]})
 
 
 if __name__ == "__main__":

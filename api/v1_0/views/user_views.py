@@ -49,19 +49,10 @@ def add_user():
     storage.save()
     return jsonify(new_user.to_dict()), 201
 
-# @user_bp.route('/<username>', methods=['GET'])
-# @swag_from('documentation/user/get_user_by_username.yml')
-# @jwt_required()
-# def get_user_by_username(username):
-#     """Getting user by username from url"""
-#     request_user = storage.get_user(get_jwt_identity())
-#     if request_user.user_type != 'admin':
-#         if username != request_user.username:
-#             abort(403)
-#         else:
-#             return jsonify(request_user.to_dict()), 200
-#     else:
-#         user = storage.get_user(username)
-#         if not user:
-#             abort(404)
-#         return jsonify({"user": user.to_dict()}), 200
+@user_bp.route('/self', methods=['GET'])
+@swag_from('documentation/user/get_user.yml')
+@jwt_required()
+def get_user():
+    """ Gets user information"""
+    request_user = storage.get_user(get_jwt_identity())
+    return jsonify({"user": request_user.to_dict()}), 200
