@@ -52,7 +52,7 @@ def login():
         api_response = requests.post(url=url, json=payload, timeout=5)
         response_obj = api_response.json()
         if api_response.status_code == 200:
-            response = make_response(redirect(url_for('order_page')))
+            response = make_response(redirect(url_for('message_page')))
             set_access_cookies(response, response_obj['access_token'])
             return response
         elif api_response.status_code == 401:
@@ -67,11 +67,11 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
-@app.route("/user", methods=['GET'])
+@app.route("/messages", methods=['GET'])
 @jwt_required()
-def user_page():
+def message_page():
     """the user page"""
-    return render_template('user.html', urlFor=url_for)
+    return render_template('messages.html', urlFor=url_for)
 
 @app.route("/order", methods=['GET'])
 @jwt_required()
@@ -311,4 +311,4 @@ def get_orders():
 
 if __name__ == "__main__":
     # app.run(host='0.0.0.0', port=5000, debug=True)
-    socketio.run(app)
+    socketio.run(app, debug=True)

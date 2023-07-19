@@ -1,0 +1,48 @@
+{% extends "default.html" %}
+
+{% block title %}Messages{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="../static/styles/messages.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+<script src="../static/scripts/messages.js"></script>
+{% endblock %}
+{% block content %}
+<div class="chat-sidebar d-flex-column">
+    <div class="new-chat-btn d-flex flex-cc">
+        <span class="material-symbols-outlined">
+            add
+        </span>
+        <p>NEW CHAT</p>
+    </div>
+    <div class="previous-chats-container d-flex-column">
+        <div class="previous-chats d-flex-column">
+            <div class="prev-chat-subject">
+            </div>
+            <div class="prev-chat-message"></div>
+        </div>
+    </div>
+</div>
+<div class="chat-window d-flex-column flex-cc">
+    <div class="chat-dialogue d-flex-column">
+        <div class="chat-messages-container d-flex-column chat-incoming">
+            <div class="chat-message-header"></div>
+            <div class="chat-message"> some message</div>
+        </div>
+        <div class="chat-messages-container d-flex-column chat-outgoing">
+            <div class="chat-message-header"></div>
+            <div class="chat-message">
+                some chat
+            </div>
+        </div>
+    </div>
+    <div class="chat-input-container d-flex" >
+        <!-- <input type="text" class="chat-input" placeholder="Type a message..."> -->
+        <textarea name="text" rows="14" cols="10" wrap="soft" id="chat-input"> </textarea>
+        <div class="chat-send-btn d-flex flex-cc">
+            <span class="material-symbols-outlined">
+                send
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}

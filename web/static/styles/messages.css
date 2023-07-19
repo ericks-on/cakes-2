@@ -1,0 +1,112 @@
+#main-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+.chat-sidebar {
+    flex-basis: 20%;
+    background-color: var(--primary-color);
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.new-chat-btn {
+    width: 80%;
+    height: 50px;
+    background-color: var(--button-color);
+    color: var(--primary-color);
+    font-size: small;
+    white-space: nowrap;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.previous-chats-container {
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    flex-basis: 80%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
+.previous-chats {
+    background-color: var(--secondary-color);
+    margin : 5px 10px;
+    border-radius: 10px;
+    flex-basis: 15%;
+    height: 70px;
+    width: 100%;
+}
+
+.chat-window {
+    flex-basis: 80%;
+    background-color: var(--secondary-color);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.chat-dialogue {
+    width: 100%;
+    flex-basis: 90%;
+    padding: 10px;
+    justify-content: flex-end;
+}
+.chat-input-container {
+    width: 100%;
+    flex-basis: 10%;
+    justify-content: space-around;
+    align-items: center;
+}
+#chat-input {
+    flex-basis: 70%;
+    border-radius: 10px;
+    height: 50px;
+    background-color: var(--primary-color);
+    border: none;
+}
+
+.chat-send-btn {
+    flex-basis: 20%;
+    height: 30px;
+    background-color: var(--button-color);
+    color: var(--primary-color);
+    font-size: small;
+    white-space: nowrap;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.chat-send-btn:hover {
+    box-shadow: var(--float-box-shadow);
+}
+
+.chat-messages-container {
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+
+.chat-incoming {
+    background-color: var(--chat-incoming-color);
+    color: var(--primary-color);
+    margin-right: auto;
+    max-width: 70%;
+    border-radius: 0 10px 10px 10px;
+}
+
+.chat-outgoing {
+    background-color: var(--chat-outgoing-color);
+    color: var(--primary-color);
+    max-width: 70%;
+    margin-left: auto;
+    border-radius: 10px 0 10px 10px;
+}

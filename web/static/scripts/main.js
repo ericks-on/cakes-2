@@ -4,6 +4,4 @@ $(document).ready(function() {
         $('#popups-container').find('*').not('#exit-btn, #exit-btn *').hide();
     });
 
-    // Socket.io connection
-    var socket = io({autoConnect: false});
 });
