@@ -1,28 +1,30 @@
 $(document).ready(function() {
     // Socket.io connection
-    var socket = io();
+    var socket = io('/client');
     $('#chat-send-btn').click(function() {
         var message = $('#chat-input').val();
         socket.emit('send', {"msg": message});
         $('#chat-input').val('');
-    });
-    socket.on('chat', function(json) {
-        $.get('/api/verify', function(data) {
-            var cls;
-            if (data.username === json.sender) {
-                cls = 'chat-outgoing';
-            } else {
-                cls = 'chat-incoming';
-            }
-            let newChat = `
-            <div class="chat-messages-container d-flex-column ${cls}">
-                <div class="chat-message-header"></div>
-                <div class="chat-message">
-                    ${json.message}
-                </div>
+        let newChat = `
+        <div class="chat-messages-container d-flex-column chat-outgoing">
+            <div class="chat-message-header"></div>
+            <div class="chat-message">
+                ${message}
             </div>
-            `
-            $('.chat-dialogue').append(newChat);
-        });
+        </div>
+        `
+        $('.chat-dialogue').append(newChat);
+    });
+    socket.on('recieve', function(json) {
+        let newChat = `
+        <div class="chat-messages-container d-flex-column chat-incoming">
+            <div class="chat-message-header"></div>
+            <div class="chat-message">
+                ${json.msg}
+            </div>
+        </div>
+        `
+        $('.chat-dialogue').append(newChat);
+
     });
 });
