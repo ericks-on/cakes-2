@@ -71,7 +71,23 @@ def logout():
 @jwt_required()
 def message_page():
     """the user page"""
-    return render_template('messages.html', urlFor=url_for)
+    access_token = request.cookies.get('access_token_cookie')
+    headers = {'Authorization': f'Bearer {access_token}'}
+    user_url = f"http://{host}:{port}/api/v1_0/users/self"
+    try:
+        user_response = requests.get(url=user_url, headers=headers,
+                                     timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
+    try:
+        user = user_response["user"]
+    except KeyError:
+        error = user_response["error"]
+        abort(500, error)
+    if user["user_type"] == "admin":
+        return render_template('admin_mess.html', urlFor=url_for)
+    else:
+        return render_template('messages.html', urlFor=url_for)
 
 @app.route("/order", methods=['GET'])
 @jwt_required()

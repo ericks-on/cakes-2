@@ -1,12 +1,12 @@
 $(document).ready(function() {
     // Socket.io connection
-    var socket = io();
+    var socket = io('/admin');
     $('#chat-send-btn').click(function() {
         var message = $('#chat-input').val();
         socket.emit('send', {"msg": message});
         $('#chat-input').val('');
     });
-    socket.on('chat', function(json) {
+    socket.on('from_client', function(json) {
         $.get('/api/verify', function(data) {
             var cls;
             if (data.username === json.sender) {
