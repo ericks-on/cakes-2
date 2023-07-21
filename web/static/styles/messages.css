@@ -52,6 +52,9 @@
     flex-basis: 50%;
     font-size: small;
     font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .chats-info-recepient {
     margin-left: 5px;
