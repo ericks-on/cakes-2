@@ -84,10 +84,26 @@ def message_page():
     except KeyError:
         error = user_response["error"]
         abort(500, error)
+
+    chat_url = f"http://{host}:{port}/api/v1_0/chats"
+    try:
+        chat_response = requests.get(url=chat_url, headers=headers,
+                                     timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
+
+    try:
+        chats = chat_response["chats"]
+    except KeyError:
+        error = chat_response["error"]
+        abort(500, error)
+
     if user["user_type"] == "admin":
-        return render_template('admin_mess.html', urlFor=url_for)
+        return render_template('admin_mess.html', urlFor=url_for,
+                               chats=chats)
     else:
-        return render_template('messages.html', urlFor=url_for)
+        return render_template('messages.html', urlFor=url_for,
+                               chats=chats)
 
 @app.route("/order", methods=['GET'])
 @jwt_required()

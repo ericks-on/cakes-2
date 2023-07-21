@@ -37,3 +37,17 @@ def create_chat():
     obj = storage.get(Chat, new_chat.id)
     return jsonify({'chat': obj.to_dict()}), 201
 
+@chat_bp.route('/', methods=['GET'])
+@swag_from('documentation/chat/get_chats.yml')
+@jwt_required()
+def get_chats():
+    """This endpoint returns all chats"""
+    user = storage.get_user(get_jwt_identity())
+    if not user:
+        return jsonify({'message': 'Unauthorised user'}), 401
+    if user.user_type == 'admin':
+        chats = storage.all(Chat)
+    else:
+        chats = user.chats
+
+    return jsonify({'chats': [chat.to_dict() for chat in chats]}), 200

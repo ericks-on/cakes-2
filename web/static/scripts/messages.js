@@ -48,10 +48,14 @@ $(document).ready(function() {
                 $('#new-chat-subject').val('');
                 let newChat = `
                 <div class="chats-info d-flex-column">
-                    <div class="chat-subject">
-                        ${data.subject}
+                    <div class="chats-info-header d-flex">
+                        <p>To:</p>
+                        <div class="chats-info-recepient">Admin</div>                
                     </div>
-                    <div class="chat-message"></div>
+                    <div class="chats-info-row d-flex">
+                        <div class="chats-info-row-subject">Subject:</div>
+                        <div class="chats-info-row-value">${data.subject}</div>
+                    </div>
                     <input type="hidden" name="chat-id-side" value="${data.chat_id}">
                 </div>
                 `

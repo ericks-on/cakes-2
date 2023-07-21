@@ -14,6 +14,7 @@
         <p>NEW CHAT</p>
     </div>
     <div class="chats-container d-flex-column">
+        {% for chat in chats %}
         <div class="chats-info d-flex-column">
             <div class="chats-info-header d-flex">
                 <p>To:</p>
@@ -21,10 +22,11 @@
             </div>
             <div class="chats-info-row d-flex">
                 <div class="chats-info-row-subject">Subject:</div>
-                <div class="chats-info-row-value">some val</div>
+                <div class="chats-info-row-value">{{chat.subject}}</div>
             </div>
-            <input type="hidden" name="chat-id-side" value="">
+            <input type="hidden" name="chat-id-side" value="{{chat.id}}">
         </div>
+        {% endfor %}
     </div>
 </div>
 <div class="chat-window d-flex-column flex-cc">
