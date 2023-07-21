@@ -48,6 +48,8 @@ def get_chats():
     if user.user_type == 'admin':
         chats = storage.all(Chat)
     else:
-        chats = user.chats
+        chats = user.send_chats + user.received_chats
+    
+    sorted_chats = sorted(chats, key=lambda x: x.created_at, reverse=True)
 
-    return jsonify({'chats': [chat.to_dict() for chat in chats]}), 200
+    return jsonify({'chats': [chat.to_dict() for chat in sorted_chats]}), 200
