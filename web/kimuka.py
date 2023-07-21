@@ -262,6 +262,7 @@ def order_page():
                            )
 
 @app.route("/api/sales", methods=['GET'])
+@jwt_required()
 def get_sales():
     """get sales for popup"""
     year = datetime.now().year
@@ -290,6 +291,7 @@ def get_sales():
     return jsonify({"monthly_sales": current_sales, "year": year})
 
 @app.route("/api/monthly_aov", methods=['GET'])
+@jwt_required()
 def get_monthly_aov():
     """get monthly aov"""
     year = datetime.now().year
@@ -316,6 +318,7 @@ def get_monthly_aov():
     return jsonify({"monthly_aov": monthly_aov, "year": year, "monthly_orders": monthly_orders_totals})
 
 @app.route('/api/orders', methods=['GET'])
+@jwt_required()
 def get_orders():
     """get all orders"""
     orders_url = f"http://{host}:{port}/api/v1_0/orders"
@@ -324,6 +327,7 @@ def get_orders():
     return jsonify({"orders": orders})
 
 @app.route('/api/verify', methods=['GET'])
+@jwt_required()
 def verify():
     """verify user"""
     access_token = request.cookies.get('access_token_cookie')
@@ -342,6 +346,47 @@ def verify():
         abort(500, error)
 
     return jsonify({"user_type": user["user_type"], "username": user["username"]})
+
+@app.route('/api/chat', methods=['POST'])
+@jwt_required()
+def new_chat():
+    """create new chat"""
+    access_token = request.cookies.get('access_token_cookie')
+    headers = {"Authorization": f"Bearer {access_token}"}
+    chat_url = f"http://{host}:{port}/api/v1_0/chats"
+    payload = {}
+    user_url = f"http://{host}:{port}/api/v1_0/users/self"
+    try:
+        user_response = requests.get(url=user_url, headers=headers,
+                                     timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
+
+    try:
+        user = user_response["user"]
+    except KeyError:
+        error = user_response["error"]
+        abort(500, error)
+
+    if user["user_type"] == "admin":
+        payload["recepient"] = request.form["recepient"]
+    else:
+        payload["recepient"] = "admin"
+    payload["subject"] = request.form["subject"]
+    try:
+        chat_response = requests.post(url=chat_url, headers=headers,
+                                      json=payload, timeout=5).json()
+    except requests.exceptions.ConnectionError:
+        abort(500, "Connection error")
+
+    try:
+        chat = chat_response["chat"]
+    except KeyError:
+        error = chat_response["error"]
+        abort(500, error)
+
+    return jsonify({"subject": chat["subject"], "chat_id": chat["id"],
+                    "status": "success"})
 
 
 if __name__ == "__main__":

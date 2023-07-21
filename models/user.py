@@ -22,4 +22,7 @@ class User(Basemodel, Base):
     transactions = relationship(Transaction, backref='users')
     expenditures = relationship(Expenditure, backref='user')
     orders = relationship(Order, backref='orders', cascade='all, delete')
-    chats = relationship(Chat, backref='user', cascade='all, delete')
+    send_chats = relationship(Chat, backref='sender',
+                              foreign_keys='Chat.sender_id')
+    recepient_chats = relationship(Chat, backref='recepient',
+                                   foreign_keys='Chat.recepient_id')

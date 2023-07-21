@@ -27,4 +27,36 @@ $(document).ready(function() {
         $('.chat-dialogue').append(newChat);
 
     });
+
+    //new chat popup
+    $('#new-chat-btn').click(function() {
+        $('#popups-container').css('display', 'flex');
+        $('.new-chat-popup , .new-chat-popup *').show();
+
+    });
+
+    // creating new chat
+    $('#create-chat-btn').click(function() {
+        var subject = $('#new-chat-subject').val();
+        var payload = {
+            "subject": subject
+        };
+        $.post('/api/chat', payload, function(data) {
+            if (data.status == 'success') {
+                $('#popups-container').hide();
+                $('#popups-container').find('*').not('#exit-btn, #exit-btn *').hide();
+                $('#new-chat-subject').val('');
+                let newChat = `
+                <div class="chats-info d-flex-column">
+                    <div class="chat-subject">
+                        ${data.subject}
+                    </div>
+                    <div class="chat-message"></div>
+                    <input type="hidden" name="chat-id-side" value="${data.chat_id}">
+                </div>
+                `
+                $('.chats-container').prepend(newChat);
+            }
+        });
+    });
 });

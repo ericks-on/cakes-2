@@ -14,6 +14,8 @@ from models.input import Input
 from models.order import Order
 from models.product import Product
 from models.product_sales import ProductSales
+from models.chat import Chat
+from models.message import Message
 from dotenv import load_dotenv
 from passlib.hash import bcrypt
 
@@ -22,7 +24,7 @@ load_dotenv()
 tables = [User.__table__, Product.__table__, Transaction.__table__,
           Expenditure.__table__, Item.__table__, Input.__table__,
           Order.__table__, ProductSales.__table__, Cash.__table__,
-          Mpesa.__table__]
+          Mpesa.__table__, Chat.__table__, Message.__table__]
 
 
 class DBStorage:
