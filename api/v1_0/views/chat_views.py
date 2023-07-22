@@ -78,8 +78,6 @@ def get_chat(chat_id):
     if not user:
         return jsonify({'message': 'Unauthorised user'}), 401
     chat = storage.get(Chat, chat_id)
-    if user.id not in [chat.sender_id, chat.recepient_id]:
-        return jsonify({'message': 'Unauthorised user'}), 401
 
     if not chat:
         return jsonify({'message': 'Chat not found'}), 404
@@ -95,6 +93,83 @@ def get_chat(chat_id):
             return_chat["sender"] = chat.sender.username
             return_chat["recepient"] = chat.recepient.username
         return jsonify({'chat': return_chat}), 200
-    if user not in chat.senders and user not in chat.recepients:
+    if user.id not in [chat.sender_id, chat.recepient_id]:
         return jsonify({'message': 'Unauthorised user'}), 401
     return jsonify({'chat': chat.to_dict()}), 200
+
+@chat_bp.route('/<chat_id>', methods=['DELETE'])
+@swag_from('documentation/chat/delete_chat.yml')
+@jwt_required()
+def delete_chat(chat_id):
+    """This endpoint deletes a specific chat"""
+    user = storage.get_user(get_jwt_identity())
+    if not user:
+        return jsonify({'message': 'Unauthorised user'}), 401
+    chat = storage.get(Chat, chat_id)
+    if not chat:
+        return jsonify({'message': 'Chat not found'}), 404
+    if user.user_type == 'admin':
+        storage.delete(chat)
+        storage.save()
+        return jsonify({'message': 'Chat deleted'}), 200
+    if user.id not in [chat.sender_id, chat.recepient_id]:
+        return jsonify({'message': 'Unauthorised user'}), 401
+    storage.delete(chat)
+    storage.save()
+    return jsonify({'message': 'Chat deleted'}), 200
+
+@chat_bp.route('/<chat_id>/messages', methods=['POST'])
+@swag_from('documentation/chat/create_message.yml')
+@jwt_required()
+def create_message(chat_id):
+    """This endpoint creates a new message"""
+    data = request.get_json()
+    if not data:
+        return jsonify({'message': 'No data provided'}), 400
+    user = storage.get_user(get_jwt_identity())
+    chat = storage.get(Chat, chat_id)
+    if not user:
+        return jsonify({'message': 'Unauthorised user'}), 401
+    if not chat:
+        return jsonify({'message': 'Chat not found'}), 404
+    if user.user_type != 'admin':
+        if user.id not in [chat.sender_id, chat.recepient_id]:
+            return jsonify({'message': 'Unauthorised user'}), 401
+        # if user.id == chat.sender_id:
+        #     if chat.sender_deleted == 1:
+        #         return jsonify({'message': 'Chat not found'}), 404
+        # else:
+        #     if chat.recepient_deleted == 1:
+        #         return jsonify({'message': 'Chat not found'}), 404
+    content = data.get('content')
+    if not content:
+        return jsonify({'message': 'No content provided'}), 400
+    new_message = Message(chat_id=chat.id, content=content, sender_id=user.id)
+    storage.add(new_message)
+    storage.save()
+    obj = storage.get(Message, new_message.id)
+    return jsonify({'message': obj.to_dict()}), 201
+
+@chat_bp.route('/<chat_id>/messages', methods=['GET'])
+@swag_from('documentation/chat/get_messages.yml')
+@jwt_required()
+def get_messages(chat_id):
+    """This endpoint returns all messages in a chat"""
+    user = storage.get_user(get_jwt_identity())
+    if not user:
+        return jsonify({'message': 'Unauthorised user'}), 401
+    chat = storage.get(Chat, chat_id)
+    if not chat:
+        return jsonify({'message': 'Chat not found'}), 404
+    if user.user_type != 'admin':
+        if user.id not in [chat.sender_id, chat.recepient_id]:
+            return jsonify({'message': 'Unauthorised user'}), 401
+        # if user.id == chat.sender_id:
+        #     if chat.sender_deleted == 1:
+        #         return jsonify({'message': 'Chat not found'}), 404
+        # else:
+        #     if chat.recepient_deleted == 1:
+        #         return jsonify({'message': 'Chat not found'}), 404
+    messages = chat.messages
+    sorted_messages = sorted(messages, key=lambda x: x.created_at, reverse=True)
+    return jsonify({'messages': [message.to_dict() for message in sorted_messages]}), 200
