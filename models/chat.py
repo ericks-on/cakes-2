@@ -12,5 +12,7 @@ class Chat(Basemodel, Base):
     sender_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     recepient_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     subject = Column(String(128), nullable=False)
+    # sender_deleted = Column(Integer, default=0)
+    # recepient_deleted = Column(Integer, default=0)
 
     messages = relationship(Message, backref='chat', cascade='all, delete')

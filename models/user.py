@@ -7,6 +7,7 @@ from sqlalchemy.orm import relationship
 from models.order import Order
 from models.expenditure import Expenditure
 from models.chat import Chat
+from models.message import Message
 
 
 class User(Basemodel, Base):
@@ -26,3 +27,4 @@ class User(Basemodel, Base):
                               foreign_keys='Chat.sender_id')
     received_chats = relationship(Chat, backref='recepient',
                                   foreign_keys='Chat.recepient_id')
+    messages = relationship(Message, backref='sender')

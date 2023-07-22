@@ -9,3 +9,4 @@ class Message(Basemodel, Base):
     __tablename__ = 'messages'
     chat_id = Column(String(60), ForeignKey('chats.id'), nullable=False)
     content = Column(String(4096), nullable=False)
+    sender_id = Column(String(60), ForeignKey('users.id'), nullable=False)
