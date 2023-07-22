@@ -51,5 +51,20 @@ def get_chats():
         chats = user.send_chats + user.received_chats
     
     sorted_chats = sorted(chats, key=lambda x: x.created_at, reverse=True)
+    if user.user_type == 'admin':
+        return_chats = []
+        for chat in sorted_chats:
+            return_chat = chat.to_dict()
+            if chat.sender.user_type == 'admin':
+                return_chat["sender"] = 'admin'
+                return_chat["recepient"] = chat.recepient.username
+            elif chat.recepient.user_type == 'admin':
+                return_chat["sender"] = chat.sender.username
+                return_chat["recepient"] = 'admin'
+            else:
+                return_chat["sender"] = chat.sender.username
+                return_chat["recepient"] = chat.recepient.username
+            return_chats.append(return_chat)
+        return jsonify({'chats': return_chats}), 200
 
     return jsonify({'chats': [chat.to_dict() for chat in sorted_chats]}), 200

@@ -7,18 +7,30 @@
 {% endblock %}
 {% block content %}
 <div class="chat-sidebar d-flex-column">
-    <div class="new-chat-btn d-flex flex-cc">
+    <div class="d-flex flex-cc" id="new-chat-btn">
         <span class="material-symbols-outlined">
             add
         </span>
         <p>NEW CHAT</p>
     </div>
-    <div class="previous-chats-container d-flex-column">
-        <div class="previous-chats d-flex-column">
-            <div class="prev-chat-subject">
+    <div class="chats-container d-flex-column">
+        {% for chat in chats %}
+        <div class="chats-info d-flex-column">
+            <div class="chats-info-header d-flex">
+                <p>To:</p>
+                {% if chat.sender == "admin" %}
+                <div class="chats-info-recepient">{{chat.recepient}}</div>
+                {% else %}
+                <div class="chats-info-recepient">{{chat.sender}}</div>
+                {% endif %}
             </div>
-            <div class="prev-chat-message"></div>
+            <div class="chats-info-row d-flex">
+                <div class="chats-info-row-subject">Subject:</div>
+                <div class="chats-info-row-value">{{chat.subject}}</div>
+            </div>
+            <input type="hidden" name="chat-id-side" value="{{chat.id}}">
         </div>
+        {% endfor %}
     </div>
 </div>
 <div class="chat-window d-flex-column flex-cc">
