@@ -67,7 +67,36 @@ $(document).ready(function() {
     // click chat to display messages
     $(".chats-info").click(function() {
         var chat_id = $(this).find('input[name="chat-id-side"]').val();
-        var payload = {
-            "chat_id": chat_id
-        };
+        var url = '/api/chat/' + chat_id + '/messages';
+        $.get(url, function(data) {
+            if (data.status == 'success') {
+                $('.chat-dialogue').empty();
+                for (var i = 0; i < data.messages.length; i++) {
+                    if (data.messages[i].sender == 'client') {
+                        let newChat = `
+                        <div class="chat-messages-container d-flex-column chat-outgoing">
+                            <div class="chat-message-header"></div>
+                            <div class="chat-message">
+                                ${data.messages[i].message}
+                            </div>
+                        </div>
+                        `
+                        $('.chat-dialogue').append(newChat);
+                    } else {
+                        let newChat = `
+                        <div class="chat-messages-container d-flex-column chat-incoming">
+                            <div class="chat-message-header"></div>
+                            <div class="chat-message">
+                                ${data.messages[i].message}
+                            </div>
+                        </div>
+                        `
+                    $('.chat-dialogue').append(newChat);
+                }
+            }
+        }
+        $('.default-chat-window').hide();
+        $('.chat-window').show();
+        });
+});
 });

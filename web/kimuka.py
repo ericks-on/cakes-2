@@ -415,10 +415,27 @@ def new_chat():
     return jsonify({"subject": chat["subject"], "chat_id": chat["id"],
                     "status": "success"})
 
-@app.route('/api/chat/messages', methods=['POST'])
+@app.route('/api/chat/<chat_id>/messages', methods=['GET'])
 @jwt_required()
-def new_message():
+def new_message(chat_id):
     """Get chat messages""" 
+    request_cookie = request.cookies.get('access_token_cookie')
+    headers = {"Authorization": f"Bearer {request_cookie}"}
+    user_url = f"http://{host}:{port}/api/v1_0/users/self"
+    try:
+        user_response = requests.get(url=user_url, timeout=5,
+                                     headers=headers).json()
+    except requests.exceptions.JSONDecodeError:
+        abort(500, "Connection error")
+
+    try:
+        user = user_response["user"]
+    except KeyError:
+        error = user_response["error"]
+        abort(500, error)
+
+    if not user:
+        return jsonify({'message': 'Unauthorised user'}), 401
     access_token = request.cookies.get('access_token_cookie')
     headers = {"Authorization": f"Bearer {access_token}"}
     messages_url = f"http://{host}:{port}/api/v1_0/chats/{chat_id}/messages"
@@ -434,7 +451,13 @@ def new_message():
         error = messages_response["error"]
         abort(500, error)
 
-    return jsonify({"messages": messages})
+    for message in messages:
+        if message["sender_id"] == user["id"]:
+            message["sender"] = "client"
+        else:
+            message["sender"] = 'admin'
+
+    return jsonify({"messages": messages, "status": "success"})
 
 
 if __name__ == "__main__":

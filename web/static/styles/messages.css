@@ -105,13 +105,13 @@
 
 .chat-dialogue {
     width: 100%;
-    flex-basis: 90%;
+    height: 80%;
     padding: 10px;
     justify-content: flex-end;
 }
 .chat-input-container {
     width: 100%;
-    flex-basis: 10%;
+    height: 10%;
     justify-content: space-around;
     align-items: center;
     background-color: var(--table-row-even-color);
