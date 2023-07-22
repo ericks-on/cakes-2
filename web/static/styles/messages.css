@@ -29,7 +29,7 @@
     width: 100%;
     justify-content: flex-start;
     align-items: center;
-    flex-basis: 80%;
+    flex-basis: 90%;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 10px;
@@ -46,7 +46,10 @@
     font-size: 20px;
     padding: 10px;
 }
-
+.chats-info:hover {
+    box-shadow: var(--float-box-shadow);
+    cursor: pointer;
+}
 .chats-info-row {
     width: 100%;
     flex-basis: 50%;
@@ -73,9 +76,31 @@
     font-weight: normal;
 }
 .chat-window {
+    display: none;
     flex-basis: 80%;
     background-color: var(--secondary-color);
     border-radius: 10px;
+}
+
+.default-chat-window {
+    flex-basis: 80%;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.default-window-body {
+    margin: 10px 0;
+}
+.default-window-header {
+    margin: 10px 0;
+    width: auto;
+    height: auto;
+}
+.chat-logo {
+    background-image: url(../images/cakes_logo.png);
+    width: 20px;
+    height: 10px;
 }
 
 .chat-dialogue {

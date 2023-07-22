@@ -63,4 +63,11 @@ $(document).ready(function() {
             }
         });
     });
+
+    // click chat to display messages
+    $(".chats-info").click(function() {
+        var chat_id = $(this).find('input[name="chat-id-side"]').val();
+        var payload = {
+            "chat_id": chat_id
+        };
 });

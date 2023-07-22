@@ -68,3 +68,33 @@ def get_chats():
         return jsonify({'chats': return_chats}), 200
 
     return jsonify({'chats': [chat.to_dict() for chat in sorted_chats]}), 200
+
+@chat_bp.route('/<chat_id>', methods=['GET'])
+@swag_from('documentation/chat/get_chat.yml')
+@jwt_required()
+def get_chat(chat_id):
+    """This endpoint returns a specific chat"""
+    user = storage.get_user(get_jwt_identity())
+    if not user:
+        return jsonify({'message': 'Unauthorised user'}), 401
+    chat = storage.get(Chat, chat_id)
+    if user.id not in [chat.sender_id, chat.recepient_id]:
+        return jsonify({'message': 'Unauthorised user'}), 401
+
+    if not chat:
+        return jsonify({'message': 'Chat not found'}), 404
+    if user.user_type == 'admin':
+        return_chat = chat.to_dict()
+        if chat.sender.user_type == 'admin':
+            return_chat["sender"] = 'admin'
+            return_chat["recepient"] = chat.recepient.username
+        elif chat.recepient.user_type == 'admin':
+            return_chat["sender"] = chat.sender.username
+            return_chat["recepient"] = 'admin'
+        else:
+            return_chat["sender"] = chat.sender.username
+            return_chat["recepient"] = chat.recepient.username
+        return jsonify({'chat': return_chat}), 200
+    if user not in chat.senders and user not in chat.recepients:
+        return jsonify({'message': 'Unauthorised user'}), 401
+    return jsonify({'chat': chat.to_dict()}), 200

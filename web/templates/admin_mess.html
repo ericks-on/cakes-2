@@ -1,59 +1,21 @@
-{% extends "default.html" %}
+{% extends "messages.html" %}
 
-{% block title %}Messages{% endblock %}
-{% block head %}
-<link rel="stylesheet" href="../static/styles/messages.css">
-<script src="../static/scripts/admin_comm.js"></script>
-{% endblock %}
-{% block content %}
-<div class="chat-sidebar d-flex-column">
-    <div class="d-flex flex-cc" id="new-chat-btn">
-        <span class="material-symbols-outlined">
-            add
-        </span>
-        <p>NEW CHAT</p>
+{% block chat_container %}
+{% for chat in chats %}
+<div class="chats-info d-flex-column">
+    <div class="chats-info-header d-flex">
+        <p>To:</p>
+        {% if chat.sender == "admin" %}
+        <div class="chats-info-recepient">{{chat.recepient}}</div>
+        {% else %}
+        <div class="chats-info-recepient">{{chat.sender}}</div>
+        {% endif %}
     </div>
-    <div class="chats-container d-flex-column">
-        {% for chat in chats %}
-        <div class="chats-info d-flex-column">
-            <div class="chats-info-header d-flex">
-                <p>To:</p>
-                {% if chat.sender == "admin" %}
-                <div class="chats-info-recepient">{{chat.recepient}}</div>
-                {% else %}
-                <div class="chats-info-recepient">{{chat.sender}}</div>
-                {% endif %}
-            </div>
-            <div class="chats-info-row d-flex">
-                <div class="chats-info-row-subject">Subject:</div>
-                <div class="chats-info-row-value">{{chat.subject}}</div>
-            </div>
-            <input type="hidden" name="chat-id-side" value="{{chat.id}}">
-        </div>
-        {% endfor %}
+    <div class="chats-info-row d-flex">
+        <div class="chats-info-row-subject">Subject:</div>
+        <div class="chats-info-row-value">{{chat.subject}}</div>
     </div>
+    <input type="hidden" name="chat-id-side" value="{{chat.id}}">
 </div>
-<div class="chat-window d-flex-column flex-cc">
-    <div class="chat-dialogue d-flex-column">
-        <div class="chat-messages-container d-flex-column chat-incoming">
-            <div class="chat-message-header"></div>
-            <div class="chat-message"> some message</div>
-        </div>
-        <div class="chat-messages-container d-flex-column chat-outgoing">
-            <div class="chat-message-header"></div>
-            <div class="chat-message">
-                some chat
-            </div>
-        </div>
-    </div>
-    <div class="chat-input-container d-flex" >
-        <!-- <input type="text" class="chat-input" placeholder="Type a message..."> -->
-        <textarea name="text" rows="14" cols="10" wrap="soft" id="chat-input"> </textarea>
-        <div class="d-flex flex-cc" id="chat-send-btn">
-            <span class="material-symbols-outlined">
-                send
-            </span>
-        </div>
-    </div>
-</div>
+{% endfor %}
 {% endblock %}

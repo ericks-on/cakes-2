@@ -14,6 +14,7 @@
         <p>NEW CHAT</p>
     </div>
     <div class="chats-container d-flex-column">
+        {% block chat_container %}
         {% for chat in chats %}
         <div class="chats-info d-flex-column">
             <div class="chats-info-header d-flex">
@@ -27,6 +28,15 @@
             <input type="hidden" name="chat-id-side" value="{{chat.id}}">
         </div>
         {% endfor %}
+        {% endblock %}
+    </div>
+</div>
+<div class="default-chat-window d-flex-column flex-cc">
+    <div class="default-window-header d-flex flex-cc">
+        <img src="../static/images/cakes_logo.png" alt="">
+    </div>
+    <div class="default-window-body d-flex flex-cc">
+        <p>Choose a chat to start messaging</p>
     </div>
 </div>
 <div class="chat-window d-flex-column flex-cc">

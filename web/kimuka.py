@@ -415,7 +415,34 @@ def new_chat():
     return jsonify({"subject": chat["subject"], "chat_id": chat["id"],
                     "status": "success"})
 
+@app.route('/api/chat/messages', methods=['POST'])
+@jwt_required()
+def new_message():
+    """Get chat messages""" 
+    access_token = request.cookies.get('access_token_cookie')
+    headers = {"Authorization": f"Bearer {access_token}"}
+    messages_url = f"http://{host}:{port}/api/v1_0/chats/{chat_id}/messages"
+    try:
+        messages_response = requests.get(url=messages_url, headers=headers,
+                                         timeout=5).json()
+    except requests.exceptions.JSONDecodeError:
+        abort(500, "Connection error")
+
+    try:
+        messages = messages_response["messages"]
+    except KeyError:
+        error = messages_response["error"]
+        abort(500, error)
+
+    return jsonify({"messages": messages})
+
 
 if __name__ == "__main__":
     # app.run(host='0.0.0.0', port=5000, debug=True)
-    socketio.run(app, debug=True)
+    web_host = os.environ.get('KIMUKA_WEB_HOST')
+    web_port = os.environ.get('KIMUKA_WEB_PORT')
+    if not host:
+        host = '127.0.0.1'
+    if not port:
+        port = 5000
+    socketio.run(app, debug=True, host=web_host, port=web_port)
