@@ -71,6 +71,7 @@ $(document).ready(function() {
         $.get(url, function(data) {
             if (data.status == 'success') {
                 $('.chat-dialogue').empty();
+                $("#chat-id").val(chat_id);
                 for (var i = 0; i < data.messages.length; i++) {
                     if (data.messages[i].sender == 'client') {
                         let newChat = `
