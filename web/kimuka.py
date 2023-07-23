@@ -459,6 +459,32 @@ def new_message(chat_id):
 
     return jsonify({"messages": messages, "status": "success"})
 
+@app.route('/api/chat/<chat_id>/messages', methods=['POST'])
+@jwt_required()
+def send_message(chat_id):
+    """Send message to chat"""
+    access_token = request.cookies.get('access_token_cookie')
+    headers = {"Authorization": f"Bearer {access_token}"}
+    messages_url = f"http://{host}:{port}/api/v1_0/chats/{chat_id}/messages"
+    payload = {}
+    payload["content"] = request.form["message"]
+    if not payload["content"]:
+        return jsonify({"message": "No message provided",
+                        "status": "error"}), 400
+    try:
+        messages_response = requests.post(url=messages_url, headers=headers,
+                                          json=payload, timeout=5).json()
+    except requests.exceptions.JSONDecodeError:
+        abort(500, "Connection error")
+
+    try:
+        message = messages_response["message"]
+    except KeyError:
+        error = messages_response["error"]
+        abort(500, error)
+
+    return jsonify({"message": message, "status": "success"}), 201
+
 
 if __name__ == "__main__":
     # app.run(host='0.0.0.0', port=5000, debug=True)

@@ -3,11 +3,18 @@ $(document).ready(function() {
     var socket = io('/client');
     $('#chat-send-btn').click(function() {
         var message = $('#chat-input').val();
+        var chat_id = $('#chat-id').val();
         if (message == '') {
             alert('Please enter a message');
             return;
         }
-        socket.emit('send', {"msg": message});
+        payload = {
+            "message": message
+        };
+        $.post('/api/chat/' + chat_id + '/message', payload, function(data) {
+            if (data.status == 'success') {
+                socket.emit('send', {"msg": data.message, "chat_id": chat_id});
+            }
         $('#chat-input').val('');
         let newChat = `
         <div class="chat-messages-container d-flex-column chat-outgoing">

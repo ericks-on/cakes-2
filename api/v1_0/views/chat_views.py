@@ -143,7 +143,7 @@ def create_message(chat_id):
         #         return jsonify({'message': 'Chat not found'}), 404
     content = data.get('content')
     if not content:
-        return jsonify({'message': 'No content provided'}), 400
+        return jsonify({'message': 'No message provided'}), 400
     new_message = Message(chat_id=chat.id, content=content, sender_id=user.id)
     storage.add(new_message)
     storage.save()
