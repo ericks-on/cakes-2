@@ -1,5 +1,10 @@
 {% extends "messages.html" %}
 
+{% block head %}
+<link rel="stylesheet" href="../static/styles/messages.css">
+<script src="../static/scripts/admin_comm.js"></script>
+{% endblock %}
+
 {% block chat_container %}
 {% for chat in chats %}
 <div class="chats-info d-flex-column">

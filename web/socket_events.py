@@ -106,7 +106,8 @@ def handle_to_admin(json):
     headers = {'Authorization': f'Bearer {access_token}'}
     user_url = f"http://{host}:{port}/api/v1_0/users/self"
     try:
-        user_response = requests.get(user_url, headers=headers).json()
+        user_response = requests.get(user_url, headers=headers,
+                                     timeout=5).json()
     except Exception as error:
         print(error)
         return
