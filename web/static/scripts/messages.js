@@ -3,6 +3,10 @@ $(document).ready(function() {
     var socket = io('/client');
     $('#chat-send-btn').click(function() {
         var message = $('#chat-input').val();
+        if (message == '') {
+            alert('Please enter a message');
+            return;
+        }
         socket.emit('send', {"msg": message});
         $('#chat-input').val('');
         let newChat = `
