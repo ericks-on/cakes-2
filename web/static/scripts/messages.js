@@ -11,10 +11,12 @@ $(document).ready(function() {
         payload = {
             "message": message
         };
-        $.post('/api/chat/' + chat_id + '/message', payload, function(data) {
+        $.post('/api/chat/' + chat_id + '/messages', payload, function(data) {
             if (data.status == 'success') {
                 socket.emit('send', {"msg": data.message, "chat_id": chat_id});
+                console.log(data.message);
             }
+        });
         $('#chat-input').val('');
         let newChat = `
         <div class="chat-messages-container d-flex-column chat-outgoing">
@@ -89,7 +91,7 @@ $(document).ready(function() {
                         <div class="chat-messages-container d-flex-column chat-outgoing">
                             <div class="chat-message-header"></div>
                             <div class="chat-message">
-                                ${data.messages[i].message}
+                                ${data.messages[i].content}
                             </div>
                         </div>
                         `
@@ -99,7 +101,7 @@ $(document).ready(function() {
                         <div class="chat-messages-container d-flex-column chat-incoming">
                             <div class="chat-message-header"></div>
                             <div class="chat-message">
-                                ${data.messages[i].message}
+                                ${data.messages[i].content}
                             </div>
                         </div>
                         `
