@@ -111,5 +111,23 @@ $(document).ready(function() {
             scrollToLastMessage();
         }
         });
-});
+    });
+
+    // scroll to last message on chat
+    $(".scroll-bottom-new-msg").click(function() {
+        scrollToLastMessage();
+        $('.new-msg-on-current-chat').hide();
+        $('.new-msg-count').empty();
+    });
+
+    // scroll to message btn apperance
+    $(".chat-dialogue").scroll(function() {
+        let scrolled = $(".chat-dialogue").prop("scrollHeight") -
+        ($(".chat-dialogue").scrollTop() + $(".chat-dialogue").height());
+        if (scrolled > 10) {
+            $('.new-msg-on-current-chat').css('display', 'flex');
+        } else {
+            $('.new-msg-on-current-chat').hide();
+        }
+    });
 });
