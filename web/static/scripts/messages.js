@@ -1,6 +1,10 @@
 $(document).ready(function() {
     // Socket.io connection
     var socket = io('/client');
+    function scrollToLastMessage() {
+        const messageContainer = $(".chat-dialogue");
+        messageContainer.scrollTop(messageContainer.prop("scrollHeight"));
+    }
     $('#chat-send-btn').click(function() {
         var message = $('#chat-input').val();
         var chat_id = $('#chat-id').val();
@@ -14,19 +18,21 @@ $(document).ready(function() {
         $.post('/api/chat/' + chat_id + '/messages', payload, function(data) {
             if (data.status == 'success') {
                 socket.emit('send', {"msg": data.message, "chat_id": chat_id});
-                console.log(data.message);
+                $('#chat-input').val('');
+                let newChat = `
+                <div class="chat-messages-container d-flex-column chat-outgoing">
+                    <div class="chat-message-header"></div>
+                    <div class="chat-message">
+                        ${message}
+                    </div>
+                </div>
+                `
+                $('.chat-dialogue').append(newChat);
+                scrollToLastMessage();
             }
+        }).fail(function() {
+            alert('Please enter a message');
         });
-        $('#chat-input').val('');
-        let newChat = `
-        <div class="chat-messages-container d-flex-column chat-outgoing">
-            <div class="chat-message-header"></div>
-            <div class="chat-message">
-                ${message}
-            </div>
-        </div>
-        `
-        $('.chat-dialogue').append(newChat);
     });
     socket.on('recieve', function(json) {
         let newChat = `
@@ -38,6 +44,7 @@ $(document).ready(function() {
         </div>
         `
         $('.chat-dialogue').append(newChat);
+        scrollToLastMessage();
 
     });
 
@@ -108,9 +115,10 @@ $(document).ready(function() {
                     $('.chat-dialogue').append(newChat);
                 }
             }
+            $('.default-chat-window').hide();
+            $('.chat-window').show();
+            scrollToLastMessage();
         }
-        $('.default-chat-window').hide();
-        $('.chat-window').show();
         });
 });
 });

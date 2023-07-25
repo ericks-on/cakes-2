@@ -80,7 +80,6 @@ def handle_json(json):
 @socketio.on('send', namespace='/client')
 def handle_send_message(json):
     """handle send message"""
-    print('Message: ' + json["msg"])
     access_token = request.cookies.get('access_token_cookie')
     headers = {'Authorization': f'Bearer {access_token}'}
     user_url = f"http://{host}:{port}/api/v1_0/users/self"
@@ -118,7 +117,7 @@ def handle_to_admin(json):
         return
     if user["user_type"] == "admin":
         sender = 'Admin'
-        json = {'sender': sender, 'msg': json["msg"]}
+        json = {'sender': sender, 'msg': json["msg"]["content"]}
         print(json["sender"])
         emit('recieve', json, to='/erickson', namespace='/client')
     else:

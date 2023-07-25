@@ -171,5 +171,5 @@ def get_messages(chat_id):
         #     if chat.recepient_deleted == 1:
         #         return jsonify({'message': 'Chat not found'}), 404
     messages = chat.messages
-    sorted_messages = sorted(messages, key=lambda x: x.created_at, reverse=True)
+    sorted_messages = sorted(messages, key=lambda x: x.created_at)
     return jsonify({'messages': [message.to_dict() for message in sorted_messages]}), 200
