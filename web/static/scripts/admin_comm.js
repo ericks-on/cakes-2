@@ -81,7 +81,7 @@ $(document).ready(function() {
             var url = '/api/chat/' + chat_id + '/messages';
             $.get(url, function(data) {
                 if (data.status == 'success') {
-                    $('.chat-dialogue').empty();
+                    $('.chat-dialogue').not(":last").empty();
                     $("#chat-id").val(chat_id);
                     for (var i = 0; i < data.messages.length; i++) {
                         if (data.messages[i].sender == 'client') {

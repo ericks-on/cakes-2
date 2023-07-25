@@ -17,6 +17,7 @@
     --no-change-color: #000000;
     --chat-incoming-color: #FF5722;
     --chat-outgoing-color: #008080;
+    --transparent-bg-color: rgba(0, 0, 0, 0.8);
     --float-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 * {
