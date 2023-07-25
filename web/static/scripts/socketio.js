@@ -13,5 +13,14 @@ $(document).ready(function() {
         </div>
         `
         $('.chat-dialogue').append(newChat);
+        let count = $(".new-msg-count").text();
+        let newCount;
+        if (count == '') {
+            newCount = 1
+        }else{
+            newCount = parseInt(count) + 1
+        }
+        $(".new-msg-count").text(newCount);
+        $(".new-msg-count").css('display', 'flex');
     });
 });

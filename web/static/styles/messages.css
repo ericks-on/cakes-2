@@ -240,6 +240,7 @@
 }
 
 .new-msg-count {
+    display: none;
     width: 15px;
     height: 15px;
     border-radius: 50%;

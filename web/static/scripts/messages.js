@@ -118,6 +118,7 @@ $(document).ready(function() {
         scrollToLastMessage();
         $('.new-msg-on-current-chat').hide();
         $('.new-msg-count').empty();
+        $('.new-msg-count').hide();
     });
 
     // scroll to message btn apperance
