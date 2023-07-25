@@ -94,7 +94,7 @@ def handle_send_message(json):
         print(error)
         return
     sender = user['username']
-    json = {'sender': sender, 'msg': json["msg"]}
+    json = {'sender': sender, 'msg': json["msg"]["content"]}
     print(json["sender"])
     emit('from_client', json, namespace='/admin', to='/admin')
 
