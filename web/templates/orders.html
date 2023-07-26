@@ -335,10 +335,10 @@
         {% endfor %}
     </div>
 </div>
-<div class="new-order-popup">
+<div id="new-order-popup">
     <h2>NEW ORDER</h2>
     <form class="new-order-form d-flex-column" id="new-order-form">
-        <div class="new-order-form-row d-flex">
+        <div class="new-order-form-row d-flex flex-cc">
             <label for="product">Product</label>
             <select name="product" id="product">
                 {% for product in products %}
@@ -346,32 +346,11 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="new-order-form-row d-flex">
+        <div class="new-order-form-row d-flex flex-cc">
             <label for="quantity">Quantity</label>
             <input type="number" name="quantity" id="quantity" min="1" value="1">
         </div>
-        <div class="new-order-form-row d-flex">
-            <label for="status">Status</label>
-            <select name="status" id="status">
-                <option value="pending">Pending</option>
-                <option value="confirmed">Confirmed</option>
-                <option value="delivered">Delivered</option>
-                <option value="settled">Settled</option>
-            </select>
-        </div>
-        <div class="new-order-form-row d-flex">
-            <label for="date">Date</label>
-            <input type="date" name="date" id="date">
-        </div>
-        <div class="new-order-form-row d-flex">
-            <label for="time">Time</label>
-            <input type="time" name="time" id="time">
-        </div>
-        <div class="new-order-form-row d-flex">
-            <label for="amount">Amount</label>
-            <input type="number" name="amount" id="amount" min="1" value="1">
-        </div>
-        <div class="new-order-form-row d-flex">
+        <div class="new-order-form-row d-flex flex-cc">
             <input type="submit" value="Submit" id="submit-order">
         </div>
     </form>

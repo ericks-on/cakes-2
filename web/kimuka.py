@@ -272,13 +272,30 @@ def order_page():
                if value == most_sales]
     most_popular = [list(sales_totals.keys())[index] for index in indices]
 
+    # get the product names
+    all_products_url = f"http://{host}:{port}/api/v1_0/products"
+
+    try:
+        all_products_response = requests.get(url=all_products_url,
+                                             headers=headers,
+                                             timeout=5).json()
+    except requests.exceptions.JSONDecodeError:
+        abort(500, "Connection error")
+
+    try:
+        all_products = all_products_response["products"]
+    except KeyError:
+        error = all_products_response["error"]
+        abort(500, error)
+
     return render_template('orders.html', urlFor=url_for,
                            orders=orders, order_history=order_history,
                            products_sales=products_sales, month=month_str,
                            year=year, sales_comparison=sales_comparison,
                            aov_info=aov_info, most_popular=most_popular,
                            sales_contribution=sales_contribution,
-                           all_sales_value=all_sales_value
+                           all_sales_value=all_sales_value,
+                           products=[product["name"] for product in all_products]
                            )
 
 @app.route("/api/sales", methods=['GET'])

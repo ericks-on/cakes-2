@@ -529,6 +529,42 @@
 }
 
 
+/* ========================================new orders popup================================= */
+#new-order-popup {
+    background-color: var(--primary-color);
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    padding: 20px;
+    display: none;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#new-order-popup select, #new-order-popup input {
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--table-color);
+    background-color: var(--table-row-even-color);
+    border: 1px solid var(--button-color);
+    margin-left: 10px;
+}
+#new-order-popup select:focus, #new-order-popup input:focus {
+    outline: none;
+}
+
+.new-order-form-row {
+    margin: 10px 0;
+    width: 100%;
+    height: auto;
+}
+
+
 
 /* ----------------------------------------order status info----------------------------------------- */
 .order-status-info-btn {

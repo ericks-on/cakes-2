@@ -197,4 +197,10 @@ $(document).ready(function() {
     allOrdersTable.search('').draw();
   });
 
+  $(".new-order-btn").click(function() {
+    $('#popups-container').css('display', 'flex');
+    $('#new-order-popup').css('display', 'flex');
+    $('#new-order-popup *').show();
+  });
+
 });
