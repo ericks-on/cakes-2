@@ -337,22 +337,55 @@
 </div>
 <div id="new-order-popup">
     <h2>NEW ORDER</h2>
-    <form class="new-order-form d-flex-column" id="new-order-form">
-        <div class="new-order-form-row d-flex flex-cc">
-            <label for="product">Product</label>
-            <select name="product" id="product">
-                {% for product in products %}
-                <option value="{{ product }}">{{ product }}</option>
-                {% endfor %}
-            </select>
+    <div class="make-order-container d-flex">
+        <form class="new-order-form d-flex-column" id="new-order-form">
+            <div class="new-order-form-row d-flex">
+                <label for="product">Product</label>
+                <select name="product" id="product">
+                    {% for product in products %}
+                    <option value="{{ product }}">{{ product.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="new-order-form-row d-flex flex-cc">
+                <label for="quantity">Quantity</label>
+                <input type="number" name="quantity" id="quantity" min="1" value="1">
+            </div>
+            <div class="new-order-form-row add-btn d-flex flex-cc">
+                Add
+            </div>
+        </form>
+        <div class="cart d-flex-column">
+            <div class="cart-headline d-flex-column flex-cc">
+                <h2>Cart</h2>
+                <div class="cart-header d-flex">
+                    <div class="cart-header-label">Product</div>
+                    <div class="cart-header-label">Quantity</div>
+                    <div class="cart-header-label">Amount</div>
+                </div>
+            </div>
+            <div class="cart-body d-flex-column" id="cart-body">
+                <div class="cart-body-row d-flex">
+                    <div class="cart-body-row-value cart-product">12-pack</div>
+                    <div class="cart-body-row-value cart-quantity">10</div>
+                    <div class="cart-body-row-value cart-amount">1000</div>
+                </div>
+                <div class="cart-body-row d-flex">
+                    <div class="cart-body-row-value cart-product">12-pack</div>
+                    <div class="cart-body-row-value cart-quantity">10</div>
+                    <div class="cart-body-row-value cart-amount">1000</div>
+                </div>
+            </div>
+            <div class="cart-footer d-flex-column">
+                <div class="cart-footer-row d-flex flex-cc">
+                    <div class="cart-footer-row-label">Total Amount:</div>
+                    <div class="cart-footer-row-value" id="total-amount">KSH 3000</div>
+                </div>
+                <div class="checkout-btn d-flex flex-cc">
+                    Checkout
+                </div>
+            </div>
         </div>
-        <div class="new-order-form-row d-flex flex-cc">
-            <label for="quantity">Quantity</label>
-            <input type="number" name="quantity" id="quantity" min="1" value="1">
-        </div>
-        <div class="new-order-form-row d-flex flex-cc">
-            <input type="submit" value="Submit" id="submit-order">
-        </div>
-    </form>
+    </div>
 </div>
 {% endblock %}

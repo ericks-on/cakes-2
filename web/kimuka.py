@@ -295,7 +295,7 @@ def order_page():
                            aov_info=aov_info, most_popular=most_popular,
                            sales_contribution=sales_contribution,
                            all_sales_value=all_sales_value,
-                           products=[product["name"] for product in all_products]
+                           products=[product for product in all_products]
                            )
 
 @app.route("/api/sales", methods=['GET'])

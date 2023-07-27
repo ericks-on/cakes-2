@@ -533,13 +533,11 @@
 #new-order-popup {
     background-color: var(--primary-color);
     width: auto;
-    height: auto;
+    height: 300px;
     border-radius: 10px;
     padding: 20px;
     display: none;
     flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
 #new-order-popup select, #new-order-popup input {
@@ -553,6 +551,7 @@
     background-color: var(--table-row-even-color);
     border: 1px solid var(--button-color);
     margin-left: 10px;
+    width: 100px;
 }
 #new-order-popup select:focus, #new-order-popup input:focus {
     outline: none;
@@ -562,10 +561,97 @@
     margin: 10px 0;
     width: 100%;
     height: auto;
+    align-items: center;
+}
+
+.add-btn {
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--button-color);
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.new-order-form {
+    width: auto;
+    padding-right: 10px;
+    height: 100%;
+    border-right: 1px solid grey;
+}
+
+.cart {
+    padding-left: 10px;
+}
+.cart-headline {
+    width: 100%;
+}
+.cart-headline h2 {
+    color: var(--button-color);
+    margin-bottom: 20px;
+}
+
+.cart-header {
+    width: 100%;
+    align-items: center;
+    background-color: grey;
+}
+.cart-header-label {
+    font-weight: 900;
+}
+.cart-header-label, .cart-body-row-value {
+    white-space: nowrap;
+    text-align: left;
+    margin-right: 5px;
+    flex-basis: 100px;
 }
 
 
+.cart-body {
+    width: 100%;
+    height: 100px;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.cart-body-row:nth-child(even) {
+    background-color: var(--table-row-even-color);
+}
+.cart-body-row:nth-child(odd) {
+    background-color: var(--table-row-odd-color);
+}
 
+.cart-footer {
+    width: 100%;
+    align-items: center;
+    color: white;
+}
+.cart-footer-row {
+    height: 20px;
+    background-color: grey;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.cart-footer-row-label {
+    font-weight: 900;
+    margin-right: 10px;
+}
+.checkout-btn {
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--button-color);
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 10px 0;
+}
 /* ----------------------------------------order status info----------------------------------------- */
 .order-status-info-btn {
     position: absolute;
