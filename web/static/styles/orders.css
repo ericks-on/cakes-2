@@ -624,6 +624,11 @@
     background-color: var(--table-row-odd-color);
 }
 
+#cart-remove-btn:hover {
+    background-color: var(--button-color);
+    cursor: pointer;
+}
+
 .cart-footer {
     width: 100%;
     align-items: center;

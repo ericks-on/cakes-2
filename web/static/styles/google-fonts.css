@@ -13,3 +13,11 @@
   'GRAD' 200,
   'opsz' 48
 }
+
+.g-small {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 100,
+  'GRAD' 100,
+  'opsz' 12
+}
