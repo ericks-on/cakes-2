@@ -341,7 +341,7 @@
         <form class="new-order-form d-flex-column" id="new-order-form">
             <div class="new-order-form-row d-flex">
                 <label for="product">Product</label>
-                <select name="product" id="product">
+                <select name="product" id="select-order-product">
                     {% for product in products %}
                     <option id="new-order-pdt" value="{{ product.price }}">{{ product.name }}</option>
                     {% endfor %}
@@ -353,7 +353,7 @@
             </div>
             <div class="new-order-form-row d-flex ">
                 <div class="new-order-amount">Amount:</div>
-                <div id="new-order-amount-value">2000</div>
+                <div id="new-order-amount-value"></div>
             </div>
             <div class="new-order-form-row d-flex flex-cc float" id="add-btn">
                 Add
@@ -369,16 +369,6 @@
                 </div>
             </div>
             <div class="cart-body d-flex-column" id="cart-body">
-                <div class="cart-body-row d-flex">
-                    <div class="cart-body-row-value cart-product">12-pack</div>
-                    <div class="cart-body-row-value cart-quantity">10</div>
-                    <div class="cart-body-row-value cart-amount">1000</div>
-                </div>
-                <div class="cart-body-row d-flex">
-                    <div class="cart-body-row-value cart-product">12-pack</div>
-                    <div class="cart-body-row-value cart-quantity">10</div>
-                    <div class="cart-body-row-value cart-amount">1000</div>
-                </div>
             </div>
             <div class="cart-footer d-flex-column">
                 <div class="cart-footer-row d-flex flex-cc">

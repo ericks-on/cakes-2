@@ -203,19 +203,32 @@ $(document).ready(function() {
     $('#new-order-popup *').show();
   });
 
+  // ============================initial amount displayed=========================
+  let price = $("#select-order-product").val();
+  let quantity = $("#new-order-quantity").val();
+  $("#new-order-amount-value").text(price * quantity);
+
   // ========================= display total amount when adding pdt to cart =====================
   $('#new-order-quantity').on('input', function(){
     var quantity = $(this).val();
-    var price = $("#new-order-pdt").val();
+    var price = $("#select-order-product").val();
     var amount = price * quantity;
-    $("#new-order-amount-value").text(amount)
+    $("#new-order-amount-value").text(amount);
   })
+
+
+  // =======================change total amount when product is changed=================
+  $("#select-order-product").on('change', function(){
+    let price = $(this).val();
+    let quantity = $("#new-order-quantity").val();
+    $("#new-order-amount-value").text(price * quantity);
+  });
 
   // ======================Adding items to cart ==============================
   $("#add-btn").click(function(){
-    var amount = $("#new-order-amount-value").text()
-    var quantity = $("#new-order-quantity").val()
-    var name = $("#new-order-pdt").text()
+    var amount = $("#new-order-amount-value").text();
+    var quantity = $("#new-order-quantity").val();
+    var name = $("#new-order-pdt").text();
     let newItem = `
     <div class="cart-body-row d-flex">
         <div class="cart-body-row-value" id="cart-product">${name}</div>
@@ -223,10 +236,10 @@ $(document).ready(function() {
         <div class="cart-body-row-value" id="cart-amount">${amount}</div>
     </div>
     `
-    let orderTotal = parseInt($("#cart-total-amount").text())
-    let newTotal = orderTotal + parseInt(amount)
-    $("#cart-total-amount").text(newTotal)
-    $(".cart-body").append(newItem)
+    let orderTotal = parseInt($("#cart-total-amount").text());
+    let newTotal = orderTotal + parseInt(amount);
+    $("#cart-total-amount").text(newTotal);
+    $(".cart-body").append(newItem);
   });
 
 });
