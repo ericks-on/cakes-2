@@ -652,6 +652,19 @@
     cursor: pointer;
     margin: 10px 0;
 }
+
+.new-order-amount {
+    font-size: 20px;
+    font-weight: 900;
+    margin-right: 10px;
+}
+.new-order-amount-value {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+
+
 /* ----------------------------------------order status info----------------------------------------- */
 .order-status-info-btn {
     position: absolute;
