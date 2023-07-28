@@ -658,7 +658,7 @@
     font-weight: 900;
     margin-right: 10px;
 }
-.new-order-amount-value {
+#new-order-amount-value {
     font-weight: bold;
     font-size: 15px;
 }

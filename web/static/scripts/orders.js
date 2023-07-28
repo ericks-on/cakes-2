@@ -203,4 +203,12 @@ $(document).ready(function() {
     $('#new-order-popup *').show();
   });
 
+  // ========================= display total amount when adding pdt to cart =====================
+  $('#new-order-quantity').on('input', function(){
+    var quantity = $(this).val();
+    var price = $("#new-order-pdt").val();
+    var amount = price * quantity;
+    $("#new-order-amount-value").text(amount)
+  })
+
 });
