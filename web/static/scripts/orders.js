@@ -211,4 +211,22 @@ $(document).ready(function() {
     $("#new-order-amount-value").text(amount)
   })
 
+  // ======================Adding items to cart ==============================
+  $("#add-btn").click(function(){
+    var amount = $("#new-order-amount-value").text()
+    var quantity = $("#new-order-quantity").val()
+    var name = $("#new-order-pdt").text()
+    let newItem = `
+    <div class="cart-body-row d-flex">
+        <div class="cart-body-row-value" id="cart-product">${name}</div>
+        <div class="cart-body-row-value" id="cart-quantity">${quantity}</div>
+        <div class="cart-body-row-value" id="cart-amount">${amount}</div>
+    </div>
+    `
+    let orderTotal = parseInt($("#cart-total-amount"))
+    let newTotal = orderTotal + parseInt(amount)
+    $("#cart-total-amount").text(newTotal)
+    $(".cart-body").append(newItem)
+  });
+
 });

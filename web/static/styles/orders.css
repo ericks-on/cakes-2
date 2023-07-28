@@ -564,7 +564,7 @@
     align-items: center;
 }
 
-.add-btn {
+#add-btn {
     width: 100px;
     height: 30px;
     border-radius: 5px;
@@ -663,6 +663,9 @@
     font-size: 15px;
 }
 
+#add-btn {
+    margin: 0 auto;
+}
 
 
 /* ----------------------------------------order status info----------------------------------------- */

@@ -86,6 +86,10 @@ body {
     color: var(--no-change-color);
 }
 
+.float:hover {
+    box-shadow: var(--float-box-shadow);
+}
+
 #content {
     flex-basis: 85%;
     background-color: var(--primary-color);
