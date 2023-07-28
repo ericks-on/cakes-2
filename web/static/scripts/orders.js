@@ -247,4 +247,13 @@ $(document).ready(function() {
     $(".cart-body").append(newItem);
   });
 
+  //==========================delete from cart==============================
+  $(".cart-body").on('click', '#cart-remove-btn', function(){
+    var amount = $(this).prev().text();
+    let orderTotal = parseInt($("#cart-total-amount").text());
+    let newTotal = orderTotal - parseInt(amount);
+    $("#cart-total-amount").text(newTotal);
+    $(this).parent().remove();
+  });
+
 });
