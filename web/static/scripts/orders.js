@@ -223,7 +223,7 @@ $(document).ready(function() {
         <div class="cart-body-row-value" id="cart-amount">${amount}</div>
     </div>
     `
-    let orderTotal = parseInt($("#cart-total-amount"))
+    let orderTotal = parseInt($("#cart-total-amount").text())
     let newTotal = orderTotal + parseInt(amount)
     $("#cart-total-amount").text(newTotal)
     $(".cart-body").append(newItem)
