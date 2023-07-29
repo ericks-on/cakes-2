@@ -502,6 +502,11 @@ def send_message(chat_id):
 
     return jsonify({"message": message, "status": "success"}), 201
 
+@app.route("/api/orders", methods=["POST"])
+@jwt_required()
+def new_order():
+    """Making a new order"""
+
 
 if __name__ == "__main__":
     # app.run(host='0.0.0.0', port=5000, debug=True)
