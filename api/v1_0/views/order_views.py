@@ -43,8 +43,13 @@ def add_order():
     if not data:
         return jsonify({'error': 'Invalid JSON data'}), 400
     order = Order(user_id=user.id)
-    order_qty = 0
-    order_value = 0
+    order_qty = sum([int(item.get('quantity')) for item in data])
+    order_value = sum([storage.get_product(item.get('name')).price *
+                       int(item.get('quantity')) for item in data])
+    order.quantity = order_qty
+    order.order_value = order_value
+    storage.add(order)
+    storage.save()
     for item in data:
         if not item.get('name') or not item.get('quantity'):
             return jsonify({'error': 'Invalid JSON data'}), 400
@@ -56,14 +61,9 @@ def add_order():
         p_sale = ProductSales(product_id=pdt.id, order_id=order.id,
                               quantity=item.get('quantity'),
                               sales_value=sales_value)
-        order_qty += int(item.get('quantity'))
-        order_value += sales_value
         storage.add(p_sale)
+        storage.save()
         
-    order.quantity = order_qty
-    order.order_value = order_value
-    storage.add(order)
-    storage.save()
     order_obj = storage.get(Order, order.id)
     return jsonify({"order": order_obj.to_dict()}), 201
 

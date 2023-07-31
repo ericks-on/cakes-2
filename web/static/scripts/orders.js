@@ -273,9 +273,19 @@ $(document).ready(function() {
       var order = {
         "order_items": items
       }
-      console.log(JSON.stringify(order));
-      $.post( "/api/orders", JSON.stringify(order), function( data ) {
-        console.log(data);
+      headers = {
+        "Content-Type": "application/json"
+      }
+      $.ajax( {
+        url:"/api/orders",
+        data: JSON.stringify(order),
+        type: "POST",
+        headers: headers,
+        success: function(data) {
+          alert('Order created successfully');
+          location.reload();
+        }
+    
       });
     }
   });
