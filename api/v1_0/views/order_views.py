@@ -20,8 +20,9 @@ orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
 def all_orders():
     """To obtain all orders"""
     username = get_jwt_identity()
-    # username = 'erickson'
     user = storage.get_user(username)
+    if not user:
+        return jsonify({'error': 'Unauthorized'}), 401
     if user.user_type == 'admin':
         orders = [order.to_dict() for order in storage.all(Order)]
         return jsonify({"orders": orders}), 200

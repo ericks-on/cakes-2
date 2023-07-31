@@ -367,7 +367,11 @@ def get_orders():
         orders_response = requests.get(url=orders_url, timeout=5).json()
     except requests.exceptions.JSONDecodeError:
         abort(500, "Connection error")
-    orders = orders_response["orders"]
+        
+    try:
+        orders = orders_response["orders"]
+    except KeyError:
+        abort(500, "Error getting orders")
     return jsonify({"orders": orders})
 
 @app.route('/api/verify', methods=['GET'])
