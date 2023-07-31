@@ -645,7 +645,7 @@
     font-weight: 900;
     margin-right: 10px;
 }
-.checkout-btn {
+#checkout-btn {
     width: 100px;
     height: 30px;
     border-radius: 5px;

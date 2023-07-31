@@ -362,9 +362,12 @@ def get_monthly_aov():
 @jwt_required()
 def get_orders():
     """get all orders"""
+    access_token = request.cookies.get('access_token_cookie')
+    headers = {"Authorization": f"Bearer {access_token}"}
     orders_url = f"http://{host}:{port}/api/v1_0/orders"
     try:
-        orders_response = requests.get(url=orders_url, timeout=5).json()
+        orders_response = requests.get(url=orders_url, timeout=5,
+                                       headers=headers).json()
     except requests.exceptions.JSONDecodeError:
         abort(500, "Connection error")
         
@@ -373,6 +376,11 @@ def get_orders():
     except KeyError:
         abort(500, "Error getting orders")
     return jsonify({"orders": orders})
+
+@app.route("/api/orders", methods=["POST"])
+@jwt_required()
+def new_order():
+    """Making a new order"""
 
 @app.route('/api/verify', methods=['GET'])
 @jwt_required()
@@ -505,11 +513,6 @@ def send_message(chat_id):
         abort(500, error)
 
     return jsonify({"message": message, "status": "success"}), 201
-
-@app.route("/api/orders", methods=["POST"])
-@jwt_required()
-def new_order():
-    """Making a new order"""
 
 
 if __name__ == "__main__":

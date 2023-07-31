@@ -256,4 +256,27 @@ $(document).ready(function() {
     $(this).parent().remove();
   });
 
+  // =============================Checkout==============================
+  $("#checkout-btn").click(function(){
+    var cartItems = $(".cart-body-row");
+    if (cartItems.length == 0) {
+      alert('Please add items to cart');
+    }else {
+      var items = [];
+      for (var i = 0; i < cartItems.length; i++) {
+        var item = {
+          name: $(cartItems[i]).find("#cart-product").text(),
+          quantity: $(cartItems[i]).find("#cart-quantity").text()
+        }
+        items.push(item);
+      }
+      var order = {
+        "items": items
+      }
+      $.post( "/api/orders", order, function( data ) {
+        console.log(data);
+      });
+    }
+  });
+
 });
