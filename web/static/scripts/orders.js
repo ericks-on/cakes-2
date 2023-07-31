@@ -271,7 +271,7 @@ $(document).ready(function() {
         items.push(item);
       }
       var order = {
-        "items": items
+        "order_items": items
       }
       $.post( "/api/orders", order, function( data ) {
         console.log(data);

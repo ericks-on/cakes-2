@@ -381,6 +381,43 @@ def get_orders():
 @jwt_required()
 def new_order():
     """Making a new order"""
+    access_token = request.cookies.get('access_token_cookie')
+    header = {"Authorization": f"Bearer {access_token}"}
+    order_items  = request.get_json().get("order_items")
+    items = 
+    payload = {}
+    
+    # ======================clean up ======================
+    if not order_items:
+        abort(400, "No order items")    
+    if len(order_items) == 0:
+        abort(400, "No order items")
+        
+    for item in order_items:
+        obj = {}
+        if not item["name"] or not item["quantity"]:
+            abort(400, "Missing product name or quantity")
+        try:
+            quantity = int(item["quantity"])
+        except ValueError:
+            abort(400, "Quantity must be an integer")
+            
+        if quantity < 1:
+            abort(400, "Quantity must be greater than 0")
+            
+        obj["name"] = item["name"]
+        obj["quantity"] = quantity
+        items.append(obj)
+        
+    # ======================send request ======================
+    payload["order_items"] = items
+    url = f"http://{host}:{port}/api/v1_0/orders"
+    
+    try:
+        response = requests.post(url=url, headers=headers,
+                                 json=payload, timeout=5).json()
+    except requests.exceptions.JSONDecodeError:
+        abort(500, "Connection error")
 
 @app.route('/api/verify', methods=['GET'])
 @jwt_required()

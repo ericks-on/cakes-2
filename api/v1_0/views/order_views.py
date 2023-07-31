@@ -9,6 +9,7 @@ import os
 import calendar
 from models import storage
 from models.product import Product
+from models.product_sales import ProductSales
 
 
 orders_bp = Blueprint('orders', __name__, url_prefix='/orders')
@@ -29,7 +30,6 @@ def all_orders():
     else:
         orders = [order.to_dict() for order in user.orders]
         return jsonify({"orders": orders}), 200
-
 
 @orders_bp.route('/', methods=['POST'])
 @swag_from('documentation/order/add_order.yml')
