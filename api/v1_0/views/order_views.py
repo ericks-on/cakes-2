@@ -36,14 +36,36 @@ def all_orders():
 @jwt_required()
 def add_order():
     """ Adds new order"""
-    username = get_jwt_identity()
-    user_id = storage.get_user(username).id
-    order_value = request.json.get("order_value")
-    quantity = request.json.get("quantity")
-    new_order = Order(user_id=user_id, order_value=order_value, quantity=quantity)
-    storage.add(new_order)
+    user = storage.get_user(get_jwt_identity())
+    if not user:
+        return jsonify({'error': 'Unauthorized'}), 401
+    data = request.get_json().get('order_items')
+    if not data:
+        return jsonify({'error': 'Invalid JSON data'}), 400
+    order = Order(user_id=user.id)
+    order_qty = 0
+    order_value = 0
+    for item in data:
+        if not item.get('name') or not item.get('quantity'):
+            return jsonify({'error': 'Invalid JSON data'}), 400
+        if int(item.get('quantity')) < 1:
+            return jsonify({'error': 'Invalid quantity'}), 400
+        
+        pdt = storage.get_product(item.get('name'))
+        sales_value = pdt.price * int(item.get('quantity'))
+        p_sale = ProductSales(product_id=pdt.id, order_id=order.id,
+                              quantity=item.get('quantity'),
+                              sales_value=sales_value)
+        order_qty += int(item.get('quantity'))
+        order_value += sales_value
+        storage.add(p_sale)
+        
+    order.quantity = order_qty
+    order.order_value = order_value
+    storage.add(order)
     storage.save()
-    return jsonify(new_order.to_dict()), 200
+    order_obj = storage.get(Order, order.id)
+    return jsonify({"order": order_obj.to_dict()}), 201
 
 @orders_bp.route('/<order_id>', methods=['GET'])
 @swag_from('documentation/order/get_order_by_id.yml')

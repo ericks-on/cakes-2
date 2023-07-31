@@ -265,15 +265,16 @@ $(document).ready(function() {
       var items = [];
       for (var i = 0; i < cartItems.length; i++) {
         var item = {
-          name: $(cartItems[i]).find("#cart-product").text(),
-          quantity: $(cartItems[i]).find("#cart-quantity").text()
+          "name": $(cartItems[i]).find("#cart-product").text(),
+          "quantity": $(cartItems[i]).find("#cart-quantity").text()
         }
         items.push(item);
       }
       var order = {
         "order_items": items
       }
-      $.post( "/api/orders", order, function( data ) {
+      console.log(JSON.stringify(order));
+      $.post( "/api/orders", JSON.stringify(order), function( data ) {
         console.log(data);
       });
     }

@@ -382,9 +382,9 @@ def get_orders():
 def new_order():
     """Making a new order"""
     access_token = request.cookies.get('access_token_cookie')
-    header = {"Authorization": f"Bearer {access_token}"}
+    headers = {"Authorization": f"Bearer {access_token}"}
     order_items  = request.get_json().get("order_items")
-    items = 
+    items = []
     payload = {}
     
     # ======================clean up ======================
@@ -418,6 +418,13 @@ def new_order():
                                  json=payload, timeout=5).json()
     except requests.exceptions.JSONDecodeError:
         abort(500, "Connection error")
+        
+    try:
+        new_order = response["order"]
+    except KeyError:
+        abort(500, "Error creating order")
+        
+    return jsonify({"order": new_order})
 
 @app.route('/api/verify', methods=['GET'])
 @jwt_required()
