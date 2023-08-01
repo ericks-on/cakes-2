@@ -282,7 +282,7 @@ $(document).ready(function() {
         type: "POST",
         headers: headers,
         success: function(data) {
-          alert('Order created successfully');
+          alert('Order created successfully, Check Order History for details');
           location.reload();
         }
     
