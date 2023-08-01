@@ -215,6 +215,9 @@
     cursor: pointer;
     background-color: var(--button-color);
 }
+#order-hist-table tfoot td:hover {
+    color: white;
+}
 
 
 /* -----------------------------------------------Product analysis table--------------------------------------- */

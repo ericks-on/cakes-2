@@ -28,8 +28,10 @@ def all_orders():
         orders = [order.to_dict() for order in storage.all(Order)]
         return jsonify({"orders": orders}), 200
     else:
-        orders = [order.to_dict() for order in user.orders]
-        return jsonify({"orders": orders}), 200
+        orders = user.orders
+        orders = sorted(orders, key=lambda x: x.created_at, reverse=True)
+        sorted_orders = [order.to_dict() for order in orders]
+        return jsonify({"orders": sorted_orders}), 200
 
 @orders_bp.route('/', methods=['POST'])
 @swag_from('documentation/order/add_order.yml')
