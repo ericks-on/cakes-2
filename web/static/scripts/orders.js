@@ -204,14 +204,14 @@ $(document).ready(function() {
   });
 
   // ============================initial amount displayed=========================
-  let price = $("#select-order-product").val();
+  let price = JSON.parse($("#select-order-product").val()).price;
   let quantity = $("#new-order-quantity").val();
   $("#new-order-amount-value").text(price * quantity);
 
   // ========================= display total amount when adding pdt to cart =====================
   $('#new-order-quantity').on('input', function(){
     var quantity = $(this).val();
-    var price = $("#select-order-product").val();
+    var price = JSON.parse($("#select-order-product").val()).price;
     var amount = price * quantity;
     $("#new-order-amount-value").text(amount);
   })
@@ -219,7 +219,7 @@ $(document).ready(function() {
 
   // =======================change total amount when product is changed=================
   $("#select-order-product").on('change', function(){
-    let price = $(this).val();
+    let price = JSON.parse($(this).val()).price;
     let quantity = $("#new-order-quantity").val();
     $("#new-order-amount-value").text(price * quantity);
   });
@@ -228,7 +228,7 @@ $(document).ready(function() {
   $("#add-btn").click(function(){
     var amount = $("#new-order-amount-value").text();
     var quantity = $("#new-order-quantity").val();
-    var name = $("#new-order-pdt").text();
+    var name = JSON.parse($("#select-order-product").val()).name;
     let newItem = `
     <div class="cart-body-row d-flex">
         <div class="cart-body-row-value d-flex flex-cc" id="cart-product">${name}</div>
@@ -241,7 +241,11 @@ $(document).ready(function() {
         </div>
     </div>
     `
-    let orderTotal = parseInt($("#cart-total-amount").text());
+    if ($("#cart-total-amount").text() == '') {
+      orderTotal = 0;
+    }else {
+      let orderTotal = parseInt($("#cart-total-amount").text());
+    }
     let newTotal = orderTotal + parseInt(amount);
     $("#cart-total-amount").text(newTotal);
     $(".cart-body").append(newItem);

@@ -58,10 +58,10 @@ def add_order():
         if int(item.get('quantity')) < 1:
             return jsonify({'error': 'Invalid quantity'}), 400
         
-        pdt = storage.get_product(item.get('name'))
-        sales_value = pdt.price * int(item.get('quantity'))
+        pdt = storage.get_product(item['name'])
+        sales_value = pdt.price * int(item['quantity'])
         p_sale = ProductSales(product_id=pdt.id, order_id=order.id,
-                              quantity=item.get('quantity'),
+                              quantity=item['quantity'],
                               sales_value=sales_value)
         storage.add(p_sale)
         storage.save()

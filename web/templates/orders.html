@@ -182,7 +182,7 @@
                     trending_flat
                 </span>
                 {% endif %}
-                <p>{{ sales_comparison[product].percent * 100 }}%</p>
+                <p>{{ sales_comparison[product].percent }}%</p>
             </div>
             <div class="pdt-sales">{{ sales.total_sales }} sales</div>
         </div>
@@ -343,7 +343,9 @@
                 <label for="product">Product</label>
                 <select name="product" id="select-order-product">
                     {% for product in products %}
-                    <option id="new-order-pdt" value="{{ product.price }}">{{ product.name }}</option>
+                    <option class="new-order-pdt" value='{"price": {{ product.price }}, "name": "{{ product.name | e }}"}'>
+                        {{ product.name }}
+                    </option>
                     {% endfor %}
                 </select>
             </div>
@@ -374,7 +376,7 @@
             <div class="cart-footer d-flex-column">
                 <div class="cart-footer-row d-flex flex-cc">
                     <div class="cart-footer-row-label">Total Amount: KSH</div>
-                    <div class="cart-footer-row-value" id="cart-total-amount">3000</div>
+                    <div class="cart-footer-row-value" id="cart-total-amount"></div>
                 </div>
                 <div class="d-flex flex-cc float" id="checkout-btn">
                     Checkout

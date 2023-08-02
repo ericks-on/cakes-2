@@ -208,12 +208,14 @@ def order_page():
                     sales_comparison[product] = {}
                     sales_comparison[product]["change"] = "down"
                     diff = prev_sales - current_sales
-                    sales_comparison[product]["percent"] = diff / prev_sales
+                    sales_comparison[product]["percent"] = round(
+                        (diff / prev_sales) * 100, 2)
                 elif prev_sales < current_sales:
                     sales_comparison[product] = {}
                     sales_comparison[product]["change"] = "up"
                     diff = current_sales - prev_sales
-                    sales_comparison[product]["percent"] = diff / prev_sales
+                    sales_comparison[product]["percent"] = round(
+                        (diff / prev_sales) * 100, 2)
                 else:
                     sales_comparison[product] = {}
                     sales_comparison[product]["change"] = "same"
@@ -260,8 +262,8 @@ def order_page():
     for product, sales in sales_totals.items():
         sales_contribution[product] = {}
         sales_contribution[product]["sales"] = sales["total_sales"]
-        sales_contribution[product]["percent"] = round((sales["total_sales"] /
-                                                        all_sales_sum) * 100, 2)
+        sales_contribution[product]["percent"] = round(((sales["total_sales"] /
+                                                        all_sales_sum) * 100), 2)
 
     most_sales = max([value["total_sales"] for value in sales_totals.values()])
     sales_values_totals = {}
