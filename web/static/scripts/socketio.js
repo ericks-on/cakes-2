@@ -22,5 +22,6 @@ $(document).ready(function() {
         }
         $(".new-msg-count").text(newCount);
         $(".new-msg-count").css('display', 'flex');
+        $("#new-msg-sound")[0].play();
     });
 });

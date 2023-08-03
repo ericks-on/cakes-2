@@ -202,7 +202,7 @@ def order_page():
                 else:
                     sales_comparison[product] = {}
                     sales_comparison[product]["change"] = "up"
-                    sales_comparison[product]["percent"] = 1
+                    sales_comparison[product]["percent"] = 100
             elif prev_sales > 0:
                 if prev_sales > current_sales:
                     sales_comparison[product] = {}
@@ -223,7 +223,7 @@ def order_page():
         else:
             sales_comparison[product] = {}
             sales_comparison[product]["change"] = "up"
-            sales_comparison[product]["percent"] = 1
+            sales_comparison[product]["percent"] = 100
 
     # ==================================Calculating AOV===================================
     total_orders = len(orders)
