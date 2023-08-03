@@ -231,7 +231,10 @@ def order_page():
     for order in orders:
         order_value = int(order["order_value"])
         total_order_value += order_value
-    aov = total_order_value / total_orders
+    if total_orders == 0:
+        aov = 0
+    else:
+        aov = total_order_value / total_orders
     aov_info = {}
     aov_info["total_orders"] = total_orders
     aov_info["total_order_value"] = total_order_value
@@ -261,9 +264,13 @@ def order_page():
     sales_contribution = {}
     for product, sales in sales_totals.items():
         sales_contribution[product] = {}
-        sales_contribution[product]["sales"] = sales["total_sales"]
-        sales_contribution[product]["percent"] = round(((sales["total_sales"] /
-                                                        all_sales_sum) * 100), 2)
+        if all_sales_sum == 0:
+            sales_contribution[product]["sales"] = 0
+            sales_contribution[product]["percent"] = 0
+        else:
+            sales_contribution[product]["sales"] = sales["total_sales"]
+            sales_contribution[product]["percent"] = round(
+                ((sales["total_sales"] / all_sales_sum) * 100), 2)
 
     most_sales = max([value["total_sales"] for value in sales_totals.values()])
     sales_values_totals = {}
