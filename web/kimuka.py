@@ -296,15 +296,18 @@ def order_page():
         error = all_products_response["error"]
         abort(500, error)
 
-    return render_template('orders.html', urlFor=url_for,
-                           orders=orders, order_history=order_history,
-                           products_sales=products_sales, month=month_str,
-                           year=year, sales_comparison=sales_comparison,
-                           aov_info=aov_info, most_popular=most_popular,
-                           sales_contribution=sales_contribution,
-                           all_sales_value=all_sales_value,
-                           products=[product for product in all_products]
-                           )
+    if user['user_type'] == 'admin':
+        return render_template('admin_orders.html', urlFor=url_for)
+    else:
+        return render_template('orders.html', urlFor=url_for,
+                            orders=orders, order_history=order_history,
+                            products_sales=products_sales, month=month_str,
+                            year=year, sales_comparison=sales_comparison,
+                            aov_info=aov_info, most_popular=most_popular,
+                            sales_contribution=sales_contribution,
+                            all_sales_value=all_sales_value,
+                            products=[product for product in all_products]
+                            )
 
 @app.route("/api/sales", methods=['GET'])
 @jwt_required()
