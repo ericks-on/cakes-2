@@ -208,10 +208,16 @@ def get_total_sales_within_period(year, month=None):
     if month:
         sales = {}
         for product in products:
+            pdt_sales = {}
             total_sales = sum([sale.quantity for sale in product.sales
                               if sale.created_at.year == int(year)
                               and sale.created_at.month == int(month)])
-            sales[product.name] = total_sales
+            total_value = sum([sale.sales_value for sale in product.sales
+                              if sale.created_at.year == int(year)
+                              and sale.created_at.month == int(month)])
+            pdt_sales["total_sales"] = total_sales
+            pdt_sales["total_value"] = total_value
+            sales[product.name] = pdt_sales
         return jsonify({"sales": sales}), 200
     else:
         months = calendar.month_name[1:]

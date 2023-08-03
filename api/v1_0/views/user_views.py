@@ -54,8 +54,7 @@ def add_user():
 @jwt_required()
 def get_user():
     """ Gets user information"""
-    try:
-        request_user = storage.get_user(get_jwt_identity())
-    except Exception:
-        abort(401)
+    request_user = storage.get_user(get_jwt_identity())
+    if not request_user:
+        abort(404)
     return jsonify({"user": request_user.to_dict()}), 200
