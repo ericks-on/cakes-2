@@ -392,7 +392,29 @@ def get_orders():
 @jwt_required()
 def get_order_products(order_id):
     """Getting products ordered for a specific order"""
+    pdt_url = f"http://{host}:{port}/api/v1_0/orders/{order_id}/products"
+    access_token = request.cookies.get('access_token_cookie')
+    headers = {"Authorization": f"Bearer {access_token}"}
+    try:
+        pdt_response = requests.get(url=pdt_url, timeout=5,
+                                    headers=headers).json()
+    except requests.exceptions.JSONDecodeError:
+        abort(500, "Connection error")
+        
+    try:
+        pdts = pdt_response["products"]
+    except KeyError:
+        abort(500, "Error getting products")
     
+    products = []
+    for product in pdts:
+        pdt = {}
+        pdt["name"] = product["name"]
+        pdt["quantity"] = product["quantity"]
+        pdt["price"] = product["price"]
+        products.append(pdt)
+        
+    return jsonify({"products": products})
 
 @app.route("/api/orders", methods=["POST"])
 @jwt_required()

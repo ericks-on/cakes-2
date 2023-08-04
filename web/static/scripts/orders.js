@@ -73,6 +73,18 @@ $(document).ready(function() {
         } else if (index == 4) {
           $('#order-amount').text($(this).text());
         }
+      });
+    $.get('/api/orders/' + $('#order-id').text() + '/products', function(data) {
+      var products = data.products;
+      for (var i = 0; i < products.length; i++) {
+        var row = `
+        <li class="d-flex">
+          <div class="order-detailed-product-name">Product 2</div>
+          <div class="order-detailed-product-quantity">x 12</div>
+        </li>
+        `
+        orderProductsTable.find('tbody').append(row);
+      }
     });
   });
 

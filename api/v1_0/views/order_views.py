@@ -148,6 +148,28 @@ def delete_order(order_id):
     else:
         abort(404)
 
+@orders_bp.route('/<order_id>/products', methods=['GET'])
+@swag_from('documentation/order/get_order_products.yml')
+@jwt_required()
+def get_order_products(order_id):
+    """Getting order products"""
+    username = get_jwt_identity()
+    user = storage.get_user(username)
+    if user.user_type == 'admin':
+        order = storage.get(Order, order_id)
+    else:
+        orders = user.orders
+        for obj in orders:
+            if obj.id == order_id:
+                order = obj
+            else:
+                order = None
+    if order:
+        products = [product.to_dict() for product in order.products]
+        return jsonify({"products": products}), 200
+    else:
+        abort(404)
+
 @orders_bp.route('/period/<year>/<month>', methods=['GET'])
 @orders_bp.route('/period/<year>/', methods=['GET'])
 @swag_from('documentation/order/get_order_by_period.yml')
