@@ -79,11 +79,11 @@ $(document).ready(function() {
       for (var i = 0; i < products.length; i++) {
         var row = `
         <li class="d-flex">
-          <div class="order-detailed-product-name">Product 2</div>
-          <div class="order-detailed-product-quantity">x 12</div>
+          <div class="order-detailed-product-name">${products[i]["name"]}</div>
+          <div class="order-detailed-product-quantity">x ${products[i]["quantity"]}</div>
         </li>
         `
-        orderProductsTable.find('tbody').append(row);
+        $('#order-products ul').append(row);
       }
     });
   });
