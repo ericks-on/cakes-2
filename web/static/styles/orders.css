@@ -417,16 +417,23 @@
     font-size: 15px;
     font-weight: bold;
     color: var(--button-color);
-    flex-basis: 20%;
+    flex-basis: 200px;
     text-align: left;
 }
 .order-detailed-popup-row-value {
     font-size: 15px;
     flex-basis: 80%;
-    white-space: nowrap;
     text-align: left;
     color: var(--table-color);
-    width: 80%;
+}
+
+.order-detailed-product-quantity {
+    margin: 0 10px;
+    font-weight: 600;
+}
+
+#order-products ul {
+    padding: 0;
 }
 
 

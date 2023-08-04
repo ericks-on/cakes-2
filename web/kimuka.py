@@ -388,6 +388,12 @@ def get_orders():
         abort(500, "Error getting orders")
     return jsonify({"orders": orders})
 
+@app.route('/api/orders/<order_id>/products', methods=['GET'])
+@jwt_required()
+def get_order_products(order_id):
+    """Getting products ordered for a specific order"""
+    
+
 @app.route("/api/orders", methods=["POST"])
 @jwt_required()
 def new_order():
