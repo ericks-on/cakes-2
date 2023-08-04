@@ -74,7 +74,7 @@ $(document).ready(function() {
           $('#order-amount').text($(this).text());
         }
       });
-    $.get('/api/orders/' + $('#order-id').text() + '/products', function(data) {
+    $.get('/api/orders/' + $("#order-id").text() + '/products', function(data) {
       var products = data.products;
       for (var i = 0; i < products.length; i++) {
         var row = `
