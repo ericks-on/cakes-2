@@ -74,18 +74,19 @@ $(document).ready(function() {
           $('#order-amount').text($(this).text());
         }
       });
-    $.get('/api/orders/' + $("#order-id").text() + '/products', function(data) {
-      var products = data.products;
-      for (var i = 0; i < products.length; i++) {
-        var row = `
-        <li class="d-flex">
-          <div class="order-detailed-product-name">${products[i]["name"]}</div>
-          <div class="order-detailed-product-quantity">x ${products[i]["quantity"]}</div>
-        </li>
-        `
-        $('#order-products ul').append(row);
-      }
-    });
+      let order_id = $("#order-id").text();
+      $.get('/api/orders/' + order_id + '/products', function(data) {
+        var products = data.products;
+        for (var i = 0; i < products.length; i++) {
+          var row = `
+          <li class="d-flex">
+            <div class="order-detailed-product-name">${products[i]["name"]}</div>
+            <div class="order-detailed-product-quantity">x ${products[i]["quantity"]}</div>
+          </li>
+          `
+          $('#order-products ul').append(row);
+        }
+      });
   });
 
   // =====================================insights popup======================================  
