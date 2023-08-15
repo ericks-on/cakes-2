@@ -47,8 +47,12 @@ def login():
     else:
         url = f"http://{host}:{port}/api/v1_0/token/auth"
         payload = {}
-        payload["username"] = request.form["username"]
-        payload["password"] = request.form["password"]
+        username = request.form["username"]
+        password = request.form["password"]
+        if not username or password:
+            abort(400)
+        payload["username"] = username
+        payload["password"] = password
         api_response = requests.post(url=url, json=payload, timeout=5)
         try:
             response_obj = api_response.json()

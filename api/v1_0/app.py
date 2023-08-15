@@ -37,14 +37,10 @@ def login():
     """authenticates user and creates an access token"""
     all_users = storage.all(User)
     all_usernames = [user.username for user in all_users]
-    try:
-        username = request.get_json().get("username")
-    except BadRequest:
+    username = request.get_json().get("username")
+    password = request.get_json().get("password")
+    if not username or password:
         return jsonify({"msg": "Missing username parameter"}), 400
-    try:
-        password = request.get_json().get("password")
-    except BadRequest:
-        return jsonify({"msg": "Missing password parameter"}), 400
 
     if username in all_usernames:
         user = storage.get_user(username)
