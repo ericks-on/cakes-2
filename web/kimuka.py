@@ -59,7 +59,7 @@ def login():
             response = make_response(redirect(url_for('message_page')))
             set_access_cookies(response, response_obj['access_token'])
             return response
-        elif api_response.status_code == 401:
+        else:
             return redirect(url_for('index'))
 
 @app.route('/logout')

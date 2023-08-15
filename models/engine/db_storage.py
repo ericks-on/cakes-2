@@ -45,11 +45,11 @@ class DBStorage:
 
     def add(self, obj):
         """adding new object to session"""
-        try:
-            password = obj.password
-            obj.password = bcrypt.hash(password)
-        except AttributeError:
-            pass
+        # try:
+        #     password = obj.password
+        #     obj.password = bcrypt.hash(password)
+        # except AttributeError:
+        #     pass
         session = self.__session()
         session.add(obj)
 
