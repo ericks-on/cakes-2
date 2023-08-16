@@ -1,2 +1,2 @@
 #!/bin/bash
-KIMUKA_SQL_USER=kimuka KIMUKA_SQL_DB=kimuka_db KIMUKA_SQL_PWD=kimuka_pwd KIMUKA_SQL_HOST=localhost KIMUKA_API_SEC_KEY=Erickson254#jwt python3 -m api.v1_0.app
+python3 -m api.v1_0.app

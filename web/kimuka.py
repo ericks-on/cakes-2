@@ -4,6 +4,7 @@ import os
 import calendar
 from datetime import datetime
 import requests
+import json
 from collections import OrderedDict
 from flask import make_response, abort
 from flask_jwt_extended import jwt_required, JWTManager, get_jwt_identity
@@ -60,16 +61,15 @@ def login():
         api_response = requests.post(url=url, json=payload, timeout=5)
         try:
             response_obj = api_response.json()
-        except requests.exceptions.JSONDecodeError:
+        except json.JSONDecodeError:
             abort(500, "Connection error")
 
         if api_response.status_code == 200:
-            respons = make_response(redirect(url_for('message_page')))
+            response = make_response(redirect(url_for('message_page')))
             set_access_cookies(response, response_obj['access_token'])
-            return respons
+            return response
         else:
-            # return redirect(url_for('index'))
-            return jsonify(api_response.text)
+            return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
@@ -89,7 +89,7 @@ def message_page():
     try:
         user_response = requests.get(url=user_url, headers=headers,
                                      timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
     try:
         user = user_response["user"]
@@ -101,7 +101,7 @@ def message_page():
     try:
         chat_response = requests.get(url=chat_url, headers=headers,
                                      timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -132,7 +132,7 @@ def order_page():
     try:
         user_response = requests.get(url=user_url, headers=headers,
                                         timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
     try:
         user = user_response["user"]
@@ -145,7 +145,7 @@ def order_page():
     try:
         orders_response = requests.get(url=orders_url, headers=headers,
                                        timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -164,7 +164,7 @@ def order_page():
     try:
         products_response = requests.get(url=products_url, headers=headers,
                                          timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
     try:
         products_sales = products_response["sales"]
@@ -187,7 +187,7 @@ def order_page():
         prev_sales_response = requests.get(url=prev_sales_url,
                                            headers=headers,
                                            timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -256,7 +256,7 @@ def order_page():
     try:
         sales_response = requests.get(url=sales_url, headers=headers,
                                       timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -296,7 +296,7 @@ def order_page():
         all_products_response = requests.get(url=all_products_url,
                                              headers=headers,
                                              timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -330,7 +330,7 @@ def get_sales():
     try:
         api_response = requests.get(url=url, headers=headers,
                                     timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -360,7 +360,7 @@ def get_monthly_aov():
         yearly_orders_response = requests.get(url=yearly_orders_url,
                                               headers=headers,
                                               timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
     monthly_totals = yearly_orders_response["monthly_totals"]
     monthly_orders_totals = []
@@ -388,7 +388,7 @@ def get_orders():
     try:
         orders_response = requests.get(url=orders_url, timeout=5,
                                        headers=headers).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
         
     try:
@@ -407,7 +407,7 @@ def get_order_products(order_id):
     try:
         pdt_response = requests.get(url=pdt_url, timeout=5,
                                     headers=headers).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
         
     try:
@@ -464,7 +464,7 @@ def new_order():
     try:
         response = requests.post(url=url, headers=headers,
                                  json=payload, timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
         
     try:
@@ -484,7 +484,7 @@ def verify():
     try:
         verify_response = requests.get(url=verify_url, headers=headers,
                                        timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -507,7 +507,7 @@ def new_chat():
     try:
         user_response = requests.get(url=user_url, headers=headers,
                                      timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -524,7 +524,7 @@ def new_chat():
     try:
         chat_response = requests.post(url=chat_url, headers=headers,
                                       json=payload, timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -546,7 +546,7 @@ def new_message(chat_id):
     try:
         user_response = requests.get(url=user_url, timeout=5,
                                      headers=headers).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -563,7 +563,7 @@ def new_message(chat_id):
     try:
         messages_response = requests.get(url=messages_url, headers=headers,
                                          timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
@@ -595,7 +595,7 @@ def send_message(chat_id):
     try:
         messages_response = requests.post(url=messages_url, headers=headers,
                                           json=payload, timeout=5).json()
-    except requests.exceptions.JSONDecodeError:
+    except json.JSONDecodeError:
         abort(500, "Connection error")
 
     try:
