@@ -90,7 +90,8 @@ class DBStorage:
 
     def count(self, cls):
         """counts all items on the table based on cls"""
-        return self.__session.query(cls).count()
+        session = self.__session()
+        return session.query(cls).count()
 
     def save(self):
         """saves all the changes to the storage"""
