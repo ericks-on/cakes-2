@@ -8,7 +8,11 @@ from collections import OrderedDict
 from flask import make_response, abort
 from flask_jwt_extended import jwt_required, JWTManager, get_jwt_identity
 from flask_jwt_extended import  set_access_cookies, unset_jwt_cookies
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import (
+    Flask, render_template,
+    request, redirect, url_for,
+    jsonify
+)
 from flask_cors import CORS
 from web.socket_events import socketio
 from dotenv import load_dotenv
@@ -44,12 +48,12 @@ def login():
     """Handles login"""
     if request.method == 'GET':
         return render_template('index.html', urlFor=url_for)
-    else:
+    elif request.method == 'POST':
         url = f"http://{host}:{port}/api/v1_0/token/auth"
         payload = {}
         username = request.form["username"]
         password = request.form["password"]
-        if not username or password:
+        if not username or not password:
             abort(400)
         payload["username"] = username
         payload["password"] = password
@@ -60,11 +64,12 @@ def login():
             abort(500, "Connection error")
 
         if api_response.status_code == 200:
-            response = make_response(redirect(url_for('message_page')))
+            respons = make_response(redirect(url_for('message_page')))
             set_access_cookies(response, response_obj['access_token'])
-            return response
+            return respons
         else:
-            return redirect(url_for('index'))
+            # return redirect(url_for('index'))
+            return jsonify(api_response.text)
 
 @app.route('/logout')
 def logout():

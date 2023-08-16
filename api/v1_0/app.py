@@ -39,7 +39,7 @@ def login():
     all_usernames = [user.username for user in all_users]
     username = request.get_json().get("username")
     password = request.get_json().get("password")
-    if not username or password:
+    if not username or not password:
         return jsonify({"msg": "Missing username parameter"}), 400
 
     if username in all_usernames:
@@ -50,10 +50,8 @@ def login():
             refresh_token = create_access_token(identity=username)
             return jsonify(access_token=access_token,
                            refresh_token=refresh_token), 200
-        else:
-            return jsonify({"msg": "Wrong Username or Password"}), 401
-    else:
         return jsonify({"msg": "Wrong Username or Password"}), 401
+    return jsonify({"msg": "Wrong Username or Password"}), 401
     
 @app.route('/api/v1_0/token/refresh', methods=['POST'])
 @jwt_required(refresh=True)
