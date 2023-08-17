@@ -26,12 +26,16 @@ def all_orders():
         return jsonify({'error': 'Unauthorized'}), 401
     if user.user_type == 'admin':
         orders = [order.to_dict() for order in storage.all(Order)]
+        if len(orders) == 0:
+            abort(404)
         return jsonify({"orders": orders}), 200
     else:
         orders = user.orders
-        orders = sorted(orders, key=lambda x: x.created_at, reverse=True)
-        sorted_orders = [order.to_dict() for order in orders]
-        return jsonify({"orders": sorted_orders}), 200
+        if len(orders) == 0:
+            abort(404)
+    orders = sorted(orders, key=lambda x: x.created_at, reverse=True)
+    sorted_orders = [order.to_dict() for order in orders]
+    return jsonify({"orders": sorted_orders}), 200
 
 @orders_bp.route('/', methods=['POST'])
 @swag_from('documentation/order/add_order.yml')
@@ -183,7 +187,7 @@ def get_order_by_period(year, month=None):
     else:
         orders = user.orders
 
-    if not orders:
+    if len(orders) == 0:
         abort(404)
 
     if month:
@@ -193,7 +197,7 @@ def get_order_by_period(year, month=None):
     else:
         orders = [order for order in orders
                   if order.created_at.year == int(year)]
-    if orders:
+    if len(orders) > 0:
         orders = [order.to_dict() for order in orders]
         return jsonify({"orders": orders}), 200
     else:
@@ -210,11 +214,11 @@ def get_order_totals(year):
         orders = storage.all(Order)
     else:
         orders = user.orders
-    if not orders:
+    if len(orders) == 0:
         abort(404)
     orders = [order for order in orders if
               order.created_at.year == int(year)]
-    if orders:
+    if len(orders) > 0:
         months = calendar.month_name[1:]
         monthly_totals = {}
         for mon in months:
