@@ -322,6 +322,12 @@ def order_page():
 @jwt_required()
 def payment_page():
     """the payments page"""
+    access_token = request.coookies.get('access_token_cookie')
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Content-Type': 'application/json'
+    }
+    orders_url = f'http//{host}:{port}/api/v1_0/orders'
     return render_template('payments.html', urlFor=url_for)
 
 @app.route("/api/sales", methods=['GET'])
