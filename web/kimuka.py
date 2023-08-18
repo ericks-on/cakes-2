@@ -63,6 +63,8 @@ def login():
             response_obj = api_response.json()
         except requests.exceptions.ReadTimeout:
             abort(500, "Connection error")
+        except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
         if api_response.status_code == 200:
             response = make_response(redirect(url_for('payment_page')))
@@ -91,6 +93,9 @@ def message_page():
                                      timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
+        
     try:
         user = user_response["user"]
     except KeyError:
@@ -103,6 +108,8 @@ def message_page():
                                      timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         chats = chat_response["chats"]
@@ -134,6 +141,9 @@ def order_page():
                                         timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
+        
     try:
         user = user_response["user"]
     except KeyError:
@@ -147,6 +157,8 @@ def order_page():
                                        timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         orders = orders_response["orders"]
@@ -166,6 +178,9 @@ def order_page():
                                          timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
+            
     try:
         products_sales = products_response["sales"]
     except KeyError:
@@ -189,6 +204,8 @@ def order_page():
                                            timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         prev_products_sales = prev_sales_response["sales"]
@@ -258,6 +275,8 @@ def order_page():
                                       timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         sales_totals = sales_response["sales"]
@@ -298,6 +317,8 @@ def order_page():
                                              timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         all_products = all_products_response["products"]
@@ -322,13 +343,32 @@ def order_page():
 @jwt_required()
 def payment_page():
     """the payments page"""
-    access_token = request.coookies.get('access_token_cookie')
+    access_token = request.cookies.get('access_token_cookie')
     headers = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
     }
     orders_url = f'http//{host}:{port}/api/v1_0/orders'
-    return render_template('payments.html', urlFor=url_for)
+    try:
+        api_response = requests.get(url=orders_url, headers=headers,
+                                    timeout=5).json()
+    except requests.exceptions.ReadTimeout:
+        abort(500, 'connection Error')
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
+    
+    try:
+        all_orders = api_response['orders']
+    except KeyError:
+        error = api_response['error']
+        abort(500, error)
+    
+    unpaid_orders = [order for order in all_orders if
+                     order['status'] == 'confirmed' or
+                     order['status'] == 'delivered'
+                     ]
+    return render_template('payments.html', urlFor=url_for,
+                           unpaid_orders=unpaid_orders)
 
 @app.route("/api/sales", methods=['GET'])
 @jwt_required()
@@ -344,6 +384,8 @@ def get_sales():
                                     timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         sales = api_response["monthly_sales"]
@@ -374,6 +416,9 @@ def get_monthly_aov():
                                               timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
+            
     monthly_totals = yearly_orders_response["monthly_totals"]
     monthly_orders_totals = []
     monthly_order_values = []
@@ -402,6 +447,8 @@ def get_orders():
                                        headers=headers).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
         
     try:
         orders = orders_response["orders"]
@@ -421,6 +468,8 @@ def get_order_products(order_id):
                                     headers=headers).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
         
     try:
         pdts = pdt_response["products"]
@@ -478,6 +527,8 @@ def new_order():
                                  json=payload, timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
         
     try:
         new_order = response["order"]
@@ -498,6 +549,8 @@ def verify():
                                        timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         user = verify_response["user"]
@@ -521,6 +574,8 @@ def new_chat():
                                      timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         user = user_response["user"]
@@ -538,6 +593,8 @@ def new_chat():
                                       json=payload, timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         chat = chat_response["chat"]
@@ -560,6 +617,8 @@ def new_message(chat_id):
                                      headers=headers).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         user = user_response["user"]
@@ -577,6 +636,8 @@ def new_message(chat_id):
                                          timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         messages = messages_response["messages"]
@@ -609,6 +670,8 @@ def send_message(chat_id):
                                           json=payload, timeout=5).json()
     except requests.exceptions.ReadTimeout:
         abort(500, "Connection error")
+    except requests.exceptions.ConnectionError:
+            abort(500, 'Connection error')
 
     try:
         message = messages_response["message"]
