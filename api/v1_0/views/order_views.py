@@ -25,14 +25,12 @@ def all_orders():
     if not user:
         return jsonify({'error': 'Unauthorized'}), 401
     if user.user_type == 'admin':
-        orders = [order.to_dict() for order in storage.all(Order)]
-        if len(orders) == 0:
-            abort(404)
-        return jsonify({"orders": orders}), 200
+        orders = storage.all(Order)
     else:
         orders = user.orders
-        if len(orders) == 0:
-            abort(404)
+        
+    if len(orders) == 0:
+        abort(404)
     orders = sorted(orders, key=lambda x: x.created_at, reverse=True)
     sorted_orders = [order.to_dict() for order in orders]
     return jsonify({"orders": sorted_orders}), 200

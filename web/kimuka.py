@@ -348,7 +348,7 @@ def payment_page():
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
     }
-    orders_url = f'http//{host}:{port}/api/v1_0/orders'
+    orders_url = f'http://{host}:{port}/api/v1_0/orders'
     try:
         api_response = requests.get(url=orders_url, headers=headers,
                                     timeout=5).json()
