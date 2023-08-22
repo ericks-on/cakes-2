@@ -29,9 +29,8 @@ def all_orders():
     else:
         orders = user.orders
         
-    if len(orders) == 0:
-        abort(404)
-    orders = sorted(orders, key=lambda x: x.created_at, reverse=True)
+    if len(orders) > 0:
+        orders = sorted(orders, key=lambda x: x.created_at, reverse=True)
     sorted_orders = [order.to_dict() for order in orders]
     return jsonify({"orders": sorted_orders}), 200
 
@@ -185,9 +184,6 @@ def get_order_by_period(year, month=None):
     else:
         orders = user.orders
 
-    if len(orders) == 0:
-        abort(404)
-
     if month:
         orders = [order for order in orders if
                   order.created_at.year == int(year)
@@ -195,11 +191,9 @@ def get_order_by_period(year, month=None):
     else:
         orders = [order for order in orders
                   if order.created_at.year == int(year)]
-    if len(orders) > 0:
-        orders = [order.to_dict() for order in orders]
-        return jsonify({"orders": orders}), 200
-    else:
-        abort(404)
+        
+    orders = [order.to_dict() for order in orders]
+    return jsonify({"orders": orders}), 200
 
 @orders_bp.route('/totals/<year>', methods=['GET'])
 @swag_from('documentation/order/get_order_totals.yml')
@@ -212,28 +206,26 @@ def get_order_totals(year):
         orders = storage.all(Order)
     else:
         orders = user.orders
-    if len(orders) == 0:
-        abort(404)
+
     orders = [order for order in orders if
               order.created_at.year == int(year)]
-    if len(orders) > 0:
-        months = calendar.month_name[1:]
-        monthly_totals = {}
-        for mon in months:
-            month_totals = {}
-            month_orders_total = len([order for order in orders if
-                                      months[order.created_at.month - 1] ==
-                                      mon])
-            month_orders_value = sum([order.order_value for order in orders
-                                      if months[order.created_at.month - 1] ==
-                                      mon])
-            month_totals["total_orders"] = month_orders_total
-            month_totals["total_value"] = month_orders_value
-            monthly_totals[mon] = month_totals
+    
+    months = calendar.month_name[1:]
+    monthly_totals = {}
+    for mon in months:
+        month_totals = {}
+        month_orders_total = len([order for order in orders if
+                                    months[order.created_at.month - 1] ==
+                                    mon])
+        month_orders_value = sum([order.order_value for order in orders
+                                    if months[order.created_at.month - 1] ==
+                                    mon])
+        month_totals["total_orders"] = month_orders_total
+        month_totals["total_value"] = month_orders_value
+        monthly_totals[mon] = month_totals
 
-        return jsonify({"monthly_totals": monthly_totals}), 200
-    else:
-        abort(404)
+    return jsonify({"monthly_totals": monthly_totals}), 200
+
 
 @orders_bp.route('/sales', methods=['GET'])
 @swag_from('documentation/order/get_sales.yml')
