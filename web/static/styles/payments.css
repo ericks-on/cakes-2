@@ -48,6 +48,18 @@
 }
 
 /* --------------unpaid orders ------------- */
+.unpaid-orders-container {
+    align-items: center;
+}
+#unpaid-orders-table {
+    width: 100%;
+}
+.unpaid-orders-table-title {
+    margin-bottom: 20px;
+}
 .unpaid-orders-table-title h2 {
     margin-right: 20px;
+}
+#unpaid-orders-table thead tr {
+    background-color: gray;
 }
