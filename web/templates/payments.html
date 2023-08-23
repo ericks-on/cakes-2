@@ -17,9 +17,22 @@
         <h2>
             Unpaid Orders
         </h2>
-        <span class="material-symbols-outlined g-light">
-            info
-        </span>
+        <div class="unpaid-orders-table-title-info d-flex flex-cc">
+            <span class="material-symbols-outlined g-light">
+                info
+            </span>
+            <div class="unpaid-orders-explained flex-cc">
+                <div class="unpaid-orders-explained-title">
+                    <h2>Unpaid Orders Explained</h2>
+                </div>
+                <div class="unpaid-orders-explained-body">
+                    <p>
+                        Unpaid orders are orders that have been delivered but not paid for.
+                        You can pay for them by clicking on the pay button.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
     <table id="unpaid-orders-table">
         <thead>
@@ -29,6 +42,7 @@
                 <th>Status</th>
                 <th>Quantity</th>
                 <th>Amount</th>
+                <th>Pay</th>
             </tr>
         </thead>
         <tbody>
@@ -43,11 +57,15 @@
                 {% endif %}
                 <td>{{ order.quantity }}</td>
                 <td>{{ order.order_value }}</td>
+                <td class="pay-btn">
+                    <div class="pay-btn-container d-flex flex-cc">
+                        <div class="pay-btn d-flex flex-cc">Pay</div>
+                    </div>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <div class="unpaid-orders-explained"></div>
 </div>
 <div class="transactions-container"></div>
 {% endblock %}

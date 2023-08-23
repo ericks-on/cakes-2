@@ -58,13 +58,16 @@ def login():
             abort(400)
         payload["username"] = username
         payload["password"] = password
-        api_response = requests.post(url=url, json=payload, timeout=5)
         try:
+            api_response = requests.post(url=url, json=payload, timeout=5)
             response_obj = api_response.json()
         except requests.exceptions.ReadTimeout:
             abort(500, "Connection error")
         except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+        except json.decoder.JSONDecodeError:
+            abort(500, 'Connection error')
+            
 
         if api_response.status_code == 200:
             response = make_response(redirect(url_for('payment_page')))
@@ -95,6 +98,8 @@ def message_page():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
         
     try:
         user = user_response["user"]
@@ -110,6 +115,8 @@ def message_page():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         chats = chat_response["chats"]
@@ -143,6 +150,8 @@ def order_page():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
         
     try:
         user = user_response["user"]
@@ -159,6 +168,8 @@ def order_page():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         orders = orders_response["orders"]
@@ -180,6 +191,8 @@ def order_page():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
             
     try:
         products_sales = products_response["sales"]
@@ -206,6 +219,8 @@ def order_page():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         prev_products_sales = prev_sales_response["sales"]
@@ -277,6 +292,8 @@ def order_page():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         sales_totals = sales_response["sales"]
@@ -319,6 +336,8 @@ def order_page():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         all_products = all_products_response["products"]
@@ -356,6 +375,8 @@ def payment_page():
         abort(500, 'connection Error')
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
     
     try:
         all_orders = api_response['orders']
@@ -386,6 +407,8 @@ def get_sales():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         sales = api_response["monthly_sales"]
@@ -418,6 +441,8 @@ def get_monthly_aov():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
             
     monthly_totals = yearly_orders_response["monthly_totals"]
     monthly_orders_totals = []
@@ -449,6 +474,8 @@ def get_orders():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
         
     try:
         orders = orders_response["orders"]
@@ -470,6 +497,8 @@ def get_order_products(order_id):
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
         
     try:
         pdts = pdt_response["products"]
@@ -529,6 +558,8 @@ def new_order():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
         
     try:
         new_order = response["order"]
@@ -551,6 +582,8 @@ def verify():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         user = verify_response["user"]
@@ -576,6 +609,8 @@ def new_chat():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         user = user_response["user"]
@@ -595,6 +630,8 @@ def new_chat():
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         chat = chat_response["chat"]
@@ -619,6 +656,8 @@ def new_message(chat_id):
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         user = user_response["user"]
@@ -638,6 +677,8 @@ def new_message(chat_id):
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         messages = messages_response["messages"]
@@ -672,6 +713,8 @@ def send_message(chat_id):
         abort(500, "Connection error")
     except requests.exceptions.ConnectionError:
             abort(500, 'Connection error')
+    except json.decoder.JSONDecodeError:
+        abort(500, 'Connection error')
 
     try:
         message = messages_response["message"]

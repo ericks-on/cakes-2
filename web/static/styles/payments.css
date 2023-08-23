@@ -51,6 +51,7 @@
 .unpaid-orders-container {
     align-items: center;
     padding: 10px;
+    position: relative;
 }
 #unpaid-orders-table {
     width: 100%;
@@ -72,4 +73,27 @@
 }
 #unpaid-orders-table tbody tr:nth-child(even) {
     background-color: var(--table-row-even-color);
+}
+
+/* --------------unpaid orders explained ------------- */
+.unpaid-orders-explained {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    width: 250px;
+    background-color: var(--transparent-bg-color);
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: var(--float-box-shadow);
+    text-align: center;
+    margin: 50px 10px 0 0;
+}
+.unpaid-orders-table-title-info span:hover {
+    cursor: pointer;
+}
+.unpaid-orders-table-title-info:hover .unpaid-orders-explained {
+    display: flex;
 }
