@@ -67,7 +67,61 @@
         </tbody>
     </table>
 </div>
-<div class="transactions-container"></div>
+<div class="transactions-container">
+    <div class="transactions-table-title d-flex flex-cc">
+        <h2>
+            Transactions
+        </h2>
+        <div class="transactions-table-title-info d-flex flex-cc">
+            <span class="material-symbols-outlined g-light">
+                info
+            </span>
+            <div class="transactions-explained flex-cc">
+                <div class="transactions-explained-title">
+                    <h2>Transactions Explained</h2>
+                </div>
+                <div class="transactions-explained-body">
+                    <p>
+                        Transactions are payments that have been made for orders.
+                        You can view the details of a transaction by clicking on the view button.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table id="transactions-table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr class="transactions-row">
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.created_at }}</td>
+                {% if transaction.status == 'pending' %}
+                <td class="confirmed">{{ transaction.status }}</td>
+                {% elif transaction.status == 'delivered' %}
+                <td class="delivered">{{ transaction.status }}</td>
+                {% endif %}
+                <td>{{ transaction.quantity }}</td>
+                <td>{{ transaction.transaction_value }}</td>
+                <td class="view-btn">
+                    <div class="view-btn-container d-flex flex-cc">
+                        <div class="view-btn d-flex flex-cc">View</div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
 {% block popups %}
 {% endblock %}
