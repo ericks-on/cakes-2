@@ -21,6 +21,8 @@ class Basemodel:
         """initialization"""
         if kwargs:
             for k, v in kwargs.items():
+                if k == "password":
+                    v = bcrypt.hash(v)
                 setattr(self, k, v)
 
         if not self.id:
