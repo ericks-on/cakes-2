@@ -316,7 +316,8 @@ def order_page():
             sales_contribution[product]["percent"] = round(
                 ((sales["total_sales"] / all_sales_sum) * 100), 2)
 
-    most_sales = max([value["total_sales"] for value in sales_totals.values()])
+    most_sales = max([value["total_sales"] for value in
+                      sales_totals.values()], default=0)
     sales_values_totals = {}
     for product, value in sales_totals.items():
         sales_values_totals[product] = value["total_sales"]
