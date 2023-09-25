@@ -217,7 +217,12 @@ $(document).ready(function() {
   });
 
   // ============================initial amount displayed=========================
-  let price = JSON.parse($("#select-order-product").val()).price;
+  let price_json = JSON.parse($("#select-order-product").val());
+  if (price_json == null) {
+    price = 0;
+  }else {
+    price = price_json.price;
+  }
   let quantity = $("#new-order-quantity").val();
   $("#new-order-amount-value").text(price * quantity);
 
@@ -232,16 +237,29 @@ $(document).ready(function() {
 
   // =======================change total amount when product is changed=================
   $("#select-order-product").on('change', function(){
-    let price = JSON.parse($(this).val()).price;
-    let quantity = $("#new-order-quantity").val();
-    $("#new-order-amount-value").text(price * quantity);
+    let price_json = JSON.parse($(this).val());
+    if (price_json == null) {
+      alert('Please select a product');
+      return;
+    }else {
+      let price = price_json.price;
+      let quantity = $("#new-order-quantity").val();
+      $("#new-order-amount-value").text(price * quantity);
+    }
+    
   });
 
   // ======================Adding items to cart ==============================
   $("#add-btn").click(function(){
     var amount = $("#new-order-amount-value").text();
     var quantity = $("#new-order-quantity").val();
-    var name = JSON.parse($("#select-order-product").val()).name;
+    var name_json = JSON.parse($("#select-order-product").val());
+    if (name_json == null) {
+      alert('Please select a product');
+      return;
+    }else {
+      var name = name_json.name;
+    }
     let newItem = `
     <div class="cart-body-row d-flex">
         <div class="cart-body-row-value d-flex flex-cc" id="cart-product">${name}</div>
