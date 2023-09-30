@@ -1,0 +1,31 @@
+{% extends "default.html" %}
+{% block title %}Login{% endblock %}
+{% block head %}
+{{ super() }}
+	<link rel="stylesheet" type="text/css" href="../static/styles/login.css">
+	<script type="text/javascript" src="../static/scripts/login.js"></script>
+{% endblock %}
+{% block sidebar %}{% endblock %}
+{% block header %}
+	<div class="logo-container">
+		<img src="../static/images/cakes_logo.png" alt="logo">
+	</div>
+{% endblock %}
+{% block content %}
+	<DIV class="login-container d-flex-column">
+		<FORM id="loginForm" method="POST" action='/login'>
+			<LABEL for="username">Username</LABEL>
+			<INPUT type="text" id="username" name="username">
+			<LABEL for="password">Password</LABEL>
+			<INPUT id="password" type="password" name="password">
+			<INPUT type="submit" class="button" value="Submit">
+		</FORM>
+		<div id="error-notification">
+			<div class="error-message">
+				<p>Invalid credentials! Try again</p>
+				<div id="lError-ok-button">OK</div>
+			</div>
+		</div>
+	</DIV>
+{% endblock %}
+
