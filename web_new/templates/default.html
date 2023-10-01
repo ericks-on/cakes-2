@@ -6,6 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../static/styles/google-fonts.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
@@ -22,22 +23,6 @@
     <div id="content" class="d-flex-column">
         <div class="header-container">
             {% block header %}
-            <div id="header" class="d-flex">
-                <b><h1>RETAILER</h1></b>
-                <div class="header-items d-flex">
-                    <div class="header-itemweb/static/styles/main_style.css">
-                        <span class="material-symbols-outlined">
-                            notifications
-                        </span>
-                        <div class="not-count"></div>
-                    </div>
-                    <div class="header-item user-profile">
-                        <div class="user-name">{% block username %}{% endblock %}</div>
-                        <div class="user-pic">
-                        </div>
-                    </div>
-                </div>
-            </div>
             {% endblock %}
         </div>
         <div id="main-content">
@@ -45,17 +30,11 @@
             {% endblock %}
         </div>
         <div id="footer" class="flex-cc d-flex">
-            &copy; KIMUKA 2023
         </div>
     </div>
     <div id="popups-container">
         {% block popups %}
         {% endblock %}
-        <div id="exit-btn">
-            <span class="material-symbols-outlined">
-                close
-            </span>
-        </div>
     </div>
 </body>
 </html>
