@@ -42,9 +42,49 @@
             </div>
         </div>
         <div id="main-content" class='flex'>
-            <div class='products-container'></div>
-            <div class='cart'>
-
+            <div class='products-description'></div>
+            <div class='cart-container'>
+                <div class='products-container'>
+                    <div class='product'>
+                        <div class='product-image-container'>
+                            <img src="../static/images/cake1.jpg" alt="cake" class="product-image">
+                        </div>
+                        <div class='product-name'>Cake 1</div>
+                        <div class='product-price'>100$</div>
+                        <div class='product-add-to-cart'>
+                            <span class="material-symbols-outlined">
+                                add_shopping_cart
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class='cart'>
+                    <div class='cart-header'>
+                        <div class='cart-header-title'>Cart</div>
+                        <div class='cart-header-close'>
+                            <span class="material-symbols-outlined">
+                                close
+                            </span>
+                        </div>
+                    </div>
+                    <div class='cart-content'>
+                        <div class='cart-content-title'>Products</div>
+                        <div class='cart-content-products'>
+                            <div class='cart-content-product'>
+                                <div class='cart-content-product-name'>Product name</div>
+                                <div class='cart-content-product-quantity'>Quantity</div>
+                                <div class='cart-content-product-price'>Price</div>
+                            </div>
+                        </div>
+                </div>
+                <div class='cart-footer'>
+                    <div class='total-price-container'>
+                        <div class='total-price-label'>Total price:</div>
+                        <div class='total-price-value'>0</div>
+                    </div>
+                    <div class='checkout-button-container'>
+                        <button class='checkout-button'>Checkout</button>
+                    </div>
             </div>
         </div>
         <div id="footer" class="flex-cc d-flex">

@@ -112,7 +112,7 @@ body{
     border-left: 2px solid var(--secondary-bg-color);
 }
 
-.products-container {
+.products-description {
     flex-basis: 70%;
     height: 100%;
 }
