@@ -21,9 +21,24 @@
 </head>
 <body>
     <div id="content" class="d-flex-column">
-        <div class="header-container">
-            {% block header %}
-            {% endblock %}
+        <div class="header-container flex">
+            <div class='logo-container'>
+            </div>
+            <div class='profile-container flex'>
+                <div class="profile-image-container">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                </div>
+                <div class="profile-name-container flex">
+                    <div class="profile-name">John Doe</div>
+                    <div class="profile-dropdown">
+                        <span class="material-symbols-outlined">
+                            arrow_drop_down
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="main-content">
             {% block content %}

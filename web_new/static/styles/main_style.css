@@ -5,9 +5,23 @@
     --secondary-text-color: #fff;
     --dark-bg-color: #000;
     --main-btn-color: #000;
-    --secondary-btn-color: #00FF00;
+    --secondary-btn-color: #228B22;
 }
 
+.flex{
+    display: flex;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-cc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 *{
     margin: 0;
@@ -21,8 +35,61 @@ body{
     color: var(--main-text-color);
 }
 
+#content{
+    width: 80%;
+    height: 100vh;
+    margin: 0 auto;
+}
+
 .header-container{
-    height: 50px;
+    height: 60px;
     width: 100%;
     background-color: var(--dark-bg-color);
+    border-radius: 0 0 10px 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    color: var(--secondary-text-color);
+}
+
+.logo-container{
+    height: 80%;
+    width: 100px;
+    background-color: var(--secondary-bg-color);
+}
+
+.profile-container {
+    height: 30px;
+    border-radius: 5px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+}
+
+.profile-container:hover {
+    background-color: var(--secondary-btn-color);
+    cursor: pointer;
+}
+
+.profile-image-container{
+    height: 20px;
+    width: 20px;
+}
+
+.profile-name-container {
+    height: 20px;
+    margin-left: 5px;
+    padding: 0 5px;
+    border-radius: 5px;
+}
+
+.profile-name {
+    overflow-x: clip;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100px;
+}
+
+.profile-dropdown {
+    width: 20px;
 }
