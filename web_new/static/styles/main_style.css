@@ -45,6 +45,8 @@ body{
     height: 100vh;
 }
 
+/* ==============The Header ============== */
+
 .header-container{
     background-color: var(--main-bg-color);
     height: 60px;
@@ -53,7 +55,8 @@ body{
     align-items: center;
     padding: 0 10px;
 }
-
+ 
+/* ------logo--------- */
 .logo-container{
     height: 80%;
     width: 100px;
@@ -64,6 +67,8 @@ body{
     width: 100%;
 }
 
+
+/* ---------profile--------- */
 .profile-container {
     height: 30px;
     border-radius: 5px;
@@ -99,6 +104,33 @@ body{
 
 .profile-dropdown {
     width: 20px;
+}
+
+/* --------action buttons----------- */
+.action-buttons {
+    width: 100px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-button:hover {
+    cursor: pointer;
+    transition: all ease 0.3s;
+    transform: translateY(-5px);
+}
+
+.notifications, .cart-notifications {
+    position: relative;
+}
+
+.new-notifications, .new-items {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 5px;
+    background-color: red;
+    border-radius: 50%;
 }
 
 #main-content {
