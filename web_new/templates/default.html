@@ -99,8 +99,14 @@
                     </div>
                 </div>
                 <div class='cart'>
-                    <div class='cart-header'>
+                    <div class='cart-header flex'>
                         <div class='cart-header-title'>Cart</div>
+                        <div class='clear-cart flex-cc'>
+                            <span class="material-symbols-outlined">
+                                remove_shopping_cart
+                            </span>
+                            <span class='clear-cart-label'>Empty cart</span>
+                        </div>
                     </div>
                     <br>
                     <div class='cart-content'>
@@ -114,6 +120,11 @@
                                 <div class='cart-content-product-details'>
                                     <div class='cart-product-image'>
                                         <img src="../static/images/donut.jpg" alt="cake">
+                                        <div class='delete-cart-product flex-cc'>
+                                            <span class="material-symbols-outlined">
+                                                close
+                                            </span>
+                                        </div>
                                     </div>
                                     <div class='cart-product-name'>12-pack</div>
                                 </div>
@@ -138,6 +149,11 @@
                                 <div class='cart-content-product-details'>
                                     <div class='cart-product-image'>
                                         <img src="../static/images/donut.jpg" alt="cake">
+                                        <div class='delete-cart-product flex-cc'>
+                                            <span class="material-symbols-outlined">
+                                                close
+                                            </span>
+                                        </div>
                                     </div>
                                     <div class='cart-product-name'>12-pack</div>
                                 </div>
@@ -165,12 +181,12 @@
                                 <div class='total-price-value'>0</div>
                             </div>
                             <div class='checkout-button-container'>
-                                <button class='checkout-button'>Checkout</button>
+                                <button class='checkout-button'>Checkout >></button>
                             </div>
                         </div>
                 </div>
-        <div id="footer" class="flex-cc d-flex">
-        </div>
+    </div>
+    <div id="footer" class="flex-cc d-flex">
     </div>
     <div id="popups-container">
         {% block popups %}
