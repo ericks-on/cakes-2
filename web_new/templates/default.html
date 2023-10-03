@@ -55,7 +55,7 @@
                             </span>
                         </div>
                         <div class="profile-name-container flex">
-                            <div class="profile-name">John Doe</div>
+                            <div class="profile-name">Login</div>
                             <div class="profile-dropdown">
                                 <span class="material-symbols-outlined">
                                     arrow_drop_down
@@ -64,43 +64,27 @@
                         </div>
                     </div>
                 </div>
-                <div class='profile-details flex-column'>
-                    <div class='profile-details-item flex'>
-                        <span class="material-symbols-outlined">
-                            person
-                        </span>
-                        <div class='profile-details-item-label'>Profile</div>
-                    </div>
-                    <div class='profile-details-item flex'>
-                        <span class="material-symbols-outlined">
-                            mail
-                        </span>
-                        <div class='profile-details-item-label'>example@email.com</div>
-                    </div>
-                    <div class='profile-details-item flex'>
-                        <span class="material-symbols-outlined">
-                            phone
-                        </span>
-                        <div class='profile-details-item-label'>+40 123 456 789</div>
-                    </div>
-                    <div class='profile-details-item flex'>
-                        <span class="material-symbols-outlined">
-                            location_on
-                        </span>
-                        <div class='profile-details-item-label'>Bucharest, Romania</div>
-                    </div>
-                    <div class='profile-details-item flex'>
-                        <span class="material-symbols-outlined">
-                            settings
-                        </span>
-                        <div class='profile-details-item-label'>Settings</div>
-                    </div>
-                    <div class='profile-details-item flex'>
-                        <span class="material-symbols-outlined">
-                            logout
-                        </span>
-                        <div class='profile-details-item-label'>Logout</div>
-                    </div>
+                <div class='profile-details'>
+                    {% block profile_details %}
+                    <form action="/login" method="POST">
+                        <div class='login-container flex-column'>
+                            <div class='login-title'>Login</div>
+                            <div class='login-inputs flex-column'>
+                                <div class='login-input-container flex-column'>
+                                    <div class='login-input-label'>Username</div>
+                                    <input type="text" name="username" class='login-input'>
+                                </div>
+                                <div class='login-input-container flex-column'>
+                                    <div class='login-input-label'>Password</div>
+                                    <input type="password" name="password" class='login-input'>
+                                </div>
+                            </div>
+                            <div class='login-button-container flex-cc'>
+                                <button id='login-button'>Login</button>
+                            </div>
+                        </div>
+                    </form>
+                    {% endblock %}
                 </div>
             </div>
         </div>
