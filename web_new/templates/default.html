@@ -25,6 +25,7 @@
             <div class='logo-container'>
                 <img src="../static/images/cakes_logo.png" alt="logo" class="logo">
             </div>
+            <div class='action-buttons'></div>
             <div class='profile-container flex'>
                 <div class="profile-image-container">
                     <span class="material-symbols-outlined">
@@ -43,7 +44,7 @@
         </div>
         <div id="main-content" class='flex'>
             <div class='products-description'>
-                <div class='products-description-content'>
+                <div class='products-description-content flex-column'>
                     <div class='products-description-title'>
                         Donut Delights: Hole-y Moly, You're in for a Treat!
                     </div>
@@ -51,146 +52,148 @@
                         At our donut paradise, we do hole-y things with our dough.
                         Step right in, and let's glaze over your sweetest desires!"
                     </div>
+                    <div class='products-description-button-container flex-cc'>
+                        <button class='products-description-button'>Order now</button>
+                    </div>
                 </div>
             </div>
-            <div class='cart-container'>
-                <div class='products-container flex'>
-                    <div class='product'>
-                        <div class='product-image-container'>
-                            <img src="../static/images/donut.jpg" alt="cake" class="product-image">
-                        </div>
-                        <div class='product-details flex'>
-                            <div class='product-name'>Cake 1</div>
-                            <div class='product-price'>100$</div>
-                        </div>
-                        <div class='product-add-to-cart flex-cc flex'>
-                            <span class="material-symbols-outlined">
-                                add_shopping_cart
-                            </span>
-                        </div>
+            <div class='products-container flex-column'>
+                <div class='product'>
+                    <div class='product-image-container'>
+                        <img src="../static/images/donut.jpg" alt="cake" class="product-image">
                     </div>
-                    <div class='product'>
-                        <div class='product-image-container'>
-                            <img src="../static/images/donut.jpg" alt="cake" class="product-image">
-                        </div>
-                        <div class='product-details flex'>
-                            <div class='product-name'>Cake 1</div>
-                            <div class='product-price'>100$</div>
-                        </div>
-                        <div class='product-add-to-cart flex-cc flex'>
-                            <span class="material-symbols-outlined">
-                                add_shopping_cart
-                            </span>
-                        </div>
+                    <div class='product-details flex'>
+                        <div class='product-name'>7-Pack</div>
+                        <div class='product-price'>100$</div>
                     </div>
-                    <div class='product'>
-                        <div class='product-image-container'>
-                            <img src="../static/images/donut.jpg" alt="cake" class="product-image">
-                        </div>
-                        <div class='product-details flex'>
-                            <div class='product-name'>Cake 1</div>
-                            <div class='product-price'>100$</div>
-                        </div>
-                        <div class='product-add-to-cart flex-cc flex'>
-                            <span class="material-symbols-outlined">
-                                add_shopping_cart
-                            </span>
-                        </div>
+                    <div class='product-add-to-cart flex-cc flex'>
+                        <span class="material-symbols-outlined">
+                            add_shopping_cart
+                        </span>
                     </div>
                 </div>
-                <div class='cart'>
-                    <div class='cart-header flex'>
-                        <div class='cart-header-title'>Cart</div>
-                        <div class='clear-cart flex-cc'>
-                            <span class="material-symbols-outlined">
-                                remove_shopping_cart
-                            </span>
-                            <span class='clear-cart-label'>Empty cart</span>
-                        </div>
+                <div class='product'>
+                    <div class='product-image-container'>
+                        <img src="../static/images/donut.jpg" alt="cake" class="product-image">
                     </div>
-                    <br>
-                    <div class='cart-content'>
-                        <div class='cart-content-products'>
-                            <div class='cart-content-product-title flex'>
-                                <div class='cart-content-product-name'>Product</div>
-                                <div class='cart-content-product-quantity'>Quantity</div>
-                                <div class='cart-content-product-price'>Total</div>
-                            </div>
-                            <div class='cart-content-product flex flex-cc'>
-                                <div class='cart-content-product-details'>
-                                    <div class='cart-product-image'>
-                                        <img src="../static/images/donut.jpg" alt="cake">
-                                        <div class='delete-cart-product flex-cc'>
-                                            <span class="material-symbols-outlined">
-                                                close
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class='cart-product-name'>12-pack</div>
-                                </div>
-                                <div class='cart-content-product-quantity flex'>
-                                    <div class="cart-content-product-quantity-increament flex">
-                                        <span class="material-symbols-outlined">
-                                            remove
-                                        </span>
-                                    </div>
-                                    <div class="cart-content-product-quantity-value flex-cc">
-                                        1
-                                    </div>
-                                    <div class="cart-content-product-quantity-decreament flex">
-                                        <span class="material-symbols-outlined">
-                                            add
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class='cart-content-product-price'>960</div>
-                            </div>
-                            <div class='cart-content-product flex flex-cc'>
-                                <div class='cart-content-product-details'>
-                                    <div class='cart-product-image'>
-                                        <img src="../static/images/donut.jpg" alt="cake">
-                                        <div class='delete-cart-product flex-cc'>
-                                            <span class="material-symbols-outlined">
-                                                close
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class='cart-product-name'>12-pack</div>
-                                </div>
-                                <div class='cart-content-product-quantity flex'>
-                                    <div class="cart-content-product-quantity-increament">
-                                        <span class="material-symbols-outlined flex">
-                                            remove
-                                        </span>
-                                    </div>
-                                    <div class="cart-content-product-quantity-value flex-cc">
-                                        1
-                                    </div>
-                                    <div class="cart-content-product-quantity-decreament flex">
-                                        <span class="material-symbols-outlined">
-                                            add
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class='cart-content-product-price'>960</div>
-                            </div>
-                        </div>
-                        <div class='cart-footer flex'>
-                            <div class='total-price-container flex'>
-                                <div class='total-price-label'>Total price:</div>
-                                <div class='total-price-value'>0</div>
-                            </div>
-                            <div class='checkout-button-container'>
-                                <button class='checkout-button'>Checkout >></button>
-                            </div>
-                        </div>
+                    <div class='product-details flex'>
+                        <div class='product-name'>12-Pack</div>
+                        <div class='product-price'>100$</div>
+                    </div>
+                    <div class='product-add-to-cart flex-cc flex'>
+                        <span class="material-symbols-outlined">
+                            add_shopping_cart
+                        </span>
+                    </div>
                 </div>
+                <div class='product'>
+                    <div class='product-image-container'>
+                        <img src="../static/images/donut.jpg" alt="cake" class="product-image">
+                    </div>
+                    <div class='product-details flex'>
+                        <div class='product-name'>15-Pack</div>
+                        <div class='product-price'>100$</div>
+                    </div>
+                    <div class='product-add-to-cart flex-cc flex'>
+                        <span class="material-symbols-outlined">
+                            add_shopping_cart
+                        </span>
+                    </div>
+                </div>
+            </div>
     </div>
     <div id="footer" class="flex-cc d-flex">
     </div>
     <div id="popups-container">
-        {% block popups %}
-        {% endblock %}
+        <div class='cart-container'>
+            <div class='cart'>
+                <div class='cart-header flex'>
+                    <div class='cart-header-title'>Cart</div>
+                    <div class='clear-cart flex-cc'>
+                        <span class="material-symbols-outlined">
+                            remove_shopping_cart
+                        </span>
+                        <span class='clear-cart-label'>Empty cart</span>
+                    </div>
+                </div>
+                <br>
+                <div class='cart-content'>
+                    <div class='cart-content-products'>
+                        <div class='cart-content-product-title flex'>
+                            <div class='cart-content-product-name'>Product</div>
+                            <div class='cart-content-product-quantity'>Quantity</div>
+                            <div class='cart-content-product-price'>Total</div>
+                        </div>
+                        <div class='cart-content-product flex flex-cc'>
+                            <div class='cart-content-product-details'>
+                                <div class='cart-product-image'>
+                                    <img src="../static/images/donut.jpg" alt="cake">
+                                    <div class='delete-cart-product flex-cc'>
+                                        <span class="material-symbols-outlined">
+                                            close
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class='cart-product-name'>12-pack</div>
+                            </div>
+                            <div class='cart-content-product-quantity flex'>
+                                <div class="cart-content-product-quantity-increament flex">
+                                    <span class="material-symbols-outlined">
+                                        remove
+                                    </span>
+                                </div>
+                                <div class="cart-content-product-quantity-value flex-cc">
+                                    1
+                                </div>
+                                <div class="cart-content-product-quantity-decreament flex">
+                                    <span class="material-symbols-outlined">
+                                        add
+                                    </span>
+                                </div>
+                            </div>
+                            <div class='cart-content-product-price'>960</div>
+                        </div>
+                        <div class='cart-content-product flex flex-cc'>
+                            <div class='cart-content-product-details'>
+                                <div class='cart-product-image'>
+                                    <img src="../static/images/donut.jpg" alt="cake">
+                                    <div class='delete-cart-product flex-cc'>
+                                        <span class="material-symbols-outlined">
+                                            close
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class='cart-product-name'>12-pack</div>
+                            </div>
+                            <div class='cart-content-product-quantity flex'>
+                                <div class="cart-content-product-quantity-increament">
+                                    <span class="material-symbols-outlined flex">
+                                        remove
+                                    </span>
+                                </div>
+                                <div class="cart-content-product-quantity-value flex-cc">
+                                    1
+                                </div>
+                                <div class="cart-content-product-quantity-decreament flex">
+                                    <span class="material-symbols-outlined">
+                                        add
+                                    </span>
+                                </div>
+                            </div>
+                            <div class='cart-content-product-price'>960</div>
+                        </div>
+                    </div>
+                    <div class='cart-footer flex'>
+                        <div class='total-price-container flex'>
+                            <div class='total-price-label'>Total price:</div>
+                            <div class='total-price-value'>0</div>
+                        </div>
+                        <div class='checkout-button-container'>
+                            <button class='checkout-button'>Checkout >></button>
+                        </div>
+                    </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

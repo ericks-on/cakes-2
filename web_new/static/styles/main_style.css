@@ -102,37 +102,33 @@ body{
 }
 
 #main-content {
+    width: 100%;
     height: calc(100vh - 60px);
     justify-content: center;
     align-items: center;
+    background-image: url(../images/donut_bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
-/* ======================cart container====================== */
 
 
-.cart-container {
-    width: 30%;
-    height: 100%;
-    padding: 5px;
-    background-color: var(--secondary-bg-color);
-}
-
-/* products to add on the cart */
+/* ===============Products container========= */
 
 .products-container {
-    width: 100%;
-    /* background-color: var(--secondary-bg-color); */
+    height: 100%;
+    width: 20%;
     gap: 10px;
     padding: 5px;
-    /* overflow-x: scroll; */
     text-align: center;
-    height: 30%;
-    width: 100%;
     border-bottom: 2px solid var(--main-text-color);
+    white-space: nowrap;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
 }
 
 .product {
-    width: 200px;
+    width: 100%;
 }
 
 .product-details {
@@ -186,13 +182,95 @@ body{
     align-items: center;
     height: 100%;
 }
+/* =======main landing page========== */
 
-/* the cart */
-.cart {
-    /* background-color: var(--secondary-bg-color); */
+/* ===========================Product Description=================== */
+
+.products-description {
+    background-image: url(../images/donut_bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 80%;
+    height: 100%;
     border-radius: 10px;
     margin: 10px 0;
-    height: 70%;
+    padding: 5px;
+}
+
+.products-description-content {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    color: var(--secondary-text-color);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.products-description-title {
+    font-size: 50px;
+    font-weight: bold;
+    color: var(--gold-color);
+
+}
+
+.products-description-text {
+    font-size: 20px;
+    max-width: 50%;
+    margin: 20px 0;
+    font-weight: 500;
+    color: var(--secondary-text-color);
+}
+
+.products-description-button {
+    background-color: var(--dark-bg-color);
+    color: var(--gold-color);
+    cursor: pointer;
+    width: 100px;
+    height: 50px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+
+}
+
+.products-description-button-container {
+    margin-top: 100px;
+
+}
+
+
+
+
+/* ========================popups============================== */
+
+#popups-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.8);
+    display: none;
+}
+
+/* ======================cart container====================== */
+
+
+.cart-container {
+    width: 30%;
+    height: 100%;
+    padding: 5px;
+    background-color: var(--secondary-bg-color);
+}
+
+
+/*---------------- the cart ----------*/
+.cart {
+    border-radius: 10px;
+    margin: 10px 0;
+    height: 100%;
     padding: 5px;
 }
 
@@ -314,37 +392,3 @@ body{
     text-align: center;
 }
 
-/* ===========================Product Description=================== */
-
-.products-description {
-    background-image: url(../images/donut_bg.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 70%;
-    height: 100%;
-}
-
-.products-description-content {
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0,0,0,0.5);
-    color: var(--secondary-text-color);
-    padding: 10px;
-}
-
-.products-description-title {
-    font-size: 50px;
-    font-weight: bold;
-    color: var(--gold-color);
-
-}
-
-.products-description-text {
-    font-size: 20px;
-    max-width: 50%;
-    margin: 20px 0;
-    font-weight: 500;
-    color: var(--secondary-text-color);
-}
