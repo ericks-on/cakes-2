@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../static/styles/google-fonts.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-    <script src="../static/scripts/jquery_3.7.0.js"></script>
+    <script src="../static/scripts/jquery_3.7.1.js"></script>
     <script src="../static/scripts/main.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
@@ -49,44 +49,10 @@
                         <div class='product-image-container'>
                             <img src="../static/images/donut.jpg" alt="cake" class="product-image">
                         </div>
-                        <div class='product-name'>Cake 1</div>
-                        <div class='product-price'>100$</div>
-                        <div class='product-add-to-cart flex-cc flex'>
-                            <span class="material-symbols-outlined">
-                                add_shopping_cart
-                            </span>
+                        <div class='product-details flex'>
+                            <div class='product-name'>Cake 1</div>
+                            <div class='product-price'>100$</div>
                         </div>
-                    </div>
-                    <div class='product'>
-                        <div class='product-image-container'>
-                            <img src="../static/images/donut.jpg" alt="cake" class="product-image">
-                        </div>
-                        <div class='product-name'>Cake 1</div>
-                        <div class='product-price'>100$</div>
-                        <div class='product-add-to-cart flex-cc flex'>
-                            <span class="material-symbols-outlined">
-                                add_shopping_cart
-                            </span>
-                        </div>
-                    </div>
-                    <div class='product'>
-                        <div class='product-image-container'>
-                            <img src="../static/images/donut.jpg" alt="cake" class="product-image">
-                        </div>
-                        <div class='product-name'>Cake 1</div>
-                        <div class='product-price'>100$</div>
-                        <div class='product-add-to-cart flex-cc flex'>
-                            <span class="material-symbols-outlined">
-                                add_shopping_cart
-                            </span>
-                        </div>
-                    </div>
-                    <div class='product'>
-                        <div class='product-image-container'>
-                            <img src="../static/images/donut.jpg" alt="cake" class="product-image">
-                        </div>
-                        <div class='product-name'>Cake 1</div>
-                        <div class='product-price'>100$</div>
                         <div class='product-add-to-cart flex-cc flex'>
                             <span class="material-symbols-outlined">
                                 add_shopping_cart
@@ -98,26 +64,46 @@
                     <div class='cart-header'>
                         <div class='cart-header-title'>Cart</div>
                     </div>
+                    <br>
                     <div class='cart-content'>
-                        <div class='cart-content-title'>Products</div>
                         <div class='cart-content-products'>
-                            <div class='cart-content-product'>
-                                <div class='cart-content-product-name'>Product name</div>
+                            <div class='cart-content-product-title flex'>
+                                <div class='cart-content-product-name'>Product</div>
                                 <div class='cart-content-product-quantity'>Quantity</div>
-                                <div class='cart-content-product-price'>Price</div>
+                                <div class='cart-content-product-price'>Total</div>
+                            </div>
+                            <div class='cart-content-product flex'>
+                                <div class='cart-content-product-name'>12-pack</div>
+                                <div class='cart-content-product-quantity'>
+                                    <input type="number" class="cart-content-product-quantity-value" value="1">
+                                </div>
+                                <div class='cart-content-product-price'>960</div>
+                            </div>
+                            <div class='cart-content-product flex'>
+                                <div class='cart-content-product-name'>12-pack</div>
+                                <div class='cart-content-product-quantity'>
+                                    <input type="number" class="cart-content-product-quantity-value" value="1">
+                                </div>
+                                <div class='cart-content-product-price'>960</div>
+                            </div>
+                            <div class='cart-content-product flex'>
+                                <div class='cart-content-product-name'>12-pack</div>
+                                <div class='cart-content-product-quantity'>
+                                    <input type="number" class="cart-content-product-quantity-value" value="1">
+                                </div>
+                                <div class='cart-content-product-price'>960</div>
+                            </div>
+                        </div>
+                        <div class='cart-footer flex'>
+                            <div class='total-price-container flex'>
+                                <div class='total-price-label'>Total price:</div>
+                                <div class='total-price-value'>0</div>
+                            </div>
+                            <div class='checkout-button-container'>
+                                <button class='checkout-button'>Checkout</button>
                             </div>
                         </div>
                 </div>
-                <div class='cart-footer'>
-                    <div class='total-price-container'>
-                        <div class='total-price-label'>Total price:</div>
-                        <div class='total-price-value'>0</div>
-                    </div>
-                    <div class='checkout-button-container'>
-                        <button class='checkout-button'>Checkout</button>
-                    </div>
-            </div>
-        </div>
         <div id="footer" class="flex-cc d-flex">
         </div>
     </div>
