@@ -28,6 +28,7 @@
                 </a>
             </div>
             <div class='action-buttons flex-column'>
+                {% block action_buttons %}
                 <div class='action-buttons-container flex'>
                     <div class='action-button flex-cc'>
                         <span class="material-symbols-outlined">
@@ -58,6 +59,7 @@
                         </span>
                     </div>
                 </div>
+                {% endblock %}
             </div>
             <div class='profile-container flex-column'>
                 <div class='profile-button-container'>
@@ -107,6 +109,7 @@
             </div>
         </div>
         <div id="main-content" class='flex'>
+            {% block main_content %}
             <div class='products-description'>
                 <div class='products-description-content flex-column'>
                     <div class='products-description-title'>
@@ -121,6 +124,7 @@
                     </div>
                 </div>
             </div>
+            {% endblock %}
     </div>
     <div id="footer" class="flex-cc d-flex">
     </div>
