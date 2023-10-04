@@ -1,6 +1,24 @@
 {% extends 'default.html' %}
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
+<script src="{{ url_for('static', filename='scripts/admin.js') }}"></script>
 {% endblock %}
 {% block main_content %}
+<div id='orders'>
+    <div class="incoming-orders-container">
+        <table id="incoming-orders">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Total</th>
+                    <th>Products</th>
+                    <th>Assign</th>
+                <tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
