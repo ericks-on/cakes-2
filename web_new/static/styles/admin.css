@@ -85,6 +85,10 @@
     border-radius: 10px;
 }
 
+#notification-message {
+    border-radius: 10px;
+}
+
 #notification-message:focus {
     outline: none;
 }
