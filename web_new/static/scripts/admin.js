@@ -3,5 +3,14 @@ $(document).ready(function () {
         "ordering": false,
         "pageLength": 5,
         "lengthChange": false,
+        "info": false,
+    });
+
+    $('#current-notifications').DataTable({
+        "ordering": false,
+        "pageLength": 5,
+        "lengthChange": false,
+        "info": false,
+        "searching": false,
     });
 });

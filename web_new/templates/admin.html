@@ -25,76 +25,6 @@
                     <td>2</td>
                     <td><button class="assign">Assign</button></td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
             </tbody>
         </table>
         <div class='auto-assign-btn'>
@@ -102,4 +32,62 @@
         </div>
     </div>
 </div>
-{% endblock %}
+<div class='notifications-management flex-column'>
+    <div class='current-notifications-container flex-column'>
+        <h2>Current Notifications</h2>
+        <table id="current-notifications">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Message</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Message</td>
+                    <td><button class="remove">Remove</button></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Message</td>
+                    <td><button class="remove">Remove</button></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Message</td>
+                    <td><button class="remove">Remove</button></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Message</td>
+                    <td><button class="remove">Remove</button></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Message</td>
+                    <td><button class="remove">Remove</button></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Message</td>
+                    <td><button class="remove">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class='add-new-notifications flex-column'>
+        <h2>Add Notification</h2>
+        <div class='add-notifications flex'>
+            <div class='new-notification-message flex-column'>
+                <label for='notification-message'>Message:</label>
+                <textarea id='notification-message' name='notification-message' cols="30" rows="4"></textarea>
+            </div>
+            <div class='add-notifications-btn'>
+                <button>Add Notification</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}5
