@@ -1,3 +1,7 @@
 $(document).ready(function () {
-    let table = new DataTable("#incoming-orders");
+    $("#incoming-orders").DataTable({
+        "ordering": false,
+        "pageLength": 5,
+        "lengthChange": false,
+    });
 });

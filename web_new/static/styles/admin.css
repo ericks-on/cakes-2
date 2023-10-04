@@ -3,9 +3,29 @@
 }
 
 .incoming-orders-container {
-    height: 70vh;
+    height: calc(100vh - 100px);
     width: 100%;
     background-color: var(--main-bg-color);
     border-radius: 10px;
     padding: 10px;
+}
+
+#incoming-orders {
+    height: 80%;
+    width: 100%;
+    font-size: 15px;
+}
+
+.incoming-orders-container h2 {
+    margin: 20px auto;
+}
+
+.auto-assign-btn  button{
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+    background-color: var(--dark-bg-color);
+    color: var(--secondary-text-color);
+    font-size: 15px;
+    font-weight: 600;
 }
