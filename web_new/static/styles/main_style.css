@@ -203,10 +203,17 @@ body{
 }
 
 /* --------action buttons----------- */
+
 .action-buttons {
+    z-index: 1;
+    margin-top: auto;
+    align-items: center;
+}
+.action-buttons-container {
     width: 100px;
     justify-content: space-between;
     align-items: center;
+    height: 60px;
 }
 
 .action-button:hover {
@@ -229,6 +236,25 @@ body{
     border-radius: 50%;
 }
 
+/* --------action buttons popup---------- */
+
+.action-buttons-popup {
+    width: 40vh;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    padding-top: 25px;
+    position: relative;
+}
+
+
+
+/* ====================The main content======================= */
+
 #main-content {
     width: 100%;
     height: calc(100vh - 60px);
@@ -240,8 +266,6 @@ body{
 }
 
 
-
-/* =======main landing page========== */
 
 /* ===========================Product Description=================== */
 

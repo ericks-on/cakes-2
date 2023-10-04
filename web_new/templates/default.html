@@ -25,24 +25,35 @@
             <div class='logo-container'>
                 <img src="../static/images/cakes_logo.png" alt="logo" class="logo">
             </div>
-            <div class='action-buttons flex'>
-                <div class='action-button flex-cc'>
-                    <span class="material-symbols-outlined">
-                        search
-                    </span>
-                </div>
-                <div class='action-button cart-notifications flex-cc'>
-                    <span class="material-symbols-outlined">
-                        shopping_cart
-                    </span>
-                    <div class='new-items'>
+            <div class='action-buttons flex-column'>
+                <div class='action-buttons-container flex'>
+                    <div class='action-button flex-cc'>
+                        <span class="material-symbols-outlined">
+                            search
+                        </span>
+                    </div>
+                    <div class='action-button cart-notifications flex-cc'>
+                        <span class="material-symbols-outlined">
+                            shopping_cart
+                        </span>
+                        <div class='new-items'>
+                        </div>
+                    </div>
+                    <div class='action-button flex-cc notifications'>
+                        <span class="material-symbols-outlined">
+                            notifications
+                        </span>
+                        <div class='new-notifications'>
+                        </div>
                     </div>
                 </div>
-                <div class='action-button flex-cc notifications'>
-                    <span class="material-symbols-outlined">
-                        notifications
-                    </span>
-                    <div class='new-notifications'>
+                <div class='action-buttons-popup'>
+                    {% block action_buttons_popups %}
+                    {% endblock %}
+                    <div class='exit-button'>
+                        <span class='materials-symbols-outlined'>
+                            close
+                        </span>
                     </div>
                 </div>
             </div>
