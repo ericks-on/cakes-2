@@ -251,5 +251,49 @@
             </table>
         </div>
     </div>
+    <div id='user-management' class='flex'>
+        <div class='current-users-container flex-column'>
+            <h2>Current Users</h2>
+            <table id='current-users' class='compact stripe nowrap hover'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Edit</th>
+                        <th>Remove</th>
+                        <th>Reset Password</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Username</td>
+                        <td>Role</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="remove">Remove</button></td>
+                        <td><button class="reset">Reset</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class='user-insights'>
+            <h2>User Insights</h2>
+            <div class='user-insights-container'>
+                <div class='user-insights-item'>
+                    <h3>Number of Users</h3>
+                    <p>12</p>
+                </div>
+                <div class='user-insights-item'>
+                    <h3>Number of Admins</h3>
+                    <p>12</p>
+                </div>
+                <div class='user-insights-item'>
+                    <h3>Number of Customers</h3>
+                    <p>12</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-{% endblock %}5
+{% endblock %}
