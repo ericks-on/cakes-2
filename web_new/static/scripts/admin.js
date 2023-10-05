@@ -20,4 +20,11 @@ $(document).ready(function () {
         "lengthChange": false,
         "info": false,
     });
+
+    $('#products-inventory').DataTable({
+        "ordering": false,
+        "pageLength": 5,
+        "lengthChange": false,
+        "info": false,
+    });
 });

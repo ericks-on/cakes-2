@@ -9,166 +9,246 @@
         <div class='sidebar-item'></div>
     </div>
 </div>
-<div id='active-page'></div>
-<div id='orders'>
-    <div class="incoming-orders-container flex-column">
-        <h2>Incoming Orders</h2>
-        <table id="incoming-orders" class='compact stripe nowrap hover'>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Total</th>
-                    <th>Products</th>
-                    <th>Assign</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>12/12/2019</td>
-                    <td>£12.00</td>
-                    <td>2</td>
-                    <td><button class="assign">Assign</button></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class='auto-assign-btn'>
-            <button>Auto Assign Orders</button>
-        </div>
-    </div>
-</div>
-<div class='flex-column' id='notifications-management'>
-    <div class='current-notifications-container flex-column'>
-        <h2>Current Notifications</h2>
-        <table id="current-notifications" class='compact stripe nowrap hover'>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Message</th>
-                    <th>Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Message</td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Message</td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Message</td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Message</td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Message</td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Message</td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class='add-new-notifications flex-column'>
-        <h2>Add Notification</h2>
-        <div class='add-notifications flex'>
-            <div class='new-notification-message flex-column'>
-                <label for='notification-message'>Message:</label>
-                <textarea id='notification-message' name='notification-message' cols="30" rows="4"></textarea>
-            </div>
-            <div class='add-notifications-btn'>
-                <button>Add Notification</button>
+<div id='active-page'>
+    <div id='orders'>
+        <div class="incoming-orders-container flex-column">
+            <h2>Incoming Orders</h2>
+            <table id="incoming-orders" class='compact stripe nowrap hover'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Products</th>
+                        <th>Assign</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>12/12/2019</td>
+                        <td>£12.00</td>
+                        <td>2</td>
+                        <td><button class="assign">Assign</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>12/12/2019</td>
+                        <td>£12.00</td>
+                        <td>2</td>
+                        <td><button class="assign">Assign</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>12/12/2019</td>
+                        <td>£12.00</td>
+                        <td>2</td>
+                        <td><button class="assign">Assign</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>12/12/2019</td>
+                        <td>£12.00</td>
+                        <td>2</td>
+                        <td><button class="assign">Assign</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>12/12/2019</td>
+                        <td>£12.00</td>
+                        <td>2</td>
+                        <td><button class="assign">Assign</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class='auto-assign-btn'>
+                <button>Auto Assign Orders</button>
             </div>
         </div>
     </div>
-</div>
-<div class='flex-column' id='products-management'>
-    <div class='current-products-container flex-column'>
-        <h2>Current Products</h2>
-        <table id='current-products' class='compact stripe nowrap hover'>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Product Name</td>
-                    <td>£12.00</td>
-                    <td><button class="edit">Edit</button></td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Product Name</td>
-                    <td>£12.00</td>
-                    <td><button class="edit">Edit</button></td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Product Name</td>
-                    <td>£12.00</td>
-                    <td><button class="edit">Edit</button></td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Product Name</td>
-                    <td>£12.00</td>
-                    <td><button class="edit">Edit</button></td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Product Name</td>
-                    <td>£12.00</td>
-                    <td><button class="edit">Edit</button></td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>Product Name</td>
-                    <td>£12.00</td>
-                    <td><button class="edit">Edit</button></td>
-                    <td><button class="remove">Remove</button></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class='flex-column' id='notifications-management'>
+        <div class='current-notifications-container flex-column'>
+            <h2>Current Notifications</h2>
+            <table id="current-notifications" class='compact stripe nowrap hover'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Message</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Message</td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Message</td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Message</td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Message</td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Message</td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Message</td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class='add-new-notifications flex-column'>
+            <h2>Add Notification</h2>
+            <div class='add-notifications flex'>
+                <div class='new-notification-message flex-column'>
+                    <label for='notification-message'>Message:</label>
+                    <textarea id='notification-message' name='notification-message' cols="30" rows="4"></textarea>
+                </div>
+                <div class='add-notifications-btn'>
+                    <button>Add Notification</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class='add-new-products flex-column'>
-        <h2>Add New Product</h2>
-        <div class='add-new-product flex-column'>
-            <div class='new-product-name flex-column'>
-                <label for='product-name'>Name:</label>
-                <input type='text' id='product-name' name='product-name'>
+    <div class='grid' id='products-management'>
+        <div class='current-products-container flex-column'>
+            <h2>Current Products</h2>
+            <table id='current-products' class='compact stripe nowrap hover'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Edit</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>£12.00</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>£12.00</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>£12.00</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>£12.00</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>£12.00</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>£12.00</td>
+                        <td><button class="edit">Edit</button></td>
+                        <td><button class="remove">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class='add-new-products flex-column'>
+            <h2>Add New Product</h2>
+            <div class='add-new-product flex-column'>
+                <div class='new-product-name flex-column'>
+                    <label for='product-name'>Name:</label>
+                    <input type='text' id='product-name' name='product-name'>
+                </div>
+                <div class='new-product-price flex-column'>
+                    <label for='product-price'>Price:</label>
+                    <input type='number' id='product-price' name='product-price'>
+                </div>
+                <div class='add-product-btn'>
+                    <button>Add Product</button>
+                </div>
             </div>
-            <div class='new-product-price flex-column'>
-                <label for='product-price'>Price:</label>
-                <input type='number' id='product-price' name='product-price'>
-            </div>
-            <div class='add-product-btn'>
-                <button>Add Product</button>
-            </div>
+        </div>
+        <div class='products-inventory flex-column'>
+            <h2>Products Inventory</h2>
+            <table id='products-inventory' class='compact stripe nowrap hover'>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Available</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>12</td>
+                        <td><button class="edit">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>12</td>
+                        <td><button class="edit">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>12</td>
+                        <td><button class="edit">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>12</td>
+                        <td><button class="edit">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>12</td>
+                        <td><button class="edit">Edit</button></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Product Name</td>
+                        <td>12</td>
+                        <td><button class="edit">Edit</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -20,17 +20,18 @@
 
 /* =================Incoming Orders============== */
 #orders {
-    width: 40%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-bg-color);
+    position: relative;
     display: none;
 }
 
 .incoming-orders-container {
-    height: calc(100vh - 100px);
-    width: 100%;
-    background-color: var(--main-bg-color);
-    border-radius: 10px;
+    width: 50%;
+    height: 100%;
     padding: 10px;
-    position: relative;
+    border-right: 1px solid var(--secondary-text-color);
 }
 
 #incoming-orders {
@@ -61,8 +62,8 @@
 
 /* -================Notifications================= */
 #notifications-management {
-    width: 40%;
-    height: calc(100vh - 100px);
+    width: 100%;
+    height: 100%;
     background-color: var(--main-bg-color);
     border-radius: 10px;
     justify-content: space-between;
@@ -70,7 +71,7 @@
 }
 
 .current-notifications-container {
-    width: 100%;
+    width: 50%;
     height: 50%;
     padding: 10px;
 }
@@ -81,7 +82,7 @@
 }
 
 .add-new-notifications {
-    width: 100%;
+    width: 50%;
     height: 40%;
     padding: 10px;
 }
@@ -113,18 +114,19 @@
 
 /* ==================Products================= */
 #products-management {
-    width: 40%;
-    height: calc(100vh - 100px);
+    width: 100%;
+    height: 100%;
     background-color: var(--main-bg-color);
     border-radius: 10px;
     padding: 10px;
     justify-content: space-between;
-    display: none;
+    grid-template-columns: 50% 50%;
+    gap: 10px;
+    /* display: none; */
 }
 
 .current-products-container {
     width: 100%;
-    height: 50%;
 }
 
 #products-management h2 {
@@ -141,10 +143,28 @@
     margin: 5px 0;
 }
 
+.add-new-products {
+    width: 50%;
+    height: 40%;
+    padding: 10px;
+}
+
 .add-product-btn button{
     width: 100px;
     height: 30px;
     background-color: var(--dark-bg-color);
     color: var(--secondary-text-color);
     border-radius: 10px;
+}
+
+.products-inventory {
+    padding: 10px;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    border-left: 1px solid var(--secondary-text-color);
+}
+
+.products-inventory h2 {
+    font-size: 20px;
+    margin: 10px auto;
 }
