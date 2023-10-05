@@ -187,3 +187,28 @@
     height: 100%;
     padding: 10px;
 }
+
+.user-insights {
+    width: 50%;
+    height: 100%;
+    border-left: 1px solid var(--secondary-text-color);
+    padding: 10px;
+}
+
+.user-insights h3 {
+    font-size: 15px;
+}
+
+.user-insights h2 {
+    font-size: 20px;
+    margin: 10px auto;
+}
+
+.user-insights p {
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+.user-insights-item {
+    margin: 10px 0;
+}
