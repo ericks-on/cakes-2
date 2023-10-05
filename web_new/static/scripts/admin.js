@@ -13,4 +13,11 @@ $(document).ready(function () {
         "info": false,
         "searching": false,
     });
+
+    $('#current-products').DataTable({
+        "ordering": false,
+        "pageLength": 5,
+        "lengthChange": false,
+        "info": false,
+    });
 });
