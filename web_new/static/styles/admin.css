@@ -267,7 +267,7 @@
 .dashboard-insights {
     width: 100%;
     gap: 10px;
-    height: 30%;
+    height: auto;
 }
 
 .dashboard-insight {
@@ -275,4 +275,21 @@
     height: 90%;
     background-color: var(--main-bg-color);
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.dashboard-insight h2 {
+    font-size: 20px;
+    margin: 5px auto;
+}
+
+.di-data-title {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.di-data-value {
+    font-size: 15px;
 }
