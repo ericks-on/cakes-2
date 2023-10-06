@@ -34,4 +34,11 @@ $(document).ready(function () {
         "lengthChange": false,
         "info": false,
     });
+
+    $('#current-inventory').DataTable({
+        "ordering": false,
+        "pageLength": 5,
+        "lengthChange": false,
+        "info": false,
+    });
 });
