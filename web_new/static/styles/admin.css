@@ -267,11 +267,12 @@
 .dashboard-insights {
     width: 100%;
     gap: 10px;
+    height: 30%;
 }
 
-.dashboard-insight-item {
+.dashboard-insight {
     width: 20%;
-    height: 100px;
+    height: 90%;
     background-color: var(--main-bg-color);
     border-radius: 10px;
 }
