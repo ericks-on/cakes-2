@@ -280,10 +280,25 @@
     padding: 5px;
 }
 
-.dashboard-insight h2 {
-    font-size: 20px;
-    margin: 5px auto;
+.dashboard-insight:hover{
+    cursor: pointer;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
 }
+
+.dashboard-insight-title{
+    margin: 5px auto;
+    text-align: center;
+}
+
+.dashboard-insight-title h2 {
+    font-size: 20px;
+}
+
+.dashboard-insight-title p {
+    font-size: 10px;
+}
+
 
 .di-data-title {
     font-size: 15px;
