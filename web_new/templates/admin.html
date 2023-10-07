@@ -3,9 +3,16 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
 <script src="{{ url_for('static', filename='scripts/admin.js') }}"></script>
 {% endblock %}
+{% block header %}
+{% endblock %}
 {% block main_content %}
 <div id='sidebar'>
     <div class='sidebar-container'>
+        <div class='logo-container-side'>
+            <a href="/">
+                <img src="../static/images/cakes_logo.png" alt="logo" class="logo">
+            </a>
+        </div>
         <div class='sidebar-item'></div>
     </div>
 </div>

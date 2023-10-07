@@ -1,21 +1,42 @@
 #main-content {
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
+    height: 100vh;
 }
 
 /* ==================Sidebar================= */
 #sidebar {
     width: 20%;
-    height: calc(100vh - 100px);
+    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
+    background-color: var(--main-bg-color);
 }
 
+.sidebar-item {
+    width: 100%;
+}
+
+.logo-container-side {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
+.logo-container-side img {
+    width: 150px;
+    height: 70px;
+}
 
 /* ===============Active-page================== */
 #active-page {
     width: 75%;
-    height: calc(100vh - 100px);
+    height: 100%;
     border-radius: 10px;
     padding: 10px;
 }
