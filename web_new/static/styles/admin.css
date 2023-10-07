@@ -286,14 +286,16 @@
 }
 
 .dashboard-insights {
-    width: 100%;
+    width: 50%;
     gap: 10px;
     height: auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
 }
 
 .dashboard-insight {
-    width: 20%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     background-color: var(--main-bg-color);
     border-radius: 10px;
     display: flex;
@@ -321,11 +323,37 @@
 }
 
 
-.di-data-title {
+.di-data-title h3 {
     font-size: 15px;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .di-data-value {
     font-size: 15px;
+}
+
+/* ----dashboard insights--- */
+#revenue-insight {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#profit-insight {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#orders-insight {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#products-insight {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#sales-insight {
+    grid-column: 3;
+    grid-row: 1 / 3;
 }
