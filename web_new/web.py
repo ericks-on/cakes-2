@@ -28,7 +28,7 @@ def login():
     try:
         api_response = requests.post(login_url,
                                      json={'username': username,
-                                           'password': password}, timeoout=5)
+                                           'password': password}, timeout=5)
         api_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
