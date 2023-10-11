@@ -2,7 +2,7 @@
 """Managing the web pages"""
 import os
 import requests
-from flask import Flask, render_template, request, make_response, redirect
+from flask import Flask, render_template, request, make_response
 
 
 app = Flask(__name__)
@@ -10,12 +10,12 @@ api_host = os.environ.get('API_HOST')
 api_port = os.environ.get('API_PORT')
 
 
-@app.route('/', strict_slashes=False)
+@app.route('/', strict_slashes=False, methods=['GET'])
 def index():
     """Landing page"""
     return render_template('default.html')
 
-@app.route('/login', strict_slashes=False)
+@app.route('/', strict_slashes=False, methods=['POST'])
 def login():
     """Login verification"""
     username = request.form.get('username')
@@ -33,7 +33,7 @@ def login():
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
     access_token = api_response.json()['access_token']
-    response = make_response(redirect('index.html'))
+    response = make_response(render_template('index.html'))
     response.set_cookie('access_token', access_token, httponly=True)
     return response
 
