@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <script src="../static/scripts/jquery_3.7.1.js"></script>
-    <script src="../static/scripts/main.js"></script>
+    <script src="../static/scripts/buttons.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <title>{% block title %}{% endblock %}</title>
@@ -36,7 +36,7 @@
                             history
                         </span>
                     </div>
-                    <div class='action-button cart-notifications flex-cc'>
+                    <div class='action-button cart-notifications flex-cc' id='cart-ab'>
                         <span class="material-symbols-outlined">
                             shopping_cart
                         </span>
@@ -131,7 +131,7 @@
     <div id="footer" class="flex-cc d-flex">
     </div>
     <div id="popups-container">
-        <div class='cart-container flex'>
+        <div id='cart-container'>
             <div class='products-container flex-column'>
                 <div class='product'>
                     <div class='product-image-container'>
