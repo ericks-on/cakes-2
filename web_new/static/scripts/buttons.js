@@ -13,5 +13,22 @@ $(document).ready(function(){
         $('#cart-container').css("display", "flex");
         $("#cart-container *").show();
     });
+
+    // Clicking order now button to display cart
+    $('#order-now').click(function(){
+        $("#popups-container").css("display", "flex");
+        $('#cart-container').css("display", "flex");
+        $("#cart-container *").show();
+    });
+
+    // Displaying the profile
+    $('.profile-button').click(function(){
+        $('.profile-details').show();
+    });
+
+    // closing the profile
+    $('#profile-close').click(function(){
+        $('.profile-details').hide();
+    });
 }
 );

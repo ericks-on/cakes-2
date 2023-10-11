@@ -1,16 +1,42 @@
 #!/usr/bin/python3
 """Managing the web pages"""
 import os
-from flask import Flask, render_template
+import requests
+from flask import Flask, render_template, request, make_response, redirect
 
 
 app = Flask(__name__)
+api_host = os.environ.get('API_HOST')
+api_port = os.environ.get('API_PORT')
 
 
 @app.route('/', strict_slashes=False)
+def index():
+    """Landing page"""
+    return render_template('default.html')
+
+@app.route('/login', strict_slashes=False)
 def login():
-    """Login page"""
-    return render_template('index.html')
+    """Login verification"""
+    username = request.form.get('username')
+    password = request.form.get('password')
+    login_url = 'http://{}:{}/api/v1_0/token/auth'.format(api_host, api_port)
+    
+    if not username or not password:
+        return {'error': 'Incorrect Username or Password'}, 400
+    
+    try:
+        api_response = requests.post(login_url,
+                                     json={'username': username,
+                                           'password': password}, timeoout=5)
+        api_response.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        return {'error': err.response.text}, err.response.status_code
+    else:
+        access_token = api_response.json()['access_token']
+        response = make_response(redirect('index.html'))
+        response.set_cookie('access_token', access_token, httponly=True)
+        return response
 
 
 if __name__ == '__main__':
