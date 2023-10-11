@@ -32,11 +32,10 @@ def login():
         api_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
-    else:
-        access_token = api_response.json()['access_token']
-        response = make_response(redirect('index.html'))
-        response.set_cookie('access_token', access_token, httponly=True)
-        return response
+    access_token = api_response.json()['access_token']
+    response = make_response(redirect('index.html'))
+    response.set_cookie('access_token', access_token, httponly=True)
+    return response
 
 
 if __name__ == '__main__':
