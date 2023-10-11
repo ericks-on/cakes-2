@@ -3,6 +3,7 @@
 import os
 import requests
 from flask import Flask, render_template, request, make_response
+from web_new import api_requests
 
 
 app = Flask(__name__)
@@ -13,7 +14,8 @@ api_port = os.environ.get('API_PORT')
 @app.route('/', strict_slashes=False, methods=['GET'])
 def index():
     """Landing page"""
-    return render_template('default.html')
+    products = api_requests.get_products().get('products')
+    return render_template('default.html', products=products)
 
 @app.route('/', strict_slashes=False, methods=['POST'])
 def login():
@@ -32,8 +34,10 @@ def login():
         api_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
+    
+    products = api_requests.get_products().get('products')
     access_token = api_response.json()['access_token']
-    response = make_response(render_template('index.html'))
+    response = make_response(render_template('index.html', products=products))
     response.set_cookie('access_token', access_token, httponly=True)
     return response
 

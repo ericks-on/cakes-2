@@ -14,7 +14,6 @@ products_bp = Blueprint('products', __name__, url_prefix='/products')
 
 @products_bp.route('/', methods=['GET'])
 @swag_from('documentation/product/all_products.yml')
-@jwt_required()
 def all_products():
     """To obtain all products"""
     products = [product.to_dict() for product in storage.all(Product)]
