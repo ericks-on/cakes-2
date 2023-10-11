@@ -143,7 +143,7 @@ def get_sales_by_name(product_name):
     if user.user_type != 'admin':
         abort(401)
     product = storage.get_product(product_name)
-    if len(products) == 0:
+    if len(product) == 0:
         abort(404)
     sales = [sale.to_dict() for sale in product.sales]
     return jsonify({product_name: sales}), 200
@@ -218,7 +218,6 @@ def get_total_sales_within_period(year, month=None):
             pdt_sales["total_sales"] = total_sales
             pdt_sales["total_value"] = total_value
             sales[product.name] = pdt_sales
-        return jsonify({"sales": sales}), 200
     else:
         months = calendar.month_name[1:]
         sales = {}
@@ -231,4 +230,4 @@ def get_total_sales_within_period(year, month=None):
                                    months.index(mon)+1])
                 pdt_monthly_sales[mon] = total_sales
             sales[product.name] = pdt_monthly_sales
-        return jsonify({"monthly_sales": sales}), 200
+    return jsonify({"sales": sales}), 200

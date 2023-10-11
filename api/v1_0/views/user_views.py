@@ -58,3 +58,21 @@ def get_user():
     if not request_user:
         abort(404)
     return jsonify({"user": request_user.to_dict()}), 200
+
+@user_bp.route('/<user_id>', methods=['DELETE'])
+@swag_from('documentation/user/delete_user.yml')
+@jwt_required()
+def delete_user():
+    """Deleting a user"""
+    user = storage.get_user(get_jwt_identity())
+    if not user:
+        abort(404)
+        
+    if user.user_type != 'admin':
+        abort(403)
+    del_user = storage.get(User, user_id)
+    if not del_user:
+        abort(404)
+    storage.delete(del_user)
+    storage.save()
+    return jsonify({}), 200
