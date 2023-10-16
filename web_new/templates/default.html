@@ -128,6 +128,13 @@
                 </div>
             </div>
             {% endblock %}
+            <div id='alertPopup'>
+                <div id='alertClose' class='flex-cc'>
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+            </div>
     </div>
     <div id="footer" class="flex-cc d-flex">
     </div>
@@ -142,8 +149,9 @@
                     <div class='product-details flex'>
                         <div class='product-name'>{{ product.name }}</div>
                         <div class='product-price'>KSH {{ product.price }}</div>
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
                     </div>
-                    <div class='product-add-to-cart flex-cc flex'>
+                    <div class='product-add-to-cart flex-cc flex' id='addToCart'>
                         <span class="material-symbols-outlined">
                             add_shopping_cart
                         </span>
@@ -184,35 +192,6 @@
                             <div class='cart-content-product-quantity flex'>
                                 <div class="cart-content-product-quantity-increament flex">
                                     <span class="material-symbols-outlined">
-                                        remove
-                                    </span>
-                                </div>
-                                <div class="cart-content-product-quantity-value flex-cc">
-                                    1
-                                </div>
-                                <div class="cart-content-product-quantity-decreament flex">
-                                    <span class="material-symbols-outlined">
-                                        add
-                                    </span>
-                                </div>
-                            </div>
-                            <div class='cart-content-product-price'>960</div>
-                        </div>
-                        <div class='cart-content-product flex flex-cc'>
-                            <div class='cart-content-product-details'>
-                                <div class='cart-product-image'>
-                                    <img src="../static/images/donut.jpg" alt="cake">
-                                    <div class='delete-cart-product flex-cc'>
-                                        <span class="material-symbols-outlined">
-                                            close
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class='cart-product-name'>12-pack</div>
-                            </div>
-                            <div class='cart-content-product-quantity flex'>
-                                <div class="cart-content-product-quantity-increament">
-                                    <span class="material-symbols-outlined flex">
                                         remove
                                     </span>
                                 </div>

@@ -297,6 +297,7 @@ body{
     background-image: url(../images/donut_bg.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    position: relative;
 }
 
 
@@ -449,6 +450,7 @@ body{
     background-color: var(--secondary-btn-color);
     color: var(--main-text-color);
     box-shadow: 0 0 2px 2px rgba(0,0,0,0.3);
+    cursor: pointer;
 }
 
 .product {
@@ -606,3 +608,18 @@ body{
     border-top: 1px solid var(--main-text-color);
 }
 
+/* ============alert popup========== */
+#alertPopup {
+    background-color: var(--main-bg-color);
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    width: 70%;
+    margin: 0 auto;
+    height: 50px;
+    border-radius: 0 0 20px 20px;
+}
+
+#alertClose {
+    border-radius: 50%;
+}

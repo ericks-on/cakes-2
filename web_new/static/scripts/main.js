@@ -14,4 +14,18 @@ $(document).ready(function(){
             return;
         });
     });
+
+    // ading to cart
+    $('#addToCart').click(function(){
+        let quantity = $('#quantity').val();
+        let productId = $('#productId').val();
+        $.post('/cart/add', {
+            productId: productId,
+            quantity: quantity
+        }, function(data, status){
+            alert('Product added to cart');
+        }).fail(function(data, status){
+            alert('Product could not be added to cart');
+        });
+    });
 });
