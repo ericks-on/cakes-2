@@ -44,7 +44,7 @@ def add_cart():
 @cart_bp.route('/<cart_id>', methods=['DELETE'])
 @swag_from('documentation/cart/delete_cart.yml')
 @jwt_required()
-def del_cart():
+def del_cart(cart_id):
     """Deleting item from cart"""
     user = storage.get_user(get_jwt_identity())
     cart_ids = [item.id for item in storage.all(Cart)
