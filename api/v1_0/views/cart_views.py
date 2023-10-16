@@ -55,3 +55,17 @@ def del_cart(cart_id):
     storage.delete(item)
     storage.save()
     return jsonify({}), 200
+
+@cart_bp.route('/<cart_id>', methods=['PUT'])
+@swag_from('documentation/cart/update_cart.yml')
+@jwt_required()
+def update_cart(cart_id):
+    """Updating cart item quantity"""
+    quantity = request.get_json().get('quantity')
+    cart_id = request.get_json().get('cart_id')
+    if not quantity or not cart_id:
+        abort(400)
+    item = storage.get(Cart, cart_id)
+    item.quantity = quantity
+    storage.save()
+    return jsonify(item.to_dict), 200
