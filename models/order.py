@@ -11,8 +11,6 @@ class Order(Basemodel, Base):
     __tablename__ = 'orders'
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     status = Column(String(60), nullable=False, default='pending')
-    quantity = Column(Integer, nullable=False)
-    uom = Column(String(60), nullable=False, default='packets')
     order_value = Column(Integer, nullable=False)
 
     products = relationship(ProductSales, backref='order')

@@ -39,3 +39,5 @@ def get_products():
     except requests.exceptions.Timeout:
         return {'error': 'Request Timeout'}, 500
     return pdt_response.json()
+
+def new_order()
