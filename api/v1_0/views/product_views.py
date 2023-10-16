@@ -5,8 +5,6 @@ from flasgger.utils import swag_from
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from models import storage
 from models.product import Product
-from models.user import User
-import calendar
 
 
 products_bp = Blueprint('products', __name__, url_prefix='/products')
