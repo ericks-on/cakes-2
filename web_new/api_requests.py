@@ -68,3 +68,32 @@ def add_cart(product_id, quantity):
     except requests.exceptions.Timeout:
         return {'error': 'Connection Error'}
     return cart_response.json()
+
+def update_cart(quantity, cart_id):
+    """Updating item quantity on Cart"""
+    url = cart_url + f'/<{cart_id}>'
+    try:
+        response = requests.put(url=url, json={'quantity':quantity},
+                                timeout=5)
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        return {'error': err.response.text}, err.response.status_code
+    except requests.exceptions.ConnectionError:
+        return {'error': 'Connection Error'}, 500
+    except requests.exceptions.Timeout:
+        return {'error': 'Connection Error'}
+    return response.json()
+
+def delete_cart(cart_id):
+    """Deleting item in cart"""
+    url = cart_url + f'/<{cart_id}>'
+    try:
+        response = requests.delete(url, timeout=5)
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        return {'error': err.response.text}, err.response.status_code
+    except requests.exceptions.ConnectionError:
+        return {'error': 'Connection Error'}, 500
+    except requests.exceptions.Timeout:
+        return {'error': 'Connection Error'}
+    return response.json()
