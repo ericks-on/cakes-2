@@ -147,7 +147,7 @@
                 {% for product in products %}
                 <div class='product'>
                     <div class='product-image-container'>
-                        <img src="../static/images/donut.jpg" alt="cake" class="product-image">
+                        <img src="../static/images/{{ product.image }}" alt="cake" class="product-image">
                     </div>
                     <div class='product-details flex'>
                         <div class='product-name'>{{ product.name }}</div>

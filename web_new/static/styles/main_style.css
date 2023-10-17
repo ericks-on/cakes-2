@@ -401,6 +401,7 @@ body{
     overflow-y: auto;
     display: flex;
     background-color: var(--main-bg-color);
+    border-right: 1px solid var(--dark-bg-color);
 }
 
 .product {

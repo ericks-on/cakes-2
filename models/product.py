@@ -12,6 +12,7 @@ class Product(Basemodel, Base):
     __tablename__ = 'products'
     name = Column(String(60), nullable=False, unique=True)
     price = Column(Integer, nullable=False)
+    image = Column(String(60), nullable=False)
 
     sales = relationship(ProductSales, backref='products')
 
