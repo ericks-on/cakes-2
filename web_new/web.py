@@ -22,7 +22,7 @@ def login():
     """Login verification"""
     username = request.form.get('username')
     password = request.form.get('password')
-    login_url = 'http://{}:{}/api/v1_0/token/auth'.format(api_host, api_port)
+    login_url = f'http://{api_host}:{api_port}/api/v1_0/token/auth'
     
     if not username or not password:
         return {'error': 'Incorrect Username or Password'}, 400

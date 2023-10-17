@@ -558,6 +558,11 @@ body{
     margin: auto 0;
 }
 
+.cart-content-product-quantity-decreament:hover,
+.cart-content-product-quantity-increment:hover {
+    cursor: pointer;
+}
+
 .total-price-container {
     width: 70%;
 }

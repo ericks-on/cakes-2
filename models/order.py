@@ -16,6 +16,5 @@ class Order(Basemodel, Base):
     products = relationship(ProductSales, backref='order')
 
     __table_args__ = (
-            CheckConstraint('quantity >= 0', name='positive_quantity'),
-            CheckConstraint('order_value >= 0', name='positive_value')
+            CheckConstraint('order_value >= 0', name='positive_value'),
             )
