@@ -77,7 +77,7 @@ $(document).ready(function(){
                     </span>
                 </div>
             </div>
-            <div class='cart-content-product-price'>${cartData[i].price}</div>
+            <div class='cart-content-product-price'>${cartData[i].price * cartData[i].quantity}</div>
             <input type='hidden' name='product_id' value='${cartData[i].product_id}' class='product-id-cart'>
         </div>
         `;
@@ -101,9 +101,11 @@ $(document).ready(function(){
                 let productName = cartCurrentItems.eq(i).find('.cart-content-product-details .cart-product-name').text();
                 let quantityContainer = cartCurrentItems.eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value');
                 let quantity = parseInt(cartCurrentItems.eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value').text());
+                let totalContainer = cartCurrentItems.eq(i).find('.cart-content-product-price');
                 if (name === productName) {
                     quantityContainer.text(quantity + 1);
                     newQuantity = parseInt(quantityContainer.text());
+                    totalContainer.text(newQuantity * price);
                     break;
                 }
             }
@@ -156,6 +158,7 @@ $(document).ready(function(){
 
     // empty the cart
     $('#emptyCart').click(function() {
+        confirm('Press \'OK\' to clear the shopping Cart');
         $('.cart-content-products').empty();
         deleteCookie('cartItems');
     });
