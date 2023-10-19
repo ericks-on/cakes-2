@@ -562,7 +562,7 @@ body{
 }
 
 .cart-content-product-quantity-decreament:hover,
-.cart-content-product-quantity-increment:hover {
+.cart-content-product-quantity-increament:hover {
     cursor: pointer;
 }
 

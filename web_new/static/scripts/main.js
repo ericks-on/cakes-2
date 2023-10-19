@@ -63,7 +63,7 @@ $(document).ready(function(){
                 <div class='cart-product-name'>${cartData[i].name}</div>
             </div>
             <div class='cart-content-product-quantity flex'>
-                <div class="cart-content-product-quantity-increament flex">
+                <div class="cart-content-product-quantity-decreament flex">
                     <span class="material-symbols-outlined">
                         remove
                     </span>
@@ -71,7 +71,7 @@ $(document).ready(function(){
                 <div class="cart-content-product-quantity-value flex-cc">
                     ${cartData[i].quantity}
                 </div>
-                <div class="cart-content-product-quantity-decreament flex">
+                <div class="cart-content-product-quantity-increament flex">
                     <span class="material-symbols-outlined">
                         add
                     </span>
@@ -79,6 +79,7 @@ $(document).ready(function(){
             </div>
             <div class='cart-content-product-price'>${cartData[i].price * cartData[i].quantity}</div>
             <input type='hidden' name='product_id' value='${cartData[i].product_id}' class='product-id-cart'>
+            <input type='hidden' name='product_price' value=${cartData[i].price} class='product-price-cart'>
         </div>
         `;
         $('.cart-content-products').append(item);
@@ -124,7 +125,7 @@ $(document).ready(function(){
                     <div class='cart-product-name'>${name}</div>
                 </div>
                 <div class='cart-content-product-quantity flex'>
-                    <div class="cart-content-product-quantity-increament flex">
+                    <div class="cart-content-product-quantity-decreament flex">
                         <span class="material-symbols-outlined">
                             remove
                         </span>
@@ -132,7 +133,7 @@ $(document).ready(function(){
                     <div class="cart-content-product-quantity-value flex-cc">
                         1
                     </div>
-                    <div class="cart-content-product-quantity-decreament flex">
+                    <div class="cart-content-product-quantity-increament flex">
                         <span class="material-symbols-outlined">
                             add
                         </span>
@@ -140,6 +141,7 @@ $(document).ready(function(){
                 </div>
                 <div class='cart-content-product-price'>${price}</div>
                 <input type='hidden' name='product_id' value='${productId}' class='product-id-cart'>
+                <input type='hidden' name='product_price' value=${price} class='product-price-cart'>
             </div>
             `;
             let cart = $('.cart-content-products');
@@ -161,5 +163,16 @@ $(document).ready(function(){
         confirm('Press \'OK\' to clear the shopping Cart');
         $('.cart-content-products').empty();
         deleteCookie('cartItems');
+    });
+
+    // increase quantity in cart
+    $('.cart-content-product-quantity-increament').click(function() {
+        let parent = $(this).parent()
+        let quantityContainer = parent.find('.cart-content-product-quantity-value');
+        let totalContainer = parent.find('.cart-content-product-price');
+        let price = parseInt(parent.find('.product-price-cart').val());
+        let currentQuantity = parseInt(quantityContainer.text());
+        quantityContainer.text(currentQuantity + 1);
+        totalContainer.text((currentQuantity + 1) * price);
     });
 });
