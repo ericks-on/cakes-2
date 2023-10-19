@@ -41,7 +41,6 @@ $(document).ready(function(){
     // setCookie("cartItems", JSON.stringify(cartData), 7);
     // const cartData = JSON.parse(getCookie("cartItems"));
 
-    // deleteCookie('cartItems');
     if (getCookie('cartItems') === "") {
         setCookie('cartItems', JSON.stringify([]), 30);
     }
@@ -153,5 +152,11 @@ $(document).ready(function(){
         var cartItem = {'name': name, 'product_id': productId, 'price': price, 'image': productImage, 'quantity': newQuantity};
         cartData.push(cartItem);
         setCookie('cartItems', JSON.stringify(cartData), 30);
+    });
+
+    // empty the cart
+    $('#emptyCart').click(function() {
+        $('.cart-content-products').empty();
+        deleteCookie('cartItems');
     });
 });
