@@ -145,6 +145,11 @@ $(document).ready(function(){
             cart.append(newItem);
             newQuantity = 1;
         }
+        for (let i = 0; i < cartData.length; i++) {
+            if (cartData[i].name === name) {
+                cartData.splice(i, 1);
+            }
+        }
         var cartItem = {'name': name, 'product_id': productId, 'price': price, 'image': productImage, 'quantity': newQuantity};
         cartData.push(cartItem);
         setCookie('cartItems', JSON.stringify(cartData), 30);
