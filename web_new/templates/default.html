@@ -152,7 +152,8 @@
                     <div class='product-details flex'>
                         <div class='product-name'>{{ product.name }}</div>
                         <div class='product-price'>KSH {{ product.price }}</div>
-                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <input type="hidden" name="product_id" value="{{ product.id }}" class='product-id-cart'>
+                        <input type='hidden' name="product_image" value='{{ product.image }}' class='product-image-cart'>
                     </div>
                     <div class='product-add-to-cart flex-cc flex'>
                         <span class="material-symbols-outlined">
@@ -165,7 +166,7 @@
             <div class='cart'>
                 <div class='cart-header flex'>
                     <div class='cart-header-title'>Cart</div>
-                    <div class='clear-cart flex-cc'>
+                    <div class='clear-cart flex-cc' id='emptyCart'>
                         <span class="material-symbols-outlined">
                             remove_shopping_cart
                         </span>
@@ -174,12 +175,12 @@
                 </div>
                 <br>
                 <div class='cart-content'>
+                    <div class='cart-content-product-title flex'>
+                        <div class='cart-content-product-name'>Product</div>
+                        <div class='cart-content-product-quantity'>Quantity</div>
+                        <div class='cart-content-product-price'>Total</div>
+                    </div>
                     <div class='cart-content-products'>
-                        <div class='cart-content-product-title flex'>
-                            <div class='cart-content-product-name'>Product</div>
-                            <div class='cart-content-product-quantity'>Quantity</div>
-                            <div class='cart-content-product-price'>Total</div>
-                        </div>
                         <div class='cart-content-product flex flex-cc'>
                             <div class='cart-content-product-details'>
                                 <div class='cart-product-image'>

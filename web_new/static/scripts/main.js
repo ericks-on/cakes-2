@@ -32,24 +32,33 @@ $(document).ready(function(){
         }
         return "";
     }
+
+    function deleteCookie(name) {
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+
     // Usage:
     // setCookie("cartItems", JSON.stringify(cartData), 7);
     // const cartData = JSON.parse(getCookie("cartItems"));
 
-    // ading to cart
-    $('.product-add-to-cart').click(function(){
-        let newItem = `
+    if (getCookie('cartItems') === "") {
+        setCookie('cartItems', JSON.stringify([]), 30);
+    }
+    const cartData = JSON.parse(getCookie("cartItems"));
+    $('.cart-content-products').empty()
+    for (let i = 0; i < cartData.length; i++) {
+        let item = `
         <div class='cart-content-product flex flex-cc'>
         <div class='cart-content-product-details'>
             <div class='cart-product-image'>
-                <img src="../static/images/donut.jpg" alt="cake">
+                <img src="../static/images/${cartData[i].image}" alt="cake">
                 <div class='delete-cart-product flex-cc'>
                     <span class="material-symbols-outlined">
                         close
                     </span>
                 </div>
             </div>
-            <div class='cart-product-name'>12-pack</div>
+            <div class='cart-product-name'>${cartData[i].name}</div>
         </div>
         <div class='cart-content-product-quantity flex'>
             <div class="cart-content-product-quantity-increament flex">
@@ -66,10 +75,54 @@ $(document).ready(function(){
                 </span>
             </div>
         </div>
-        <div class='cart-content-product-price'>960</div>
+        <div class='cart-content-product-price'>${cartData[i].price}</div>
+    </div>
+    `
+    }
+
+    // ading to cart
+    $('.product-add-to-cart').click(function(){
+        let productDetails = $(this).parent()
+        var name = productDetails.find('.product-details .product-name').text();
+        var price = parseInt(productDetails.find('.product-details .product-price').text().split(' ')[1]);
+        var productId = productDetails.find('.product-details .product-id-cart').val();
+        var productImage = productDetails.find('.product-details .product-image-cart').val()
+        let newItem = `
+        <div class='cart-content-product flex flex-cc'>
+        <div class='cart-content-product-details'>
+            <div class='cart-product-image'>
+                <img src="../static/images/${productImage}" alt="cake">
+                <div class='delete-cart-product flex-cc'>
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+            </div>
+            <div class='cart-product-name'>${name}</div>
+        </div>
+        <div class='cart-content-product-quantity flex'>
+            <div class="cart-content-product-quantity-increament flex">
+                <span class="material-symbols-outlined">
+                    remove
+                </span>
+            </div>
+            <div class="cart-content-product-quantity-value flex-cc">
+                1
+            </div>
+            <div class="cart-content-product-quantity-decreament flex">
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+            </div>
+        </div>
+        <div class='cart-content-product-price'>${price}</div>
+        <input type='hidden' name='product_id' value='${productId}' class='product-id-cart'>
     </div>
     `;
     let cart = $('.cart-content-products');
     cart.append(newItem);
+    var cartItem = {'name': name, 'product_id': productId, 'price': price, 'image': productImage};
+    cartData.push(cartItem);
+    setCookie('cartItems', JSON.stringify(cartData), 30);
     });
 });

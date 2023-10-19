@@ -535,6 +535,8 @@ body{
 .cart-content-products {
     position: relative;
     height: 80%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .cart-content-product {
@@ -605,11 +607,19 @@ body{
     text-align: center;
 }
 
+.cart-content-product-title {
+    border-bottom: 1px solid var(--dark-bg-color);
+}
+
 .cart-footer {
     justify-content: space-between;
     align-items: center;
     height: 10%;
     border-top: 1px solid var(--main-text-color);
+}
+
+#emptyCart:hover {
+    cursor: pointer;
 }
 
 /* ============alert popup========== */

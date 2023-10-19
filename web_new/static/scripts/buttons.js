@@ -30,5 +30,9 @@ $(document).ready(function(){
     $('#profile-close').click(function(){
         $('.profile-details').hide();
     });
-}
-);
+
+    // empty the cart
+    $('#emptyCart').click(function() {
+        $('.cart-content-products').empty();
+    });
+});
