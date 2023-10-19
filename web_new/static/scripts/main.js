@@ -76,7 +76,7 @@ $(document).ready(function(){
                 </div>
             </div>
             <div class='cart-content-product-price'>${cartData[i].price}</div>
-            <input type='hidden' name='product_id' value='${productId}' class='product-id-cart'>
+            <input type='hidden' name='product_id' value='${cartData[i].product_id}' class='product-id-cart'>
         </div>
         `;
         $('.cart-content-products').append(item);
