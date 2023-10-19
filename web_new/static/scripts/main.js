@@ -79,7 +79,7 @@ $(document).ready(function(){
             </div>
             <div class='cart-content-product-price'>${cartData[i].price * cartData[i].quantity}</div>
             <input type='hidden' name='product_id' value='${cartData[i].product_id}' class='product-id-cart'>
-            <input type='hidden' name='product_price' value=${cartData[i].price} class='product-price-cart'>
+            <input type='hidden' name='product_price' value='${cartData[i].price}' class='product-price-cart'>
         </div>
         `;
         $('.cart-content-products').append(item);
@@ -141,7 +141,7 @@ $(document).ready(function(){
                 </div>
                 <div class='cart-content-product-price'>${price}</div>
                 <input type='hidden' name='product_id' value='${productId}' class='product-id-cart'>
-                <input type='hidden' name='product_price' value=${price} class='product-price-cart'>
+                <input type='hidden' name='product_price' value='${price}' class='product-price-cart'>
             </div>
             `;
             let cart = $('.cart-content-products');
@@ -167,10 +167,10 @@ $(document).ready(function(){
 
     // increase quantity in cart
     $('.cart-content-product-quantity-increament').click(function() {
-        let parent = $(this).parent()
-        let quantityContainer = parent.find('.cart-content-product-quantity-value');
-        let totalContainer = parent.find('.cart-content-product-price');
-        let price = parseInt(parent.find('.product-price-cart').val());
+        let buttonContainer = $(this).parent()
+        let quantityContainer = buttonContainer.find('.cart-content-product-quantity-value');
+        let totalContainer = buttonContainer.parent().find('.cart-content-product-price');
+        let price = parseInt(buttonContainer.parent().find('.product-price-cart').val());
         let currentQuantity = parseInt(quantityContainer.text());
         quantityContainer.text(currentQuantity + 1);
         totalContainer.text((currentQuantity + 1) * price);
