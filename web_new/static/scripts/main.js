@@ -92,52 +92,59 @@ $(document).ready(function(){
         var productId = productDetails.find('.product-details .product-id-cart').val();
         var productImage = productDetails.find('.product-details .product-image-cart').val()
         var cartCurrentItems = $('.cart-content-product');
-        var cartCurrentNames = $('.cart-content-product .cart-content-product-details .cart-product-name').text();
-        console.log(cartCurrentNames)
-        for (let i = 0; i < cartCurrentItems.length; i++) {
-            let productName = cartCurrentItems.eq(i).find('.cart-content-product-details .cart-product-name').text();
-            let quantityContainer = cartCurrentItems.eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value');
-            let quantity = parseInt(cartCurrentItems.eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value').text());
-            if (name === productName) {
-                quantityContainer.text(quantity + 1);
-                break;
+        var cartCurrentNames = $('.cart-content-product .cart-content-product-details .cart-product-name').map(function(){
+            return $(this).text();
+        }).get();
+        let newQuantity;
+        if (name in cartCurrentNames) {
+            for (let i = 0; i < cartCurrentItems.length; i++) {
+                let productName = cartCurrentItems.eq(i).find('.cart-content-product-details .cart-product-name').text();
+                let quantityContainer = cartCurrentItems.eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value');
+                let quantity = parseInt(cartCurrentItems.eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value').text());
+                if (name === productName) {
+                    quantityContainer.text(quantity + 1);
+                    newQuantity = parseInt(quantityContainer.text());
+                    break;
+                }
             }
-        }
-        let newItem = `
-        <div class='cart-content-product flex flex-cc'>
-            <div class='cart-content-product-details'>
-                <div class='cart-product-image'>
-                    <img src="../static/images/${productImage}" alt="cake">
-                    <div class='delete-cart-product flex-cc'>
+        }else{
+            let newItem = `
+            <div class='cart-content-product flex flex-cc'>
+                <div class='cart-content-product-details'>
+                    <div class='cart-product-image'>
+                        <img src="../static/images/${productImage}" alt="cake">
+                        <div class='delete-cart-product flex-cc'>
+                            <span class="material-symbols-outlined">
+                                close
+                            </span>
+                        </div>
+                    </div>
+                    <div class='cart-product-name'>${name}</div>
+                </div>
+                <div class='cart-content-product-quantity flex'>
+                    <div class="cart-content-product-quantity-increament flex">
                         <span class="material-symbols-outlined">
-                            close
+                            remove
+                        </span>
+                    </div>
+                    <div class="cart-content-product-quantity-value flex-cc">
+                        1
+                    </div>
+                    <div class="cart-content-product-quantity-decreament flex">
+                        <span class="material-symbols-outlined">
+                            add
                         </span>
                     </div>
                 </div>
-                <div class='cart-product-name'>${name}</div>
+                <div class='cart-content-product-price'>${price}</div>
+                <input type='hidden' name='product_id' value='${productId}' class='product-id-cart'>
             </div>
-            <div class='cart-content-product-quantity flex'>
-                <div class="cart-content-product-quantity-increament flex">
-                    <span class="material-symbols-outlined">
-                        remove
-                    </span>
-                </div>
-                <div class="cart-content-product-quantity-value flex-cc">
-                    1
-                </div>
-                <div class="cart-content-product-quantity-decreament flex">
-                    <span class="material-symbols-outlined">
-                        add
-                    </span>
-                </div>
-            </div>
-            <div class='cart-content-product-price'>${price}</div>
-            <input type='hidden' name='product_id' value='${productId}' class='product-id-cart'>
-        </div>
-        `;
-        let cart = $('.cart-content-products');
-        cart.append(newItem);
-        var cartItem = {'name': name, 'product_id': productId, 'price': price, 'image': productImage};
+            `;
+            let cart = $('.cart-content-products');
+            cart.append(newItem);
+            newQuantity = 1;
+        }
+        var cartItem = {'name': name, 'product_id': productId, 'price': price, 'image': productImage, 'quantity': newQuantity};
         cartData.push(cartItem);
         setCookie('cartItems', JSON.stringify(cartData), 30);
     });
