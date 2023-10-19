@@ -41,6 +41,7 @@ $(document).ready(function(){
     // setCookie("cartItems", JSON.stringify(cartData), 7);
     // const cartData = JSON.parse(getCookie("cartItems"));
 
+    // deleteCookie('cartItems');
     if (getCookie('cartItems') === "") {
         setCookie('cartItems', JSON.stringify([]), 30);
     }
@@ -96,7 +97,7 @@ $(document).ready(function(){
             return $(this).text();
         }).get();
         let newQuantity;
-        if (name in cartCurrentNames) {
+        if (cartCurrentNames.includes(name)) {
             for (let i = 0; i < cartCurrentItems.length; i++) {
                 let productName = cartCurrentItems.eq(i).find('.cart-content-product-details .cart-product-name').text();
                 let quantityContainer = cartCurrentItems.eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value');
