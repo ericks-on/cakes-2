@@ -45,6 +45,8 @@ $(document).ready(function(){
         setCookie('cartItems', JSON.stringify([]), 30);
     }
     const cartData = JSON.parse(getCookie("cartItems"));
+
+    // loading cart items to cart
     $('.cart-content-products').empty()
     for (let i = 0; i < cartData.length; i++) {
         let item = `
@@ -82,7 +84,7 @@ $(document).ready(function(){
         $('.cart-content-products').append(item);
     }
 
-    // ading to cart
+    // adding product to cart when clicked
     $('.product-add-to-cart').click(function(){
         let productDetails = $(this).parent()
         var name = productDetails.find('.product-details .product-name').text();
