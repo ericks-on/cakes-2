@@ -70,7 +70,7 @@ $(document).ready(function(){
                     </span>
                 </div>
                 <div class="cart-content-product-quantity-value flex-cc">
-                    1
+                    ${cartData[i].quantity}
                 </div>
                 <div class="cart-content-product-quantity-decreament flex">
                     <span class="material-symbols-outlined">
