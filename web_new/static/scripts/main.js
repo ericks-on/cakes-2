@@ -178,7 +178,7 @@ $(document).ready(function(){
         totalContainer.text((currentQuantity + 1) * price);
 
         // editing the cookie after increase
-        productName = buttonContainer.parent().find('.cart-content-product-details .cart-product-name').text();
+        let productName = buttonContainer.parent().find('.cart-content-product-details .cart-product-name').text();
         for (let i = 0; i < cartData.length; i++) {
             if (cartData[i].name === productName) {
                 cartData[i].quantity = currentQuantity + 1;
@@ -194,7 +194,24 @@ $(document).ready(function(){
         let totalContainer = buttonContainer.parent().find('.cart-content-product-price');
         let price = parseInt(buttonContainer.parent().find('.product-price-cart').val());
         let currentQuantity = parseInt(quantityContainer.text());
-        quantityContainer.text(currentQuantity - 1);
-        totalContainer.text((currentQuantity + 1) * price);
+        let productName = buttonContainer.parent().find('.cart-content-product-details .cart-product-name').text();
+        if (currentQuantity === 1) {
+            buttonContainer.parent().remove();
+            // remove from cookie
+            for (let i = 0; i < cartData.length; i++) {
+                if (cartData[i].name === productName) {
+                    cartData.splice(i, 1);
+                }
+            }
+        }else {
+            quantityContainer.text(currentQuantity - 1);
+            totalContainer.text((currentQuantity + 1) * price);
+            for (let i = 0; i < cartData.length; i++) {
+                if (cartData[i].name === productName) {
+                    cartData[i].quantity = currentQuantity - 1;
+                }
+            }
+        }
+        setCookie('cartItems', JSON.stringify(cartData), 30);
     });
 });
