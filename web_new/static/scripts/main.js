@@ -45,6 +45,9 @@ $(document).ready(function(){
         setCookie('cartItems', JSON.stringify([]), 30);
     }
     const cartData = JSON.parse(getCookie("cartItems"));
+    const cartTotal = $('#cartTotal');
+    var cartTotalValue = parseInt($('#cartTotal').text());
+    console.log(cartTotalValue);
 
     // loading cart items to cart
     $('.cart-content-products').empty()
@@ -82,8 +85,12 @@ $(document).ready(function(){
             <input type='hidden' name='product_price' value='${cartData[i].price}' class='product-price-cart'>
         </div>
         `;
+        let itemTotal = cartData[i].quantity * cartData[i].price;
+        cartTotalValue += itemTotal;
         $('.cart-content-products').append(item);
     }
+    console.log(cartTotalValue);
+    cartTotal.text(cartTotalValue);
 
     // cart items
     var cartCurrentItems = $('.cart-content-product');
