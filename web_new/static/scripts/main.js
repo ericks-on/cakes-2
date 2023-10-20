@@ -47,7 +47,6 @@ $(document).ready(function(){
     const cartData = JSON.parse(getCookie("cartItems"));
     const cartTotal = $('#cartTotal');
     var cartTotalValue = parseInt($('#cartTotal').text());
-    console.log(cartTotalValue);
 
     // loading cart items to cart
     $('.cart-content-products').empty()
@@ -89,7 +88,6 @@ $(document).ready(function(){
         cartTotalValue += itemTotal;
         $('.cart-content-products').append(item);
     }
-    console.log(cartTotalValue);
     cartTotal.text(cartTotalValue);
 
     // cart items
