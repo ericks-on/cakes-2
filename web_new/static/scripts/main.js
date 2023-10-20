@@ -85,6 +85,12 @@ $(document).ready(function(){
         $('.cart-content-products').append(item);
     }
 
+    // cart items
+    var cartCurrentItems = $('.cart-content-product');
+    var cartCurrentNames = $('.cart-content-product .cart-content-product-details .cart-product-name').map(function(){
+        return $(this).text();
+    }).get();
+
     // adding product to cart when clicked
     $('.product-add-to-cart').click(function(){
         let productDetails = $(this).parent()
@@ -92,10 +98,6 @@ $(document).ready(function(){
         var price = parseInt(productDetails.find('.product-details .product-price').text().split(' ')[1]);
         var productId = productDetails.find('.product-details .product-id-cart').val();
         var productImage = productDetails.find('.product-details .product-image-cart').val()
-        var cartCurrentItems = $('.cart-content-product');
-        var cartCurrentNames = $('.cart-content-product .cart-content-product-details .cart-product-name').map(function(){
-            return $(this).text();
-        }).get();
         let newQuantity;
         if (cartCurrentNames.includes(name)) {
             for (let i = 0; i < cartCurrentItems.length; i++) {
@@ -173,6 +175,26 @@ $(document).ready(function(){
         let price = parseInt(buttonContainer.parent().find('.product-price-cart').val());
         let currentQuantity = parseInt(quantityContainer.text());
         quantityContainer.text(currentQuantity + 1);
+        totalContainer.text((currentQuantity + 1) * price);
+
+        // editing the cookie after increase
+        productName = buttonContainer.parent().find('.cart-content-product-details .cart-product-name').text();
+        for (let i = 0; i < cartData.length; i++) {
+            if (cartData[i].name === productName) {
+                cartData[i].quantity = currentQuantity + 1;
+            }
+        }
+        setCookie('cartItems', JSON.stringify(cartData), 30);
+    });
+
+    // Decrease quantity in the cart
+    $('.cart-content-product-quantity-decreament').click(function() {
+        let buttonContainer = $(this).parent()
+        let quantityContainer = buttonContainer.find('.cart-content-product-quantity-value');
+        let totalContainer = buttonContainer.parent().find('.cart-content-product-price');
+        let price = parseInt(buttonContainer.parent().find('.product-price-cart').val());
+        let currentQuantity = parseInt(quantityContainer.text());
+        quantityContainer.text(currentQuantity - 1);
         totalContainer.text((currentQuantity + 1) * price);
     });
 });
