@@ -175,6 +175,7 @@ $(document).ready(function(){
     $('#emptyCart').click(function() {
         confirm('Press \'OK\' to clear the shopping Cart');
         $('.cart-content-products').empty();
+        cartTotal.text(0);
         deleteCookie('cartItems');
     });
 
