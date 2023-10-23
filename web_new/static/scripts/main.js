@@ -91,7 +91,9 @@ $(document).ready(function(){
     cartTotal.text(cartTotalValue);
 
     // cart items
-    var cartCurrentItems = $('.cart-content-product');
+    function cartCurrentItems() {
+        return $('.cart-content-product');
+    }
     function cartCurrentNames() {
         return $('.cart-content-product .cart-content-product-details .cart-product-name').map(function() {
             return $(this).text();
@@ -109,11 +111,11 @@ $(document).ready(function(){
         // Check if product is already in cart
         console.log(cartCurrentNames());
         if (cartCurrentNames().includes(name)) {
-            for (let i = 0; i < cartCurrentItems.length; i++) {
-                let productName = cartCurrentItems.eq(i).find('.cart-content-product-details .cart-product-name').text();
-                let quantityContainer = cartCurrentItems.eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value');
-                let quantity = parseInt(cartCurrentItems.eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value').text());
-                let totalContainer = cartCurrentItems.eq(i).find('.cart-content-product-price');
+            for (let i = 0; i < cartCurrentItems().length; i++) {
+                let productName = cartCurrentItems().eq(i).find('.cart-content-product-details .cart-product-name').text();
+                let quantityContainer = cartCurrentItems().eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value');
+                let quantity = parseInt(cartCurrentItems().eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value').text());
+                let totalContainer = cartCurrentItems().eq(i).find('.cart-content-product-price');
                 if (name === productName) {
                     quantityContainer.text(quantity + 1);
                     newQuantity = parseInt(quantityContainer.text());
