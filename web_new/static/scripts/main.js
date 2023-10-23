@@ -104,6 +104,7 @@ $(document).ready(function(){
         var productId = productDetails.find('.product-details .product-id-cart').val();
         var productImage = productDetails.find('.product-details .product-image-cart').val()
         let newQuantity;
+        // Check if product is already in cart
         if (cartCurrentNames.includes(name)) {
             for (let i = 0; i < cartCurrentItems.length; i++) {
                 let productName = cartCurrentItems.eq(i).find('.cart-content-product-details .cart-product-name').text();
@@ -114,6 +115,8 @@ $(document).ready(function(){
                     quantityContainer.text(quantity + 1);
                     newQuantity = parseInt(quantityContainer.text());
                     totalContainer.text(newQuantity * price);
+                    cartTotalValue += price;
+                    cartTotal.text(cartTotalValue);
                     break;
                 }
             }
@@ -154,7 +157,10 @@ $(document).ready(function(){
             let cart = $('.cart-content-products');
             cart.append(newItem);
             newQuantity = 1;
+            cartTotalValue += price;
+            cartTotal.text(cartTotalValue);
         }
+        // Editing the cookie after adding the items
         for (let i = 0; i < cartData.length; i++) {
             if (cartData[i].name === name) {
                 cartData.splice(i, 1);
