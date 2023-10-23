@@ -183,7 +183,7 @@ $(document).ready(function(){
     });
 
     // increase quantity in cart
-    $('.cart-content-product-quantity-increament').click(function() {
+    $('.cart-content-products').on('click', '.cart-content-product .cart-content-product-quantity-increament', function() {
         let buttonContainer = $(this).parent()
         let quantityContainer = buttonContainer.find('.cart-content-product-quantity-value');
         let totalContainer = buttonContainer.parent().find('.cart-content-product-price');
@@ -203,7 +203,7 @@ $(document).ready(function(){
     });
 
     // Decrease quantity in the cart
-    $('.cart-content-product-quantity-decreament').click(function() {
+    $('.cart-content-products').on('click', '.cart-content-product .cart-content-product-quantity-decreament', function() {
         let buttonContainer = $(this).parent()
         let quantityContainer = buttonContainer.find('.cart-content-product-quantity-value');
         let totalContainer = buttonContainer.parent().find('.cart-content-product-price');
