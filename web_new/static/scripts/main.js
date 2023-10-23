@@ -201,6 +201,8 @@ $(document).ready(function(){
                 cartData[i].quantity = currentQuantity + 1;
             }
         }
+        cartTotalValue += price;
+        cartTotal.text(cartTotalValue);
         setCookie('cartItems', JSON.stringify(cartData), 30);
     });
 
@@ -229,6 +231,8 @@ $(document).ready(function(){
                 }
             }
         }
+        cartTotalValue -= price;
+        cartTotal.text(cartTotalValue);
         setCookie('cartItems', JSON.stringify(cartData), 30);
     });
 });
