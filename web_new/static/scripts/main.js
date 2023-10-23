@@ -198,9 +198,11 @@ $(document).ready(function(){
     // empty the cart
     $('#emptyCart').click(function() {
         confirm('Press \'OK\' to clear the shopping Cart');
-        $('.cart-content-products').not('.default-cart-display').empty();
         defaultCartDisplay().css('display', 'flex');
         cartTotal.text(0);
+        $('.cart-content-product').each(function(){
+            $(this).remove();
+        });
         deleteCookie('cartItems');
     });
 
