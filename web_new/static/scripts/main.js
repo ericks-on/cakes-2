@@ -102,6 +102,19 @@ $(document).ready(function(){
         }).get();
     }
 
+    // ************Checking if cart is empty***********
+    function checkEmptyCart() {
+        let cartItems = $('.cart-content-product');
+        if (cartItems.length > 0){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    // default cart display
+    let defaultCartDisplay = $('.default-cart-display');
+
     // adding product to cart when clicked
     $('.product-add-to-cart').click(function(){
         let productDetails = $(this).parent()
@@ -128,6 +141,10 @@ $(document).ready(function(){
                 }
             }
         }else{
+            let cart = $('.cart-content-products');
+            if (checkEmptyCart() === true) {
+                defaultCartDisplay.css('display', 'none');
+            }
             let newItem = `
             <div class='cart-content-product flex flex-cc'>
                 <div class='cart-content-product-details'>
@@ -161,7 +178,6 @@ $(document).ready(function(){
                 <input type='hidden' name='product_price' value='${price}' class='product-price-cart'>
             </div>
             `;
-            let cart = $('.cart-content-products');
             cart.append(newItem);
             newQuantity = 1;
             cartTotalValue += price;
