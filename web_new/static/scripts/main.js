@@ -113,7 +113,9 @@ $(document).ready(function(){
     }
 
     // default cart display
-    let defaultCartDisplay = $('.default-cart-display');
+    function defaultCartDisplay() {
+        return $('.default-cart-display');
+    }
 
     // adding product to cart when clicked
     $('.product-add-to-cart').click(function(){
@@ -124,7 +126,6 @@ $(document).ready(function(){
         var productImage = productDetails.find('.product-details .product-image-cart').val()
         let newQuantity;
         // Check if product is already in cart
-        console.log(cartCurrentNames());
         if (cartCurrentNames().includes(name)) {
             for (let i = 0; i < cartCurrentItems().length; i++) {
                 let productName = cartCurrentItems().eq(i).find('.cart-content-product-details .cart-product-name').text();
@@ -143,7 +144,7 @@ $(document).ready(function(){
         }else{
             let cart = $('.cart-content-products');
             if (checkEmptyCart() === true) {
-                defaultCartDisplay.css('display', 'none');
+                defaultCartDisplay().css('display', 'none');
             }
             let newItem = `
             <div class='cart-content-product flex flex-cc'>
@@ -197,7 +198,8 @@ $(document).ready(function(){
     // empty the cart
     $('#emptyCart').click(function() {
         confirm('Press \'OK\' to clear the shopping Cart');
-        $('.cart-content-products').empty();
+        $('.cart-content-products').not('.default-cart-display').empty();
+        defaultCartDisplay().css('display', 'flex');
         cartTotal.text(0);
         deleteCookie('cartItems');
     });
@@ -234,6 +236,7 @@ $(document).ready(function(){
         let productName = buttonContainer.parent().find('.cart-content-product-details .cart-product-name').text();
         if (currentQuantity === 1) {
             buttonContainer.parent().remove();
+            defaultCartDisplay().css('display', 'flex');
             // remove from cookie
             for (let i = 0; i < cartData.length; i++) {
                 if (cartData[i].name === productName) {
