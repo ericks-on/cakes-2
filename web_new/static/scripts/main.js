@@ -235,4 +235,20 @@ $(document).ready(function(){
         cartTotal.text(cartTotalValue);
         setCookie('cartItems', JSON.stringify(cartData), 30);
     });
+
+    // delete cart product 
+    $('.cart-content-products').on('click', '.cart-content-product .delete-cart-product', function(){
+        let currentProduct = $(this).parent().parent().parent();
+        let productName = currentProduct.find('.cart-content-product-details .cart-product-name').text();
+        let productTotal = parseInt(currentProduct.find('.cart-content-product-price').text());
+        // remove from cookie
+        for (let i = 0; i < cartData.length; i++) {
+            if (cartData[i].name === productName) {
+                cartData.splice(i, 1);
+            }
+        }
+        currentProduct.remove();
+        cartTotalValue -= productTotal;
+        cartTotal.text(cartTotalValue);
+    });
 });
