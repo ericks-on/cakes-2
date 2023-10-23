@@ -92,9 +92,11 @@ $(document).ready(function(){
 
     // cart items
     var cartCurrentItems = $('.cart-content-product');
-    var cartCurrentNames = $('.cart-content-product .cart-content-product-details .cart-product-name').map(function(){
-        return $(this).text();
-    }).get();
+    function cartCurrentNames() {
+        return $('.cart-content-product .cart-content-product-details .cart-product-name').map(function() {
+            return $(this).text();
+        }).get();
+    }
 
     // adding product to cart when clicked
     $('.product-add-to-cart').click(function(){
@@ -105,7 +107,8 @@ $(document).ready(function(){
         var productImage = productDetails.find('.product-details .product-image-cart').val()
         let newQuantity;
         // Check if product is already in cart
-        if (cartCurrentNames.includes(name)) {
+        console.log(cartCurrentNames());
+        if (cartCurrentNames().includes(name)) {
             for (let i = 0; i < cartCurrentItems.length; i++) {
                 let productName = cartCurrentItems.eq(i).find('.cart-content-product-details .cart-product-name').text();
                 let quantityContainer = cartCurrentItems.eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value');
