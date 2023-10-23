@@ -623,6 +623,11 @@ body{
     cursor: pointer;
 }
 
+.default-cart-display {
+    height: 100%;
+    width: 100%;
+}
+
 /* ============alert popup========== */
 #alertPopup {
     background-color: var(--main-bg-color);
