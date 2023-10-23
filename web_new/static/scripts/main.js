@@ -250,5 +250,6 @@ $(document).ready(function(){
         currentProduct.remove();
         cartTotalValue -= productTotal;
         cartTotal.text(cartTotalValue);
+        setCookie('cartItems', JSON.stringify(cartData), 30);
     });
 });
