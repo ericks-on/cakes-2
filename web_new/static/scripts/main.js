@@ -271,6 +271,9 @@ $(document).ready(function(){
         currentProduct.remove();
         cartTotalValue -= productTotal;
         cartTotal.text(cartTotalValue);
+        if (checkEmptyCart() === true) {
+            defaultCartDisplay().css('display', 'flex');
+        }
         setCookie('cartItems', JSON.stringify(cartData), 30);
     });
 });
