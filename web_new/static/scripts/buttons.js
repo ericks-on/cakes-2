@@ -31,5 +31,8 @@ $(document).ready(function(){
         $('.profile-details').hide();
     });
 
-
+    // close the alert popup
+    $('#alertClose').click(function() {
+        $('#alertPopup').hide();
+    });
 });
