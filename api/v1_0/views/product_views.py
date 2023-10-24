@@ -5,6 +5,7 @@ from flasgger.utils import swag_from
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from models import storage
 from models.product import Product
+import calendar
 
 
 products_bp = Blueprint('products', __name__, url_prefix='/products')
@@ -156,7 +157,7 @@ def get_sales_by_name_year_month(product_name, year, month=None):
     if user.user_type != 'admin':
         abort(401)
     product = storage.get_product(product_name)
-    if len(products) == 0:
+    if not product:
         abort(404)
     if month:
         sales = [sale.to_dict() for sale in product.sales
