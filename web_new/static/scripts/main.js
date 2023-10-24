@@ -15,6 +15,8 @@ $(document).ready(function(){
         });
     });
 
+    const alertContainer = $('#alertPopup .alertPopupMessage');
+
     function setCookie(name, value, days) {
         const date = new Date();
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -41,15 +43,61 @@ $(document).ready(function(){
     // setCookie("cartItems", JSON.stringify(cartData), 7);
     // const cartData = JSON.parse(getCookie("cartItems"));
 
-    function sendCart(data) {
+    function addToCart(data) {
         let response = $.post('/cart', data).fail(function(){
-            return 'There was a problem adding item to cart';
+            alertContainer.text("There was a problem adding item to cart");
+            alertContainer.parent().css('display', 'flex');
+            return 'fail';
         });
-        return `${JSON.parse(response.text).name} was added Sucessfully`;
+        let message =  `
+        ${JSON.parse(response.text).name} was added Sucessfully
+        `;
+        alertContainer.text(message);
+        alertContainer.parent().css('display', 'flex');
+        return 'success';
+    }
+
+    function updateCart(json) {
+        let response = $.ajax({
+            url: '/cart',
+            type: 'PUT',
+            data: json,
+            success: function() {
+                return 'success'
+            },
+            error: function() {
+                return 'fail'
+            }
+        });
+        if (response = 'fail') {
+            alertContainer.text("There was a problem updating some items in the cart");
+            alertContainer.parent().css('display', 'flex');
+        }
+        return response;
+    }
+
+    function deleteFromCart(json) {
+        let response = $.ajax({
+            url: '/cart',
+            type: 'DELETE',
+            data: json,
+            success: function() {
+                return 'success'
+            },
+            error: function() {
+                return 'fail'
+            }
+        });
+        if (response = 'fail') {
+            alertContainer.text("There was a problem deleting some items in the cart");
+            alertContainer.parent().css('display', 'flex');
+        }
+        return response;
     }
 
     if (getCookie('cartItems') === "") {
-        setCookie('cartItems', JSON.stringify([]), 30);
+        let items = $.get('/cart');
+        setCookie('cartItems', JSON.stringify(items), 30);
     }
     const cartData = JSON.parse(getCookie("cartItems"));
     const cartTotal = $('#cartTotal');
