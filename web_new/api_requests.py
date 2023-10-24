@@ -54,12 +54,11 @@ def get_cart():
         return {'error': 'Connection Error'}, 500
     return cart_response.json()
 
-def add_cart(product_id, quantity):
+def add_cart(payload, headers):
     """Adding item to cart"""
-    payload = {'quantity': quantity,
-               'product_id': product_id}
     try:
-        cart_response = requests.post(cart_url, payload=payload, timeout=5)
+        cart_response = requests.post(cart_url, payload=payload,
+                                      headers=headers, timeout=5)
         cart_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
