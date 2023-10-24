@@ -83,9 +83,9 @@ def update_cart(quantity, product_id):
         return {'error': 'Connection Error'}, 500
     return response.json(), 200
 
-def delete_cart(cart_id):
+def delete_cart(product_id):
     """Deleting item in cart"""
-    url = cart_url + f'/<{cart_id}>'
+    url = cart_url + f'/<{product_id}>'
     try:
         response = requests.delete(url, timeout=5)
         response.raise_for_status()
