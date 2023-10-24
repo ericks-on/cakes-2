@@ -41,20 +41,23 @@ def add_cart():
     storage.save()
     return jsonify(new_item.to_dict()), 201
 
-@cart_bp.route('/<cart_id>', methods=['DELETE'])
+@cart_bp.route('/<product_id>', methods=['DELETE'])
 @swag_from('documentation/cart/delete_cart.yml')
 @jwt_required()
-def del_cart(cart_id):
+def del_cart(product_id):
     """Deleting item from cart"""
     user = storage.get_user(get_jwt_identity())
-    cart_ids = [item.id for item in storage.all(Cart)
+    product_ids = [item.product_id for item in storage.all(Cart)
                 if item.user_id == user.id]
-    if cart_id not in cart_ids:
-        abort(403)
-    item = storage.get(Cart, cart_id)
-    storage.delete(item)
-    storage.save()
-    return jsonify({}), 200
+    cart = [item for item in storage.all(Cart)
+            if item.user_id == user.id]
+    if product_id not in product_ids:
+        abort(404)
+    for item in cart:
+        if item.product_id == product_id:
+            storage.delete(item)
+            storage.save()
+            return jsonify({}), 200
 
 @cart_bp.route('/<cart_id>', methods=['PUT'])
 @swag_from('documentation/cart/update_cart.yml')
