@@ -44,7 +44,7 @@ def get_products():
 def get_cart(headers):
     """Getting the items on cart"""
     try:
-        cart_response = requests.get(cart_url, headers=headers timeout=5)
+        cart_response = requests.get(cart_url, headers=headers, timeout=5)
         cart_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code

@@ -42,16 +42,34 @@ def login():
     response.set_cookie('access_token', access_token, httponly=True)
     return response
 
-@app.route('/cart', strict_slashes=False, methods=['POST'])
+@app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
+                                                   'DELETE'])
 @jwt_required()
 def add_cart():
     """saving the users cart items to db"""
     access_token = request.cookies.get('access_token_cookie')
     headers = {"Authorization": access_token,
                "Content_Type": "Application/json"}
-    payload = request.get_json()
-    response = api_requests.add_cart(payload, headers)
-    return response
+    if request.method == 'POST':
+        payload = request.get_json()
+        response = api_requests.add_cart(payload, headers)
+        return response
+    elif request.method == 'GET':
+        response = api_requests.get_cart(headers)
+        return response
+    elif request.method == 'PUT':
+        quantity = request.get_json().get('quantity')
+        product_id = request.get_json().get('product_id')
+        if not quantity or not product_id:
+            abort(400)
+        response = api_requests.update_cart(quantity, product_id, headers)
+        return response
+    elif request.method == 'DELETE':
+        product_id = request.get_json().get('product_id')
+        if not product_id:
+            abort(400)
+        response = api_requests.delete_cart(product_id, headers)
+        return response
 
 
 if __name__ == '__main__':
