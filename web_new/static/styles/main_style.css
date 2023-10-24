@@ -633,7 +633,7 @@ body{
 
 /* ============alert popup========== */
 #alertPopup {
-    background-color: var(--main-bg-color);
+    background-color: var(--secondary-bg-color);
     position: absolute;
     z-index: 1000;
     bottom: 10px;
@@ -649,7 +649,7 @@ body{
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    background-color: white;
+    background-color: red;
     cursor: pointer;
 }
 
