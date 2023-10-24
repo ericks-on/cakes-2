@@ -59,16 +59,20 @@ def del_cart(product_id):
             storage.save()
             return jsonify({}), 200
 
-@cart_bp.route('/<cart_id>', methods=['PUT'])
+@cart_bp.route('/<product_id>', methods=['PUT'])
 @swag_from('documentation/cart/update_cart.yml')
 @jwt_required()
-def update_cart(cart_id):
+def update_cart(product_id):
     """Updating cart item quantity"""
     quantity = request.get_json().get('quantity')
-    cart_id = request.get_json().get('cart_id')
-    if not quantity or not cart_id:
+    user = storage.get_user(get_jwt_identity())
+    cart = [item for item in storage.all(Cart)
+            if item.user_id == user.id]
+    if not quantity:
         abort(400)
-    item = storage.get(Cart, cart_id)
-    item.quantity = quantity
-    storage.save()
-    return jsonify(item.to_dict), 200
+    for item in cart:
+        if item.product_id == product_id:
+            item.quantity = quantity
+            storage.save()
+            return jsonify(item.to_dict), 200
+    abort(404)

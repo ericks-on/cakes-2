@@ -68,9 +68,9 @@ def add_cart(payload, headers):
         return {'error': 'Connection Error'}, 500
     return cart_response.json(), 200
 
-def update_cart(quantity, cart_id):
+def update_cart(quantity, product_id):
     """Updating item quantity on Cart"""
-    url = cart_url + f'/<{cart_id}>'
+    url = cart_url + f'/<{product_id}>'
     try:
         response = requests.put(url=url, json={'quantity':quantity},
                                 timeout=5)
