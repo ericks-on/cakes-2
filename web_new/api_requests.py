@@ -23,10 +23,10 @@ def login(username, password):
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error'}, 500
+        return {'error': 'Connection Error', 'status_code': 500}
     except requests.exceptions.Timeout:
-        return {'error': 'Request Timeout'}, 500
-    return api_response.json(), 200
+        return {'error': 'Request Timeout', 'status_code': 500}
+    return api_response.json()
 
 def get_products():
     """Get all products"""
@@ -36,10 +36,10 @@ def get_products():
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error'}, 500
+        return {'error': 'Connection Error', 'status_code': 500}
     except requests.exceptions.Timeout:
-        return {'error': 'Request Timeout'}, 500
-    return pdt_response.json(), 200
+        return {'error': 'Request Timeout', 'status_code': 500}
+    return pdt_response.json()
 
 def get_cart(headers):
     """Getting the items on cart"""
@@ -49,10 +49,10 @@ def get_cart(headers):
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error'}, 500
+        return {'error': 'Connection Error', 'status_code': 500}
     except requests.exceptions.Timeout:
-        return {'error': 'Connection Error'}, 500
-    return cart_response.json(), 200
+        return {'error': 'Connection Error', 'status_code': 500}
+    return cart_response.json()
 
 def add_cart(payload, headers):
     """Adding item to cart"""
@@ -63,10 +63,10 @@ def add_cart(payload, headers):
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error'}, 500
+        return {'error': 'Connection Error', 'status_code': 500}
     except requests.exceptions.Timeout:
-        return {'error': 'Connection Error'}, 500
-    return cart_response.json(), 200
+        return {'error': 'Connection Error', 'status_code': 500}
+    return cart_response.json()
 
 def update_cart(quantity, product_id, headers):
     """Updating item quantity on Cart"""
@@ -78,10 +78,10 @@ def update_cart(quantity, product_id, headers):
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error'}, 500
+        return {'error': 'Connection Error', 'status_code': 500}
     except requests.exceptions.Timeout:
-        return {'error': 'Connection Error'}, 500
-    return response.json(), 200
+        return {'error': 'Connection Error', 'status_code': 500}
+    return response.json()
 
 def delete_cart(product_id, headers):
     """Deleting item in cart"""
@@ -92,7 +92,7 @@ def delete_cart(product_id, headers):
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error'}, 500
+        return {'error': 'Connection Error', 'status_code': 500}
     except requests.exceptions.Timeout:
-        return {'error': 'Connection Error'}, 500
-    return response.json(), 200
+        return {'error': 'Connection Error', 'status_code': 500}
+    return response.json()
