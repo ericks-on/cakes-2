@@ -26,7 +26,7 @@ def login(username, password):
         return {'error': 'Connection Error'}, 500
     except requests.exceptions.Timeout:
         return {'error': 'Request Timeout'}, 500
-    return api_response.json()
+    return api_response.json(), 200
 
 def get_products():
     """Get all products"""
@@ -39,7 +39,7 @@ def get_products():
         return {'error': 'Connection Error'}, 500
     except requests.exceptions.Timeout:
         return {'error': 'Request Timeout'}, 500
-    return pdt_response.json()
+    return pdt_response.json(), 200
 
 def get_cart():
     """Getting the items on cart"""
@@ -52,7 +52,7 @@ def get_cart():
         return {'error': 'Connection Error'}, 500
     except requests.exceptions.Timeout:
         return {'error': 'Connection Error'}, 500
-    return cart_response.json()
+    return cart_response.json(), 200
 
 def add_cart(payload, headers):
     """Adding item to cart"""
@@ -65,8 +65,8 @@ def add_cart(payload, headers):
     except requests.exceptions.ConnectionError:
         return {'error': 'Connection Error'}, 500
     except requests.exceptions.Timeout:
-        return {'error': 'Connection Error'}
-    return cart_response.json()
+        return {'error': 'Connection Error'}, 500
+    return cart_response.json(), 200
 
 def update_cart(quantity, cart_id):
     """Updating item quantity on Cart"""
@@ -80,8 +80,8 @@ def update_cart(quantity, cart_id):
     except requests.exceptions.ConnectionError:
         return {'error': 'Connection Error'}, 500
     except requests.exceptions.Timeout:
-        return {'error': 'Connection Error'}
-    return response.json()
+        return {'error': 'Connection Error'}, 500
+    return response.json(), 200
 
 def delete_cart(cart_id):
     """Deleting item in cart"""
@@ -94,5 +94,5 @@ def delete_cart(cart_id):
     except requests.exceptions.ConnectionError:
         return {'error': 'Connection Error'}, 500
     except requests.exceptions.Timeout:
-        return {'error': 'Connection Error'}
-    return response.json()
+        return {'error': 'Connection Error'}, 500
+    return response.json(), 200
