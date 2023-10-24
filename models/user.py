@@ -12,6 +12,7 @@ from models.cart import Cart
 
 
 class User(Basemodel, Base):
+    """The user model"""
     __tablename__ = "users"
     first_name = Column(String(60), nullable=False)
     last_name = Column(String(60), nullable=False)
