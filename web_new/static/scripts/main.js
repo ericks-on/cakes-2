@@ -104,11 +104,12 @@ $(document).ready(function(){
         return response;
     }
 
-    if (getCookie('cartItems') === "") {
-        let items = getCart();
-        if (items != 'fail') {
-            setCookie('cartItems', JSON.stringify(items), 30);
-        }
+
+    let items = getCart();
+    if (items != 'fail') {
+        setCookie('cartItems', JSON.stringify(items), 30);
+    }else {
+        setCookie('cartItems', JSON.stringify([]), 30);
     }
     const cartData = JSON.parse(getCookie("cartItems"));
     const cartTotal = $('#cartTotal');
