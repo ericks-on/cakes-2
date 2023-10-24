@@ -3,6 +3,7 @@
 import os
 import requests
 from flask import Flask, render_template, request, make_response, abort
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from web_new import api_requests
 
 
@@ -40,6 +41,16 @@ def login():
     response = make_response(render_template('index.html', products=products))
     response.set_cookie('access_token', access_token, httponly=True)
     return response
+
+@app.route('/cart', strict_slashes=False, methods=['POST'])
+@jwt_required()
+def save_cart():
+    """saving the users cart items to db"""
+    access_token = request.cookies.get('access_token_cookie')
+    headers = {"Authorization": access_token,
+               "Content_Type": "Application/json"}
+    payload = request.get_json()
+    api_requests.add_cart(payload, headers)
 
 
 if __name__ == '__main__':

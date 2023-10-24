@@ -41,6 +41,13 @@ $(document).ready(function(){
     // setCookie("cartItems", JSON.stringify(cartData), 7);
     // const cartData = JSON.parse(getCookie("cartItems"));
 
+    function sendCart(data) {
+        let response = $.post('/cart', data).fail(function(){
+            return 'There was a problem adding item to cart';
+        });
+        return `${JSON.parse(response.text).name} was added Sucessfully`;
+    }
+
     if (getCookie('cartItems') === "") {
         setCookie('cartItems', JSON.stringify([]), 30);
     }

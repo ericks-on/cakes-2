@@ -8,6 +8,7 @@ from models.order import Order
 from models.expenditure import Expenditure
 from models.chat import Chat
 from models.message import Message
+from models.cart import Cart
 
 
 class User(Basemodel, Base):
@@ -28,3 +29,4 @@ class User(Basemodel, Base):
     received_chats = relationship(Chat, backref='recepient',
                                   foreign_keys='Chat.recepient_id')
     messages = relationship(Message, backref='sender')
+    cart = relationship(Cart, backref='user', cascade='all, delete')
