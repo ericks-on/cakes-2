@@ -44,13 +44,14 @@ def login():
 
 @app.route('/cart', strict_slashes=False, methods=['POST'])
 @jwt_required()
-def save_cart():
+def add_cart():
     """saving the users cart items to db"""
     access_token = request.cookies.get('access_token_cookie')
     headers = {"Authorization": access_token,
                "Content_Type": "Application/json"}
     payload = request.get_json()
-    api_requests.add_cart(payload, headers)
+    response = api_requests.add_cart(payload, headers)
+    return response
 
 
 if __name__ == '__main__':
