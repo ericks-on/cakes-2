@@ -19,10 +19,12 @@ def get_cart():
     user = storage.get_user(get_jwt_identity())
     cart_items = [item for item in storage.all(Cart)
                   if item.user_id == user.id]
-    cart = [{"product": storage.get(Product, item.product_id),
+    cart = [{"product_id": item.product_id,
              "quantity": item.quantity,
-             "total": storage.get(Product, item.product_id).price *
-             item.quantity, "id": item.id} for item in cart_items]
+             "name": storage.get(Product, item.product_id).name,
+             "price": storage.get(Product, item.product_id).price,
+             "image": storage.get(Product, item.product_id).image
+             } for item in cart_items]
     return jsonify({"cart": cart}), 200
     
 @cart_bp.route('/', methods=['POST'])
