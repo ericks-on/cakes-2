@@ -95,9 +95,20 @@ $(document).ready(function(){
         return response;
     }
 
+    function getCart() {
+        let response = $.get('/cart').fail(function () {
+            alertContainer.text("There was a problem loading the cart");
+            alertContainer.parent().css('display', 'flex');
+            return 'fail';
+        });
+        return response;
+    }
+
     if (getCookie('cartItems') === "") {
-        let items = $.get('/cart');
-        setCookie('cartItems', JSON.stringify(items), 30);
+        let items = getCart();
+        if (items != 'fail') {
+            setCookie('cartItems', JSON.stringify(items), 30);
+        }
     }
     const cartData = JSON.parse(getCookie("cartItems"));
     const cartTotal = $('#cartTotal');
