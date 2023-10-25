@@ -47,7 +47,7 @@ $(document).ready(function(){
     const headers = {'X-CSRFToken': csrftoken,};
 
     function addToCart(data) {
-        let response = $.post('/cart', data, headers=headers).fail(function(){
+        let response = $.post('/cart', data, {headers: headers}).fail(function(){
             alertContainer.text("There was a problem adding item to cart");
             alertContainer.parent().css('display', 'flex');
             return 'fail';
@@ -101,8 +101,7 @@ $(document).ready(function(){
     }
 
     function getCart() {
-        let response = $.get('/cart', headers=headers).fail(function (data) {
-            console.log(data);
+        let response = $.get('/cart', {headers: headers}).fail(function () {
             alertContainer.text("There was a problem loading the cart");
             alertContainer.parent().css('display', 'flex');
             return 'fail';

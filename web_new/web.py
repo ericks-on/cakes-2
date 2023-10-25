@@ -13,21 +13,20 @@ app = Flask(__name__)
 csrf = CSRFProtect(app)
 secret_key = secrets.token_hex(16)
 app.config['SECRET_KEY'] = secret_key
-app.config['JWT_TOKEN_LOCATION'] = ['cookies']
-app.config['JWT_ACCESS_COOKIE_NAME'] = ['access_token']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 api_host = os.environ.get('API_HOST')
 api_port = os.environ.get('API_PORT')
 
 
 @app.route('/', strict_slashes=False, methods=['GET'])
+@csrf.exempt
 def index():
     """Landing page"""
     products = api_requests.get_products().get('products')
-    csrf_token = generate_csrf()
-    return render_template('default.html', products=products, csrf_token=csrf_token)
+    return render_template('default.html', products=products)
 
 @app.route('/', strict_slashes=False, methods=['POST'])
+@csrf.exempt
 def login():
     """Login verification"""
     username = request.form.get('username')
@@ -47,19 +46,25 @@ def login():
     
     products = api_requests.get_products().get('products')
     access_token = api_response.json()['access_token']
-    csrf_token = generate_csrf()
-    response = make_response(render_template('index.html', products=products,
-                                             csrf_token=csrf_token))
-    response.set_cookie('access_token', access_token, httponly=True)
+    response = make_response(render_template('index.html', products=products))
+    response.set_cookie('access_token', access_token, httponly=True,
+                        secure=True)
+    response.set_cookie('csrf_token_add_cart', generate_csrf(),
+                        httponly=True, secure=True)
+    response.set_cookie('csrf_token_delete_cart', generate_csrf(),
+                        httponly=True, secure=True)
+    response.set_cookie('csrf_token_update_cart', generate_csrf(),
+                        httponly=True, secure=True)
+    response.set_cookie('csrf_token_get_cart', generate_csrf(),
+                        httponly=True, secure=True)
     return response
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
-@jwt_required()
 def add_cart():
     """saving the users cart items to db"""
     access_token = request.cookies.get('access_token')
-    headers = {"Authorization": access_token,
+    headers = {"Authorization": f'Bearer {access_token}',
                "Content_Type": "Application/json"}
     if request.method == 'POST':
         payload = request.get_json()
