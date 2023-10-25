@@ -99,20 +99,25 @@ $(document).ready(function(){
     }
 
     function getCart() {
-        let response = $.get('/cart', {headers: headers}).fail(function () {
-            customAlert("There was a problem loading the cart");
-            return 'fail';
+        let response = $.ajax({
+            type: 'GET',
+            url: '/cart',
+            headers: headers,
+            error: function (err) {
+                console.log(err);
+                customAlert("There was a problem loading the cart");
+            }
         });
         return response;
     }
 
 
-    let items = getCart();
-    if (items != 'fail') {
-        setCookie('cartItems', JSON.stringify(items), 30);
-    }else {
-        setCookie('cartItems', JSON.stringify([]), 30);
-    }
+    getCart().then(response => {
+        if (response.cart) {
+            console.log(response.cart);
+            setCookie('cartItems', JSON.stringify(response), 30);
+        }
+    });
     const cartData = JSON.parse(getCookie("cartItems"));
     const cartTotal = $('#cartTotal');
     var cartTotalValue = parseInt($('#cartTotal').text());
