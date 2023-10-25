@@ -5,7 +5,7 @@ import requests
 import secrets
 from flask import Flask, render_template, request, make_response, abort
 from flask import redirect, url_for
-from flask_wtf.csrf import CSRFProtect, generate_csrf
+from flask_wtf.csrf import CSRFProtect
 from web_new import api_requests
 
 
@@ -19,7 +19,6 @@ api_port = os.environ.get('API_PORT')
 
 
 @app.route('/', strict_slashes=False, methods=['GET'])
-@csrf.exempt
 def index():
     """Landing page"""
     products = api_requests.get_products().get('products')
@@ -49,14 +48,6 @@ def login():
     response = make_response(render_template('index.html', products=products))
     response.set_cookie('access_token', access_token, httponly=True,
                         secure=True)
-    response.set_cookie('csrf_token_add_cart', generate_csrf(),
-                        httponly=True, secure=True)
-    response.set_cookie('csrf_token_delete_cart', generate_csrf(),
-                        httponly=True, secure=True)
-    response.set_cookie('csrf_token_update_cart', generate_csrf(),
-                        httponly=True, secure=True)
-    response.set_cookie('csrf_token_get_cart', generate_csrf(),
-                        httponly=True, secure=True)
     return response
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',

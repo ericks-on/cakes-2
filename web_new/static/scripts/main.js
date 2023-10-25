@@ -16,6 +16,10 @@ $(document).ready(function(){
     });
 
     const alertContainer = $('#alertPopup .alertPopupMessage');
+    function customAlert(message) {
+        alertContainer.text(message);
+        alertContainer.parent().css('display', 'flex');
+    }
 
     function setCookie(name, value, days) {
         const date = new Date();
@@ -52,24 +56,14 @@ $(document).ready(function(){
             type: 'POST',
             data: data,
             headers: headers,
-            success: function (resp) {
-                return resp;
+            success: function () {
+                return 'success';
             },
             error: function(){
                 return 'fail';
             }
         });
-        if (response === 'fail') {
-            alertContainer.text("There was a problem adding item to cart");
-            alertContainer.parent().css('display', 'flex');
-            return 'fail';
-        }
-        let message =  `
-        ${JSON.parse(response.text).name} was added Sucessfully
-        `;
-        alertContainer.text(message);
-        alertContainer.parent().css('display', 'flex');
-        return 'success';
+        return response;
     }
 
     function updateCart(json) {
@@ -85,10 +79,6 @@ $(document).ready(function(){
                 return 'fail'
             }
         });
-        if (response = 'fail') {
-            alertContainer.text("There was a problem updating some items in the cart");
-            alertContainer.parent().css('display', 'flex');
-        }
         return response;
     }
 
@@ -105,17 +95,12 @@ $(document).ready(function(){
                 return 'fail'
             }
         });
-        if (response = 'fail') {
-            alertContainer.text("There was a problem deleting some items in the cart");
-            alertContainer.parent().css('display', 'flex');
-        }
         return response;
     }
 
     function getCart() {
         let response = $.get('/cart', {headers: headers}).fail(function () {
-            alertContainer.text("There was a problem loading the cart");
-            alertContainer.parent().css('display', 'flex');
+            customAlert("There was a problem loading the cart");
             return 'fail';
         });
         return response;
@@ -275,8 +260,16 @@ $(document).ready(function(){
             }
         }
         var cartItem = {'name': name, 'product_id': productId, 'price': price, 'image': productImage, 'quantity': newQuantity};
+        // adding to cookie
         cartData.push(cartItem);
         setCookie('cartItems', JSON.stringify(cartData), 30);
+
+        // updating user cart, add if not update
+        if (updateCart(cartItem) == 'fail') {
+            if (addToCart(cartItem) == 'fail') {
+                customAlert("There was a problem updating the cart");
+            }
+        }
     });
 
     // empty the cart
@@ -287,6 +280,9 @@ $(document).ready(function(){
         $('.cart-content-product').each(function(){
             $(this).remove();
         });
+        for (let i = 0; i < cartData.length; i++) {
+            deleteFromCart(cartData[i]);
+        }
         deleteCookie('cartItems');
     });
 
@@ -305,6 +301,8 @@ $(document).ready(function(){
         for (let i = 0; i < cartData.length; i++) {
             if (cartData[i].name === productName) {
                 cartData[i].quantity = currentQuantity + 1;
+                updateCart(cartData[i]);
+                break;
             }
         }
         cartTotalValue += price;
@@ -327,6 +325,7 @@ $(document).ready(function(){
             for (let i = 0; i < cartData.length; i++) {
                 if (cartData[i].name === productName) {
                     cartData.splice(i, 1);
+                    deleteFromCart(cartData[i]);
                 }
             }
         }else {
@@ -335,6 +334,7 @@ $(document).ready(function(){
             for (let i = 0; i < cartData.length; i++) {
                 if (cartData[i].name === productName) {
                     cartData[i].quantity = currentQuantity - 1;
+                    updateCart(cartData[i]);
                 }
             }
         }
