@@ -108,10 +108,10 @@ def method_not_allowed_error(error):
 
 
 if __name__ == "__main__":
-    hst = os.environ.get('KIMUKA_API_HOST')
-    if not hst:
-        hst = '0.0.0.0'
-    prt = os.environ.get('KIMUKA_API_PORT')
-    if not prt:
-        prt = 3000
-    app.run(host=hst, port = prt, debug=True)
+    host = os.environ.get('KIMUKA_API_HOST')
+    if not host:
+        host = '0.0.0.0'
+    port = os.environ.get('KIMUKA_API_PORT')
+    if not port:
+        port = 3000
+    app.run(host=host, port = port, debug=True)
