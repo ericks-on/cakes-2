@@ -8,7 +8,7 @@ from models.cart import Cart
 from models.product import Product
 
 
-cart_bp = Blueprint('cart', __name__, url_prefix='/cart')
+cart_bp = Blueprint('cart_bp', __name__, url_prefix='/cart')
 
 
 @cart_bp.route('/', methods=['GET'])

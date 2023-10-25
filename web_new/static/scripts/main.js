@@ -43,8 +43,11 @@ $(document).ready(function(){
     // setCookie("cartItems", JSON.stringify(cartData), 7);
     // const cartData = JSON.parse(getCookie("cartItems"));
 
+    var csrftoken = getCookie('csrftoken');
+    const headers = {'X-CSRFToken': csrftoken,};
+
     function addToCart(data) {
-        let response = $.post('/cart', data).fail(function(){
+        let response = $.post('/cart', data, headers=headers).fail(function(){
             alertContainer.text("There was a problem adding item to cart");
             alertContainer.parent().css('display', 'flex');
             return 'fail';
@@ -62,6 +65,7 @@ $(document).ready(function(){
             url: '/cart',
             type: 'PUT',
             data: json,
+            headers: headers,
             success: function() {
                 return 'success'
             },
@@ -81,6 +85,7 @@ $(document).ready(function(){
             url: '/cart',
             type: 'DELETE',
             data: json,
+            headers: headers,
             success: function() {
                 return 'success'
             },
@@ -96,7 +101,8 @@ $(document).ready(function(){
     }
 
     function getCart() {
-        let response = $.get('/cart').fail(function () {
+        let response = $.get('/cart', headers=headers).fail(function (data) {
+            console.log(data);
             alertContainer.text("There was a problem loading the cart");
             alertContainer.parent().css('display', 'flex');
             return 'fail';

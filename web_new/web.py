@@ -3,11 +3,16 @@
 import os
 import requests
 from flask import Flask, render_template, request, make_response, abort
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 from web_new import api_requests
 
 
 app = Flask(__name__)
+csrf = CSRFProtect(app)
+app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+app.config['JWT_ACCESS_COOKIE_NAME'] = ['access_token']
+app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 api_host = os.environ.get('API_HOST')
 api_port = os.environ.get('API_PORT')
 
@@ -16,7 +21,8 @@ api_port = os.environ.get('API_PORT')
 def index():
     """Landing page"""
     products = api_requests.get_products().get('products')
-    return render_template('default.html', products=products)
+    csrf_token = generate_csrf()
+    return render_template('default.html', products=products, csrf_token=csrf_token)
 
 @app.route('/', strict_slashes=False, methods=['POST'])
 def login():
@@ -38,7 +44,9 @@ def login():
     
     products = api_requests.get_products().get('products')
     access_token = api_response.json()['access_token']
-    response = make_response(render_template('index.html', products=products))
+    csrf_token = generate_csrf()
+    response = make_response(render_template('index.html', products=products,
+                                             csrf_token=csrf_token))
     response.set_cookie('access_token', access_token, httponly=True)
     return response
 
@@ -47,7 +55,7 @@ def login():
 @jwt_required()
 def add_cart():
     """saving the users cart items to db"""
-    access_token = request.cookies.get('access_token_cookie')
+    access_token = request.cookies.get('access_token')
     headers = {"Authorization": access_token,
                "Content_Type": "Application/json"}
     if request.method == 'POST':
