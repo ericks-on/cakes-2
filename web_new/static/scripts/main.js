@@ -362,4 +362,9 @@ $(document).ready(function(){
         }
         setCookie('cartItems', JSON.stringify(cartData), 30);
     });
+
+    $('#logout-btn').click(function() {
+        deleteCookie('access_token');
+        deleteCookie('csrf_token');
+    });
 });

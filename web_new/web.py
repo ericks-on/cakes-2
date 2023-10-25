@@ -4,7 +4,7 @@ import os
 import requests
 import secrets
 from flask import Flask, render_template, request, make_response, abort
-from flask_jwt_extended import jwt_required
+from flask import redirect, url_for
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from web_new import api_requests
 
@@ -86,6 +86,11 @@ def add_cart():
             abort(400)
         response = api_requests.delete_cart(product_id, headers)
         return response
+    
+@app.route('/logout', strict_slashes=False)
+def logout():
+    '''Logging out'''
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':

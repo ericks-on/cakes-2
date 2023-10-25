@@ -657,3 +657,8 @@ body{
     width: 90%;
     text-align: center;
 }
+
+#logout-btn {
+    text-decoration: none;
+    color: var(--main-text-color);
+}
