@@ -114,11 +114,11 @@ $(document).ready(function(){
 
     getCart().then(response => {
         if (response.cart) {
-            console.log(response.cart);
-            setCookie('cartItems', JSON.stringify(response), 30);
+            setCookie('cartItems', JSON.stringify(JSON.parse(response.cart)), 30);
         }
     });
     const cartData = JSON.parse(getCookie("cartItems"));
+    console.log(cartData);
     const cartTotal = $('#cartTotal');
     var cartTotalValue = parseInt($('#cartTotal').text());
 
