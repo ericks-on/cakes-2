@@ -47,11 +47,23 @@ $(document).ready(function(){
     const headers = {'X-CSRFToken': csrftoken,};
 
     function addToCart(data) {
-        let response = $.post('/cart', data, {headers: headers}).fail(function(){
+        let response = $.ajax({
+            url:'/cart',
+            type: 'POST',
+            data: data,
+            headers: headers,
+            success: function (resp) {
+                return resp;
+            },
+            error: function(){
+                return 'fail';
+            }
+        });
+        if (response === 'fail') {
             alertContainer.text("There was a problem adding item to cart");
             alertContainer.parent().css('display', 'flex');
             return 'fail';
-        });
+        }
         let message =  `
         ${JSON.parse(response.text).name} was added Sucessfully
         `;
