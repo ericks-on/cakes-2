@@ -2,6 +2,7 @@
 """Managing the web pages"""
 import os
 import requests
+import secrets
 from flask import Flask, render_template, request, make_response, abort
 from flask_jwt_extended import jwt_required
 from flask_wtf.csrf import CSRFProtect, generate_csrf
@@ -10,6 +11,8 @@ from web_new import api_requests
 
 app = Flask(__name__)
 csrf = CSRFProtect(app)
+secret_key = secrets.token_hex(16)
+app.config['SECRET_KEY'] = secret_key
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
 app.config['JWT_ACCESS_COOKIE_NAME'] = ['access_token']
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True

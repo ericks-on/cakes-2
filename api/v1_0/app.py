@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module contains the Donuts RESTFull API"""
 import os
+import secrets
 from dotenv import load_dotenv
 from datetime import timedelta, datetime, timezone
 from flask import Flask, jsonify, make_response, request
@@ -27,7 +28,7 @@ app.config['SWAGGER'] = {
         'title': 'Kimuka RESTFull API'
         }
 jwt = JWTManager(app)
-app.config['JWT_SECRET_KEY'] = os.environ.get('KIMUKA_API_SEC_KEY')
+app.config['JWT_SECRET_KEY'] = secret_key = secrets.token_hex(16)
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.register_blueprint(app_views)
 
