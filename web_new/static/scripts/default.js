@@ -1,20 +1,4 @@
 $(document).ready(function(){
-    // login
-    $('#login-button').click(function(event){
-        console.log('login button clicked')
-        event.preventDefault();
-        $.post('/', {
-            username: $('#login-username').val(),
-            password: $('#login-password').val()
-        }, function(data, status){
-            $('#loginForm').submit();
-        }).fail(function(data, status){
-            let errorMessages = JSON.parse(data.responseJSON['error'])['msg'];
-            alert(errorMessages);
-            return;
-        });
-    });
-
     function setCookie(name, value, days) {
         const date = new Date();
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -40,6 +24,23 @@ $(document).ready(function(){
     // Usage:
     // setCookie("cartItems", JSON.stringify(cartData), 7);
     // const cartData = JSON.parse(getCookie("cartItems"));
+
+
+    // login
+    $('#login-button').click(function(event){
+        event.preventDefault();
+        $.post('/', {
+            username: $('#login-username').val(),
+            password: $('#login-password').val()
+        },
+            function(data, status){
+            $('#loginForm').submit();
+        }).fail(function(data, status){
+            let errorMessages = JSON.parse(data.responseJSON['error'])['msg'];
+            alert(errorMessages);
+            return;
+        });
+    });
 
     if (getCookie('cartItems') === "") {
         setCookie('cartItems', JSON.stringify([]), 30);
