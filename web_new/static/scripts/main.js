@@ -55,13 +55,7 @@ $(document).ready(function(){
             url:'/cart',
             type: 'POST',
             data: data,
-            headers: headers,
-            success: function () {
-                return 'success';
-            },
-            error: function(){
-                return 'fail';
-            }
+            headers: headers
         });
         return response;
     }
@@ -71,13 +65,7 @@ $(document).ready(function(){
             url: '/cart',
             type: 'PUT',
             data: json,
-            headers: headers,
-            success: function() {
-                return 'success'
-            },
-            error: function() {
-                return 'fail'
-            }
+            headers: headers
         });
         return response;
     }
@@ -87,13 +75,7 @@ $(document).ready(function(){
             url: '/cart',
             type: 'DELETE',
             data: json,
-            headers: headers,
-            success: function() {
-                return 'success'
-            },
-            error: function() {
-                return 'fail'
-            }
+            headers: headers
         });
         return response;
     }
@@ -102,11 +84,7 @@ $(document).ready(function(){
         let response = $.ajax({
             type: 'GET',
             url: '/cart',
-            headers: headers,
-            error: function (err) {
-                console.log(err);
-                customAlert("There was a problem loading the cart");
-            }
+            headers: headers
         });
         return response;
     }
@@ -270,11 +248,12 @@ $(document).ready(function(){
         setCookie('cartItems', JSON.stringify(cartData), 30);
 
         // updating user cart, add if not update
-        if (updateCart(cartItem) == 'fail') {
+        updateCart(JSON.stringify(cartItem)).then(response =>  {
+            console.log(response)
             if (addToCart(cartItem) == 'fail') {
                 customAlert("There was a problem updating the cart");
             }
-        }
+        });
     });
 
     // empty the cart
