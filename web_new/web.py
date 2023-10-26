@@ -4,6 +4,8 @@ import os
 import requests
 import secrets
 from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 from flask import Flask, render_template, request, make_response, abort
 from flask import redirect, url_for
 from flask_wtf.csrf import CSRFProtect, generate_csrf
@@ -11,6 +13,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_jwt_extended import set_access_cookies
 from flask_jwt_extended import unset_jwt_cookies
+from flask_jwt_extended import get_jwt
 from web_new import api_requests
 
 
@@ -27,6 +30,7 @@ api_port = os.environ.get('API_PORT')
 
 @app.after_request
 def refresh_expiring_jwts(response):
+    """refreshing jwt tokens"""
     try:
         exp_timestamp = get_jwt()["exp"]
         now = datetime.now(timezone.utc)
