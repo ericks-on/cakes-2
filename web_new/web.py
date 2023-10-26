@@ -109,6 +109,7 @@ def home():
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
+@jwt_required()
 def cart():
     """CRUD operations on cart"""
     access_token = request.cookies.get('access_token')
