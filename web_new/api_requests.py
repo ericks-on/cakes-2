@@ -11,6 +11,7 @@ api_port = os.environ.get('API_PORT')
 login_url = f'http://{api_host}:{api_port}/api/v1_0/token/auth'
 products_url = f'http://{api_host}:{api_port}/api/v1_0/products'
 cart_url = f'http://{api_host}:{api_port}/api/v1_0/cart'
+refresh_url = f'http://{api_host}:{api_port}/api/v1_0/token/refresh'
 
 
 def login(username, password):
@@ -19,6 +20,20 @@ def login(username, password):
         api_response = requests.post(login_url,
                                      json={'username': username,
                                            'password': password}, timeout=5)
+        api_response.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        return {'error': err.response.text,
+                'status_code': err.response.status_code}
+    except requests.exceptions.ConnectionError:
+        return {'error': 'Connection Error', 'status_code': 500}
+    except requests.exceptions.Timeout:
+        return {'error': 'Request Timeout', 'status_code': 500}
+    return api_response.json()
+
+def refresh_token():
+    """Refreshing access tokens"""
+    try:
+        api_response = requests.get(refresh_url, timeout=5)
         api_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text,
