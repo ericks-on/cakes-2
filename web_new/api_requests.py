@@ -30,10 +30,10 @@ def login(username, password):
         return {'error': 'Request Timeout', 'status_code': 500}
     return api_response.json()
 
-def refresh_token():
+def refresh_token(headers):
     """Refreshing access tokens"""
     try:
-        api_response = requests.get(refresh_url, timeout=5)
+        api_response = requests.get(refresh_url, headers=headers, timeout=5)
         api_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
         return {'error': err.response.text,

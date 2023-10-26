@@ -39,6 +39,7 @@ app.register_blueprint(app_views)
 
 
 @app.route('/api/v1_0/token/auth', methods=['POST'])
+@csrf.exempt
 def login():
     """authenticates user and creates an access token"""
     all_users = storage.all(User)

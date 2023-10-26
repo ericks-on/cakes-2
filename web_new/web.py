@@ -42,7 +42,8 @@ def refresh_expiring_jwts(response):
         now = datetime.now(timezone.utc)
         target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
         if target_timestamp > exp_timestamp:
-            access_token = api_requests.refresh_token().get('access_token')
+            headers = {"X-CSRFToken": generate_csrf()}
+            access_token = api_requests.refresh_token(headers).get('access_token')
             set_access_cookies(response, access_token)
         return response
     except (RuntimeError, KeyError):
@@ -111,7 +112,9 @@ def cart():
     """CRUD operations on cart"""
     access_token = request.cookies.get('access_token')
     headers = {"Authorization": f'Bearer {access_token}',
-               "Content-Type": "Application/json"}
+               "Content-Type": "Application/json",
+               "X-CSRFToken": generate_csrf()
+               }
     if request.method == 'POST':
         payload = request.get_json()
         response = api_requests.add_cart(payload, headers)
