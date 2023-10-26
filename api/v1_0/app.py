@@ -32,8 +32,9 @@ jwt = JWTManager(app)
 csrf = CSRFProtect(app)
 app.config["JWT_COOKIE_SECURE"] = False #remember to change to True
 secret_key = os.environ.get('KIMUKA_SECRET_KEY')
+jwt_key = os.environ.get('KIMUKA_JWT_KEY')
 app.config['SECRET_KEY'] = secret_key
-app.config['JWT_SECRET_KEY'] = secret_key
+app.config['JWT_SECRET_KEY'] = jwt_key
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.register_blueprint(app_views)
 
