@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Managing the web pages"""
 import os
+from dotenv import load_dotenv
 import requests
 import secrets
 from datetime import datetime
@@ -14,9 +15,11 @@ from flask_jwt_extended import JWTManager
 from flask_jwt_extended import set_access_cookies
 from flask_jwt_extended import unset_jwt_cookies
 from flask_jwt_extended import get_jwt
+from flask_jwt_extended import unset_access_cookies
 from web_new import api_requests
 
 
+load_dotenv()
 app = Flask(__name__)
 csrf = CSRFProtect(app)
 jwt = JWTManager(app)
@@ -24,7 +27,8 @@ jwt = JWTManager(app)
 secret_key = os.environ.get('KIMUKA_SECRET_KEY')
 app.config['SECRET_KEY'] = secret_key
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
-app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies",
+                                    "json", "query_string"]
 api_host = os.environ.get('API_HOST')
 api_port = os.environ.get('API_PORT')
 
@@ -43,16 +47,39 @@ def refresh_expiring_jwts(response):
     except (RuntimeError, KeyError):
         # Case where there is not a valid JWT. Just return the original response
         return response
+    
+@jwt.unauthorized_loader
+def unauthorized_callback(callback):
+    # No auth header
+    return redirect(url_for('index'), 302)
+
+@jwt.invalid_token_loader
+def invalid_token_callback(callback):
+    # Invalid Fresh/Non-Fresh Access token in auth header
+    resp = make_response(redirect(url_for('index')))
+    unset_jwt_cookies(resp)
+    return resp, 302
+
+@jwt.expired_token_loader
+def expired_token_callback(callback):
+    # Expired auth header
+    resp = make_response(redirect(url_for('index')))
+    unset_access_cookies(resp)
+    return resp, 302
 
 @app.route('/', strict_slashes=False, methods=['GET'])
+@csrf.exempt
 def index():
     """Landing page"""
     products = api_requests.get_products().get('products')
-    login_csrf = generate_csrf()
-    return render_template('default.html', products=products,
-                           login_csrf=login_csrf)
+    if not products:
+        message = "error fetching the products"
+        return render_template('default.html', products=[],
+                               error=message)
+    return render_template('default.html', products=products)
 
 @app.route('/', strict_slashes=False, methods=['POST'])
+@csrf.exempt
 def login():
     """Login verification"""
     username = request.form.get('username')
@@ -62,7 +89,7 @@ def login():
         return {'error': 'Incorrect Username or Password'}, 400
     login_response = api_requests.login(username, password)
     if not login_response.get('error'):
-        access_token = login_response['access_token']
+        access_token = login_response.get('access_token')
         response = make_response(redirect(url_for('home')))
         set_access_cookies(response, access_token)
         return response
