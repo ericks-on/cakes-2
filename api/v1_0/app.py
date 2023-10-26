@@ -7,6 +7,7 @@ from datetime import timedelta, datetime, timezone
 from flask import Flask, jsonify, make_response, request
 from flask_cors import CORS
 from flasgger import Swagger
+from flask_wtf.csrf import CSRFProtect
 from flask_jwt_extended import create_access_token, JWTManager
 from flask_jwt_extended import get_jwt_identity, get_jwt, jwt_required
 from flask_jwt_extended import set_access_cookies
@@ -28,8 +29,10 @@ app.config['SWAGGER'] = {
         'title': 'Kimuka RESTFull API'
         }
 jwt = JWTManager(app)
+csrf = CSRFProtect(app)
 app.config["JWT_COOKIE_SECURE"] = False #remember to change to True
 secret_key = os.environ.get('KIMUKA_SECRET_KEY')
+app.config['SECRET_KEY'] = secret_key
 app.config['JWT_SECRET_KEY'] = secret_key
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.register_blueprint(app_views)
