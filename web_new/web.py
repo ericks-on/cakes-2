@@ -30,8 +30,7 @@ app.config['SECRET_KEY'] = secret_key
 app.config['JWT_SECRET_KEY'] = jwt_key
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 app.config['JWT_CSRF_CHECK_FORM'] = True
-app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies",
-                                    "json", "query_string"]
+app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 api_host = os.environ.get('API_HOST')
 api_port = os.environ.get('API_PORT')
 
