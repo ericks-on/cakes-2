@@ -112,10 +112,11 @@ def home():
 def cart():
     """CRUD operations on cart"""
     access_token = request.cookies.get('access_token')
-    headers = {"Authorization": f'Bearer {access_token}',
-               "Content-Type": "Application/json",
-               "X-CSRFToken": generate_csrf()
-               }
+    headers = {
+        "Authorization": f'Bearer {access_token}',
+        "Content-Type": "Application/json",
+        "X-CSRFToken": generate_csrf()
+        }
     if request.method == 'POST':
         payload = request.get_json()
         response = api_requests.add_cart(payload, headers)
