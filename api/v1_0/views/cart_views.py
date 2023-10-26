@@ -17,6 +17,8 @@ cart_bp = Blueprint('cart_bp', __name__, url_prefix='/cart')
 def get_cart():
     """Getting all items in the cart"""
     user = storage.get_user(get_jwt_identity())
+    if not user:
+        abort(403)
     cart_items = [item for item in storage.all(Cart)
                   if item.user_id == user.id]
     cart = [{"product_id": item.product_id,
@@ -76,5 +78,5 @@ def update_cart(product_id):
         if item.product_id == product_id:
             item.quantity = quantity
             storage.save()
-            return jsonify(item.to_dict), 200
+            return jsonify(item.to_dict()), 200
     abort(404)
