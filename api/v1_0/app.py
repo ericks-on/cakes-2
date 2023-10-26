@@ -28,6 +28,7 @@ app.config['SWAGGER'] = {
         'title': 'Kimuka RESTFull API'
         }
 jwt = JWTManager(app)
+app.config["JWT_COOKIE_SECURE"] = False #remember to change to True
 app.config['JWT_SECRET_KEY'] = secrets.token_hex(16)
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.register_blueprint(app_views)
@@ -54,7 +55,7 @@ def login():
         return jsonify({"msg": "Wrong Username or Password"}), 401
     return jsonify({"msg": "Wrong Username or Password"}), 401
     
-@app.route('/api/v1_0/token/refresh', methods=['POST'])
+@app.route('/api/v1_0/token/refresh', methods=['GET'])
 @jwt_required(refresh=True)
 def refresh():
     """refreshes access token"""
