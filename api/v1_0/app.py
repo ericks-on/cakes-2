@@ -28,7 +28,7 @@ app.config['SWAGGER'] = {
         'title': 'Kimuka RESTFull API'
         }
 jwt = JWTManager(app)
-app.config['JWT_SECRET_KEY'] = secret_key = secrets.token_hex(16)
+app.config['JWT_SECRET_KEY'] = secrets.token_hex(16)
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.register_blueprint(app_views)
 
