@@ -64,7 +64,7 @@ def login():
     return jsonify({"msg": "Wrong Username or Password"}), 401
     
 @app.route('/api/v1_0/token/refresh', methods=['GET'])
-@jwt_required(refresh=True)
+@jwt_required()
 def refresh():
     """refreshes access token"""
     current_user = get_jwt_identity()

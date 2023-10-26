@@ -49,8 +49,8 @@ def refresh_expiring_jwts(response):
                 "X-CSRFToken": generate_csrf()
                 }
             refresh_response = api_requests.refresh_token(headers)
-            if not refresh_response.get('error'):
-                access_token = refresh_response.get('access_token')
+            if not refresh_response[0].get_json().get('error'):
+                access_token = refresh_response[0].get_json().get('access_token')
                 set_access_cookies(response, access_token)
         return response
     except (RuntimeError, KeyError):
@@ -59,18 +59,21 @@ def refresh_expiring_jwts(response):
     
 @jwt.unauthorized_loader
 def unauthorized_callback(callback):
+    """what happens when no token is present"""
     # No auth header
     return redirect(url_for('index'), 302)
 
 @jwt.invalid_token_loader
 def invalid_token_callback(callback):
+    """What happens when token is invalid"""
     # Invalid Fresh/Non-Fresh Access token in auth header
     resp = make_response(redirect(url_for('index')))
     unset_jwt_cookies(resp)
     return resp, 302
 
 @jwt.expired_token_loader
-def expired_token_callback(callback):
+def expired_token_callback(header, payload):
+    """What happens when token is expired"""
     # Expired auth header
     resp = make_response(redirect(url_for('index')))
     unset_access_cookies(resp)
@@ -99,6 +102,7 @@ def login():
     login_response = api_requests.login(username, password)
     if not login_response.get('error'):
         access_token = login_response.get('access_token')
+        refresh_token = login_response.get('refresh_token')
         response = make_response(redirect(url_for('home')))
         set_access_cookies(response, access_token)
         return response
