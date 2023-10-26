@@ -5,7 +5,7 @@ import requests
 import secrets
 from flask import Flask, render_template, request, make_response, abort
 from flask import redirect, url_for
-from flask_wtf.csrf import CSRFProtect
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 from web_new import api_requests
 
 
@@ -34,21 +34,21 @@ def login():
     
     if not username or not password:
         return {'error': 'Incorrect Username or Password'}, 400
-    
-    try:
-        api_response = requests.post(login_url,
-                                     json={'username': username,
-                                           'password': password}, timeout=5)
-        api_response.raise_for_status()
-    except requests.exceptions.HTTPError as err:
-        return {'error': err.response.text}, err.response.status_code
-    
-    products = api_requests.get_products().get('products')
-    access_token = api_response.json()['access_token']
-    response = make_response(render_template('index.html', products=products))
+    login_response = api_requests.login(username, password)
+    if not login_response.get('error'):
+        access_token = login_response['access_token']
+    response = make_response(redirect(url_for('home')))
     response.set_cookie('access_token', access_token, httponly=True,
                         secure=True)
     return response
+
+@app.route('/home', strict_slashes=False, methods=['GET'])
+def home():
+    """After login"""
+    products = api_requests.get_products().get('products')
+    cart_csrf = generate_csrf()
+    return render_template('index.html', products=products,
+                           cart_csrf=cart_csrf)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
@@ -62,6 +62,7 @@ def cart():
         response = api_requests.add_cart(payload, headers)
         return response
     if request.method == 'GET':
+        headers = {"Authorization": f'Bearer {access_token}'}
         response = api_requests.get_cart(headers)
         return response
     if request.method == 'PUT':
