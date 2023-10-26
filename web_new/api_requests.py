@@ -3,6 +3,7 @@
 import os
 import requests
 from dotenv import load_dotenv
+from flask import jsonify
 
 
 load_dotenv()
@@ -35,7 +36,7 @@ def refresh_token(headers):
         api_response = requests.get(refresh_url, headers=headers, timeout=5)
         api_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        return {'error': err.response.text}, err.response.status_code
+        return jsonify({'error': err.response.text}), err.response.status_code
     except requests.exceptions.ConnectionError:
         return {'error': 'Connection Error', 'status_code': 500}, 500
     except requests.exceptions.Timeout:
