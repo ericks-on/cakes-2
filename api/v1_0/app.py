@@ -29,7 +29,8 @@ app.config['SWAGGER'] = {
         }
 jwt = JWTManager(app)
 app.config["JWT_COOKIE_SECURE"] = False #remember to change to True
-app.config['JWT_SECRET_KEY'] = secrets.token_hex(16)
+secret_key = os.environ.get('KIMUKA_SECRET_KEY')
+app.config['JWT_SECRET_KEY'] = secret_key
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.register_blueprint(app_views)
 

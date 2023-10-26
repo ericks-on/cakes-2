@@ -20,7 +20,8 @@ from web_new import api_requests
 app = Flask(__name__)
 csrf = CSRFProtect(app)
 jwt = JWTManager(app)
-secret_key = secrets.token_hex(16)
+# secret_key = secrets.token_hex(16)
+secret_key = os.environ.get('KIMUKA_SECRET_KEY')
 app.config['SECRET_KEY'] = secret_key
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
@@ -47,10 +48,11 @@ def refresh_expiring_jwts(response):
 def index():
     """Landing page"""
     products = api_requests.get_products().get('products')
-    return render_template('default.html', products=products)
+    login_csrf = generate_csrf()
+    return render_template('default.html', products=products,
+                           login_csrf=login_csrf)
 
 @app.route('/', strict_slashes=False, methods=['POST'])
-@csrf.exempt
 def login():
     """Login verification"""
     username = request.form.get('username')
