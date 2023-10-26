@@ -22,12 +22,11 @@ def login(username, password):
                                            'password': password}, timeout=5)
         api_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        return {'error': err.response.text,
-                'status_code': err.response.status_code}
+        return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error', 'status_code': 500}
+        return {'error': 'Connection Error', 'status_code': 500}, 500
     except requests.exceptions.Timeout:
-        return {'error': 'Request Timeout', 'status_code': 500}
+        return {'error': 'Request Timeout', 'status_code': 500}, 500
     return api_response.json()
 
 def refresh_token(headers):
@@ -36,12 +35,11 @@ def refresh_token(headers):
         api_response = requests.get(refresh_url, headers=headers, timeout=5)
         api_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        return {'error': err.response.text,
-                'status_code': err.response.status_code}
+        return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error', 'status_code': 500}
+        return {'error': 'Connection Error', 'status_code': 500}, 500
     except requests.exceptions.Timeout:
-        return {'error': 'Request Timeout', 'status_code': 500}
+        return {'error': 'Request Timeout', 'status_code': 500}, 500
     return api_response.json()
 
 def get_products():
@@ -50,12 +48,11 @@ def get_products():
         pdt_response = requests.get(products_url, timeout=5)
         pdt_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        return {'error': err.response.text,
-                'status_code': err.response.status_code}
+        return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error', 'status_code': 500}
+        return {'error': 'Connection Error', 'status_code': 500}, 500
     except requests.exceptions.Timeout:
-        return {'error': 'Request Timeout', 'status_code': 500}
+        return {'error': 'Request Timeout', 'status_code': 500}, 500
     return pdt_response.json()
 
 def get_cart(headers):
@@ -64,12 +61,11 @@ def get_cart(headers):
         cart_response = requests.get(cart_url, headers=headers, timeout=5)
         cart_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        return {'error': err.response.text,
-                'status_code': err.response.status_code}
+        return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error', 'status_code': 500}
+        return {'error': 'Connection Error', 'status_code': 500}, 500
     except requests.exceptions.Timeout:
-        return {'error': 'Connection Error', 'status_code': 500}
+        return {'error': 'Connection Error', 'status_code': 500}, 500
     return cart_response.json()
 
 def add_cart(payload, headers):
@@ -79,10 +75,9 @@ def add_cart(payload, headers):
                                       headers=headers, timeout=5)
         cart_response.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        return {'error': err.response.text,
-                'status_code': err.response.status_code}
+        return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error', 'status_code': 500}
+        return {'error': 'Connection Error', 'status_code': 500}, 500
     except requests.exceptions.Timeout:
         return {'error': 'Connection Error', 'status_code': 500}
     return cart_response.json()
@@ -95,12 +90,11 @@ def update_cart(quantity, product_id, headers):
                                 timeout=5, headers=headers)
         response.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        return {'error': err.response.text,
-                'status_code': err.response.status_code}
+        return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error', 'status_code': 500}
+        return {'error': 'Connection Error', 'status_code': 500}, 500
     except requests.exceptions.Timeout:
-        return {'error': 'Connection Error', 'status_code': 500}
+        return {'error': 'Connection Error', 'status_code': 500}, 500
     return response.json()
 
 def delete_cart(product_id, headers):
@@ -110,10 +104,9 @@ def delete_cart(product_id, headers):
         response = requests.delete(url, timeout=5, headers=headers)
         response.raise_for_status()
     except requests.exceptions.HTTPError as err:
-        return {'error': err.response.text,
-                'status_code': err.response.status_code}
+        return {'error': err.response.text}, err.response.status_code
     except requests.exceptions.ConnectionError:
-        return {'error': 'Connection Error', 'status_code': 500}
+        return {'error': 'Connection Error', 'status_code': 500}, 500
     except requests.exceptions.Timeout:
-        return {'error': 'Connection Error', 'status_code': 500}
+        return {'error': 'Connection Error', 'status_code': 500}, 500
     return response.json()

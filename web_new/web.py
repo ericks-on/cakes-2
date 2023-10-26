@@ -43,9 +43,15 @@ def refresh_expiring_jwts(response):
         now = datetime.now(timezone.utc)
         target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
         if target_timestamp > exp_timestamp:
-            headers = {"X-CSRFToken": generate_csrf()}
-            access_token = api_requests.refresh_token(headers).get('access_token')
-            set_access_cookies(response, access_token)
+            access_token = request.cookies.get('access_token')
+            headers = {
+                "Authorization": f'Bearer {access_token}',
+                "X-CSRFToken": generate_csrf()
+                }
+            refresh_response = api_requests.refresh_token(headers)
+            if not refresh_response.get('error'):
+                access_token = refresh_response.get('access_token')
+                set_access_cookies(response, access_token)
         return response
     except (RuntimeError, KeyError):
         # Case where there is not a valid JWT. Just return the original response
