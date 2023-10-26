@@ -61,9 +61,10 @@ def login():
     login_response = api_requests.login(username, password)
     if not login_response.get('error'):
         access_token = login_response['access_token']
-    response = make_response(redirect(url_for('home')))
-    set_access_cookies(response, access_token)
-    return response
+        response = make_response(redirect(url_for('home')))
+        set_access_cookies(response, access_token)
+        return response
+    return login_response
 
 @app.route('/home', strict_slashes=False, methods=['GET'])
 @jwt_required()

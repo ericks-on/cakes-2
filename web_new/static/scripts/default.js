@@ -34,11 +34,11 @@ $(document).ready(function(){
             password: $('#login-password').val()
         },
             function(data, status){
-            $('#loginForm').submit();
-        }).fail(function(data, status){
-            let errorMessages = JSON.parse(data.responseJSON['error'])['msg'];
-            alert(errorMessages);
-            return;
+                if (data.error) {
+                    alert(JSON.parse(data.error)['msg']);
+                }else {
+                    $('#loginForm').submit();
+                }
         });
     });
 
