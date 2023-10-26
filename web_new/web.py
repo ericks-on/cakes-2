@@ -52,11 +52,11 @@ def login():
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
-def add_cart():
-    """saving the users cart items to db"""
+def cart():
+    """CRUD operations on cart"""
     access_token = request.cookies.get('access_token')
     headers = {"Authorization": f'Bearer {access_token}',
-               "Content_Type": "Application/json"}
+               "Content-Type": "Application/json"}
     if request.method == 'POST':
         payload = request.get_json()
         response = api_requests.add_cart(payload, headers)

@@ -48,7 +48,10 @@ $(document).ready(function(){
     // const cartData = JSON.parse(getCookie("cartItems"));
 
     var csrftoken = getCookie('csrftoken');
-    const headers = {'X-CSRFToken': csrftoken,};
+    const headers = {
+        'X-CSRFToken': csrftoken,
+        'Content-Type': 'application/json'
+    };
 
     function addToCart(data) {
         let response = $.ajax({
@@ -84,7 +87,11 @@ $(document).ready(function(){
         let response = $.ajax({
             type: 'GET',
             url: '/cart',
-            headers: headers
+            headers: headers,
+            error: function (err) {
+                console.log(err);
+                customAlert("There was a problem loading the cart");
+            }
         });
         return response;
     }
@@ -242,17 +249,23 @@ $(document).ready(function(){
                 cartData.splice(i, 1);
             }
         }
-        var cartItem = {'name': name, 'product_id': productId, 'price': price, 'image': productImage, 'quantity': newQuantity};
+        var cartItem = {
+            'name': name,
+            'product_id': productId,
+            'price': price,
+            'image': productImage,
+            'quantity': newQuantity
+        };
         // adding to cookie
         cartData.push(cartItem);
         setCookie('cartItems', JSON.stringify(cartData), 30);
 
         // updating user cart, add if not update
-        updateCart(JSON.stringify(cartItem)).then(response =>  {
-            console.log(response)
-            if (addToCart(cartItem) == 'fail') {
+        updateCart(JSON.stringify(cartItem)).catch(err =>  {
+            console.log(err);
+            addToCart(JSON.stringify(cartItem)).catch(err => {
                 customAlert("There was a problem updating the cart");
-            }
+            });
         });
     });
 
