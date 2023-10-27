@@ -82,7 +82,7 @@ $(document).ready(function(){
 
     getCart().then(response => {
         if (response.cart) {
-            setCookie('cartItems', JSON.stringify(JSON.parse(response.cart)), 30);
+            setCookie('cartItems', JSON.stringify(response.cart), 30);
         }else {
             console.log(response);
             customAlert('There was a problem loading the cart');
