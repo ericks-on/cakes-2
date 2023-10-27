@@ -92,6 +92,16 @@ $(document).ready(function(){
     const cartTotal = $('#cartTotal');
     var cartTotalValue = parseInt($('#cartTotal').text());
 
+    // default cart display
+    function defaultCartDisplayShow() {
+        $('.cart-content-products').find('*').not('.default-cart-display, .default-cart-display *').remove();
+        $('.default-cart-display').css('display', 'flex');
+    }
+
+    function defaultCartDisplayHide() {
+        $('.default-cart-display').hide()
+    }
+
     // loading cart items to cart
     if (cartData.length > 0) {
         $('.cart-content-products').empty();
@@ -134,6 +144,8 @@ $(document).ready(function(){
             $('.cart-content-products').append(item);
         }
         cartTotal.text(cartTotalValue);
+    }else {
+        defaultCartDisplayShow()
     }
 
     // cart items
@@ -156,10 +168,6 @@ $(document).ready(function(){
         }
     }
 
-    // default cart display
-    function defaultCartDisplay() {
-        return $('.default-cart-display');
-    }
 
     // adding product to cart when clicked
     $('.product-add-to-cart').click(function(){
@@ -188,7 +196,7 @@ $(document).ready(function(){
         }else{
             let cart = $('.cart-content-products');
             if (checkEmptyCart() === true) {
-                defaultCartDisplay().css('display', 'none');
+                defaultCartDisplayHide();
             }
             let newItem = `
             <div class='cart-content-product flex flex-cc'>
@@ -260,11 +268,8 @@ $(document).ready(function(){
     // empty the cart
     $('#emptyCart').click(function() {
         confirm('Press \'OK\' to clear the shopping Cart');
-        defaultCartDisplay().css('display', 'flex');
+        defaultCartDisplayShow();
         cartTotal.text(0);
-        $('.cart-content-product').each(function(){
-            $(this).remove();
-        });
         for (let i = 0; i < cartData.length; i++) {
             deleteFromCart(cartData[i]);
         }
@@ -305,7 +310,7 @@ $(document).ready(function(){
         let productName = buttonContainer.parent().find('.cart-content-product-details .cart-product-name').text();
         if (currentQuantity === 1) {
             buttonContainer.parent().remove();
-            defaultCartDisplay().css('display', 'flex');
+            defaultCartDisplayShow();
             // remove from cookie
             for (let i = 0; i < cartData.length; i++) {
                 if (cartData[i].name === productName) {
@@ -343,7 +348,7 @@ $(document).ready(function(){
         cartTotalValue -= productTotal;
         cartTotal.text(cartTotalValue);
         if (checkEmptyCart() === true) {
-            defaultCartDisplay().css('display', 'flex');
+            defaultCartDisplayShow();
         }
         setCookie('cartItems', JSON.stringify(cartData), 30);
     });
