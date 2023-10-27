@@ -49,8 +49,8 @@ def refresh_expiring_jwts(response):
                 "X-CSRFToken": generate_csrf()
                 }
             refresh_response = api_requests.refresh_token(headers)
-            if not refresh_response[0].get_json().get('error'):
-                access_token = refresh_response[0].get_json().get('access_token')
+            if not refresh_response.get_json().get('error'):
+                access_token = refresh_response.get_json().get('access_token')
                 set_access_cookies(response, access_token)
         return response
     except (RuntimeError, KeyError):
@@ -100,19 +100,19 @@ def login():
     if not username or not password:
         return {'error': 'Incorrect Username or Password'}, 400
     login_response = api_requests.login(username, password)
-    if not login_response.get('error'):
-        access_token = login_response.get('access_token')
-        refresh_token = login_response.get('refresh_token')
+    return_obj = login_response.get_json()
+    if not return_obj.get('error'):
+        access_token = return_obj.get('access_token')
         response = make_response(redirect(url_for('home')))
         set_access_cookies(response, access_token)
         return response
-    return login_response
+    return return_obj, return_obj.get('status_code')
 
 @app.route('/home', strict_slashes=False, methods=['GET'])
 @jwt_required()
 def home():
     """After login"""
-    products = api_requests.get_products().get('products')
+    products = api_requests.get_products().get_json().get('products')
     cart_csrf = generate_csrf()
     return render_template('index.html', products=products,
                            cart_csrf=cart_csrf)
@@ -130,24 +130,25 @@ def cart():
         }
     if request.method == 'POST':
         payload = request.get_json()
-        response = api_requests.add_cart(payload, headers)
+        response = api_requests.add_cart(payload, headers).get_json()
         return response
     if request.method == 'GET':
         headers = {"Authorization": f'Bearer {access_token}'}
-        response = api_requests.get_cart(headers)
+        response = api_requests.get_cart(headers).get_json()
         return response
     if request.method == 'PUT':
         quantity = request.get_json().get('quantity')
         product_id = request.get_json().get('product_id')
         if not quantity or not product_id:
             abort(400)
-        response = api_requests.update_cart(quantity, product_id, headers)
+        response = api_requests.update_cart(quantity, product_id,
+                                            headers).get_json()
         return response
     if request.method == 'DELETE':
         product_id = request.get_json().get('product_id')
         if not product_id:
             abort(400)
-        response = api_requests.delete_cart(product_id, headers)
+        response = api_requests.delete_cart(product_id, headers).get_json()
         return response
     
 @app.route('/logout', strict_slashes=False)
