@@ -16,6 +16,7 @@ from flask_jwt_extended import set_access_cookies
 from flask_jwt_extended import unset_jwt_cookies
 from flask_jwt_extended import get_jwt
 from flask_jwt_extended import unset_access_cookies
+from flask_cors import CORS
 from web_new import api_requests
 
 
@@ -23,6 +24,7 @@ load_dotenv()
 app = Flask(__name__)
 csrf = CSRFProtect(app)
 jwt = JWTManager(app)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 # secret_key = secrets.token_hex(16)
 secret_key = os.environ.get('KIMUKA_SECRET_KEY')
 jwt_key = os.environ.get('KIMUKA_JWT_KEY')
