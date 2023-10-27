@@ -259,6 +259,7 @@ $(document).ready(function(){
                 if (response.error) {
                     customAlert("There was a problem adding item to cart");
                 }
+                console.log(response)
             });
         }else {
             updateCart(JSON.stringify(cartItem)).then(response =>  {
