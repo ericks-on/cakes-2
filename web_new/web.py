@@ -83,7 +83,7 @@ def expired_token_callback(header, payload):
 @csrf.exempt
 def index():
     """Landing page"""
-    products = api_requests.get_products().get('products')
+    products = api_requests.get_products().get_json().get('products')
     if not products:
         message = "error fetching the products"
         return render_template('default.html', products=[],
