@@ -253,16 +253,22 @@ $(document).ready(function(){
         cartData.push(cartItem);
         setCookie('cartItems', JSON.stringify(cartData), 30);
 
-        // updating user cart, add if not update
-        updateCart(JSON.stringify(cartItem)).then(response =>  {
-            if (response.error) {
-                addToCart(JSON.stringify(cartItem)).then(response => {
-                    if (response.error) {
-                        customAlert("There was a problem updating the cart");
-                    }
-                });
-            }
-        });
+        // updating in server
+        if (newQuantity === 1) {
+            addToCart(JSON.stringify(cartItem)).then(response => {
+                if (response.error) {
+                    customAlert("There was a problem adding item to cart");
+                }
+            });
+        }else {
+            updateCart(JSON.stringify(cartItem)).then(response =>  {
+                if (response.error) {
+                    customAlert('There was a problem updating the cart');
+                }
+            });
+        }
+
+
     });
 
     // empty the cart
