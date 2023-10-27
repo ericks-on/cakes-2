@@ -62,3 +62,38 @@
 {% block cart_csrf %}
 <input type='hidden' name='cart_csrf' id='cart_csrf' value='{{ cart_csrf }}'>
 {% endblock %}
+{% block cart %}
+{% for item in cart %}
+<div class='cart-content-product flex flex-cc'>
+    <div class='cart-content-product-details'>
+        <div class='cart-product-image'>
+            <img src="../static/images/${productImage}" alt="cake">
+            <div class='delete-cart-product flex-cc'>
+                <span class="material-symbols-outlined">
+                    close
+                </span>
+            </div>
+        </div>
+        <div class='cart-product-name'>{{ item.name }}</div>
+    </div>
+    <div class='cart-content-product-quantity flex'>
+        <div class="cart-content-product-quantity-decreament flex">
+            <span class="material-symbols-outlined">
+                remove
+            </span>
+        </div>
+        <div class="cart-content-product-quantity-value flex-cc">
+            1
+        </div>
+        <div class="cart-content-product-quantity-increament flex">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+        </div>
+    </div>
+    <div class='cart-content-product-price'>{{ item.price }}</div>
+    <input type='hidden' name='product_id' value='{{ item.product_id }}' class='product-id-cart'>
+    <input type='hidden' name='product_price' value='{{ item.price }}' class='product-price-cart'>
+</div>
+{% endfor %}
+{% endblock %}
