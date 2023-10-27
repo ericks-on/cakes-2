@@ -31,13 +31,12 @@ $(document).ready(function(){
     // setCookie("cartItems", JSON.stringify(cartData), 7);
     // const cartData = JSON.parse(getCookie("cartItems"));
 
-    var cartCSRF = $('#cart_csrf').val();
-    const headers = {
-        'X-CSRFToken': cartCSRF,
-        'Content-Type': 'application/json'
-    };
 
     function addToCart(data) {
+        const headers = {
+            'X-CSRFToken': $('#cart_post_csrf').val(),
+            'Content-Type': 'application/json'
+        };
         let response = $.ajax({
             url:'/cart',
             type: 'POST',
@@ -53,6 +52,10 @@ $(document).ready(function(){
     }
 
     function updateCart(json) {
+        const headers = {
+            'X-CSRFToken': $('#cart_put_csrf').val(),
+            'Content-Type': 'application/json'
+        };
         let response = $.ajax({
             url: '/cart',
             type: 'PUT',
@@ -68,6 +71,10 @@ $(document).ready(function(){
     }
 
     function deleteFromCart(json) {
+        const headers = {
+            'X-CSRFToken': $('#cart_delete_csrf').val(),
+            'Content-Type': 'application/json'
+        };
         let response = $.ajax({
             url: '/cart',
             type: 'DELETE',
@@ -83,6 +90,10 @@ $(document).ready(function(){
     }
 
     function getCart() {
+        const headers = {
+            'X-CSRFToken': $('#cart_csrf').val(),
+            'Content-Type': 'application/json'
+        };
         let response = $.ajax({
             type: 'GET',
             url: '/cart',
@@ -104,11 +115,10 @@ $(document).ready(function(){
     }
 
     function defaultCartDisplayHide() {
-        $('.default-cart-display').hide()
+        $('.default-cart-display').hide();
     }
 
     getCart().then(response => {
-        console.log(response);
         if (response.cart) {
             setCookie('cartItems', JSON.stringify(response.cart), 30);
         }
@@ -285,13 +295,6 @@ $(document).ready(function(){
         // adding to cookie
         cartData.push(cartItem);
         setCookie('cartItems', JSON.stringify(cartData), 30);
-
-        // updating in server
-        if (newQuantity === 1) {
-            addToCart(JSON.stringify(cartItem));
-        }else {
-            updateCart(JSON.stringify(cartItem));
-        }
     });
 
     // empty the cart

@@ -2,7 +2,6 @@
 """Managing the web pages"""
 import os
 from dotenv import load_dotenv
-import requests
 import secrets
 from datetime import datetime
 from datetime import timedelta
@@ -32,7 +31,7 @@ app.config['SECRET_KEY'] = secret_key
 app.config['JWT_SECRET_KEY'] = jwt_key
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 app.config['JWT_CSRF_CHECK_FORM'] = True
-app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+app.config["JWT_TOKEN_LOCATION"] = ["cookies", "headers"]
 api_host = os.environ.get('API_HOST')
 api_port = os.environ.get('API_PORT')
 
@@ -61,8 +60,8 @@ def refresh_expiring_jwts(response):
     
 @jwt.unauthorized_loader
 def unauthorized_callback(callback):
-    """what happens when no token is present"""
-    # No auth header
+    """what happens when no token is present"""   
+    print(callback)
     return redirect(url_for('index'), 302)
 
 @jwt.invalid_token_loader
@@ -115,9 +114,7 @@ def login():
 def home():
     """After login"""
     products = api_requests.get_products().get_json().get('products')
-    cart_csrf = generate_csrf()
-    return render_template('index.html', products=products,
-                           cart_csrf=cart_csrf)
+    return render_template('index.html', products=products)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])

@@ -60,7 +60,10 @@
 </div>
 {% endblock %}
 {% block cart_csrf %}
-<input type='hidden' name='cart_csrf' id='cart_csrf' value='{{ cart_csrf }}'>
+<input type='hidden' name='cart_csrf' id='cart_csrf' value='{{ csrf_token() }}'>
+<input type='hidden' name='cart_post_csrf' id='cart_post_csrf' value='{{ csrf_token() }}'>
+<input type='hidden' name='cart_put_csrf' id='cart_put_csrf' value='{{ csrf_token() }}'>
+<input type='hidden' name='cart_delete_csrf' id='cart_delete_csrf' value='{{ csrf_token() }}'>
 {% endblock %}
 {% block cart %}
 {% for item in cart %}
