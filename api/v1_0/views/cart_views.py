@@ -37,13 +37,14 @@ def add_cart():
     product_id = request.get_json().get('product_id')
     quantity = request.get_json().get('quantity')
     user = storage.get_user(get_jwt_identity())
+    product_name = storage.get(Product, product_id)
     if not product_id or not quantity:
         abort(400)
     
     new_item = Cart(product_id=product_id, quantity=quantity, user_id=user.id)
     storage.add(new_item)
     storage.save()
-    return jsonify(new_item.to_dict()), 201
+    return jsonify({product_name: new_item.to_dict()}), 201
 
 @cart_bp.route('/<product_id>', methods=['DELETE'])
 @swag_from('documentation/cart/delete_cart.yml')
@@ -55,13 +56,14 @@ def del_cart(product_id):
                 if item.user_id == user.id]
     cart = [item for item in storage.all(Cart)
             if item.user_id == user.id]
+    product_name = storage.get(Product, product_id)
     if product_id not in product_ids:
         abort(404)
     for item in cart:
         if item.product_id == product_id:
             storage.delete(item)
             storage.save()
-            return jsonify({}), 200
+            return jsonify({product_name: {}}), 200
 
 @cart_bp.route('/<product_id>', methods=['PUT'])
 @swag_from('documentation/cart/update_cart.yml')
@@ -72,11 +74,12 @@ def update_cart(product_id):
     user = storage.get_user(get_jwt_identity())
     cart = [item for item in storage.all(Cart)
             if item.user_id == user.id]
+    product_name = storage.get(Product, product_id)
     if not quantity:
         abort(400)
     for item in cart:
         if item.product_id == product_id:
             item.quantity = quantity
             storage.save()
-            return jsonify(item.to_dict()), 200
+            return jsonify({product_name: item.to_dict()}), 200
     abort(404)

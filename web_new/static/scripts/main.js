@@ -42,7 +42,12 @@ $(document).ready(function(){
             url:'/cart',
             type: 'POST',
             data: data,
-            headers: headers
+            headers: headers,
+            success: function (resp) {
+                if (resp.error) {
+                    customAlert('There was a problem adding item to cart')
+                }
+            }
         });
         return response;
     }
@@ -52,7 +57,12 @@ $(document).ready(function(){
             url: '/cart',
             type: 'PUT',
             data: json,
-            headers: headers
+            headers: headers,
+            success: function (resp) {
+                if (resp.errror) {
+                    customAlert('There was a problem adding item to cart')
+                }
+            }
         });
         return response;
     }
@@ -62,7 +72,12 @@ $(document).ready(function(){
             url: '/cart',
             type: 'DELETE',
             data: json,
-            headers: headers
+            headers: headers,
+            success: function (resp) {
+                if (resp.errror) {
+                    customAlert('There was a problem adding item to cart')
+                }
+            }
         });
         return response;
     }
@@ -72,8 +87,10 @@ $(document).ready(function(){
             type: 'GET',
             url: '/cart',
             headers: headers,
-            error: function (err) {
-                customAlert("There was a problem loading the cart");
+            success: function (resp) {
+                if (resp.error){
+                    customAlert("There was a problem loading the cart");
+                }
             }
         });
         return response;
@@ -83,10 +100,11 @@ $(document).ready(function(){
     getCart().then(response => {
         if (response.cart) {
             setCookie('cartItems', JSON.stringify(response.cart), 30);
-        }else {
-            console.log(response);
-            customAlert('There was a problem loading the cart');
         }
+        // }else {
+        //     console.log(response);
+        //     customAlert('There was a problem loading the cart');
+        // }
     });
     const cartData = JSON.parse(getCookie("cartItems"));
     const cartTotal = $('#cartTotal');
@@ -185,11 +203,22 @@ $(document).ready(function(){
                 let quantity = parseInt(cartCurrentItems().eq(i).find('.cart-content-product-quantity .cart-content-product-quantity-value').text());
                 let totalContainer = cartCurrentItems().eq(i).find('.cart-content-product-price');
                 if (name === productName) {
-                    quantityContainer.text(quantity + 1);
-                    newQuantity = parseInt(quantityContainer.text());
-                    totalContainer.text(newQuantity * price);
-                    cartTotalValue += price;
-                    cartTotal.text(cartTotalValue);
+                    newQuantity = parseInt(quantity + 1);
+                    var cartItem = {
+                        'name': name,
+                        'product_id': productId,
+                        'price': price,
+                        'image': productImage,
+                        'quantity': newQuantity
+                    };
+                    updateCart(JSON.stringify(cartItem)).them(response => {
+                        if (response[name]) {
+                            quantityContainer.text(newQuantity);
+                            totalContainer.text(newQuantity * price);
+                            cartTotalValue += price;
+                            cartTotal.text(cartTotalValue);
+                        }
+                    });
                     break;
                 }
             }
@@ -198,43 +227,54 @@ $(document).ready(function(){
             if (checkEmptyCart() === true) {
                 defaultCartDisplayHide();
             }
-            let newItem = `
-            <div class='cart-content-product flex flex-cc'>
-                <div class='cart-content-product-details'>
-                    <div class='cart-product-image'>
-                        <img src="../static/images/${productImage}" alt="cake">
-                        <div class='delete-cart-product flex-cc'>
-                            <span class="material-symbols-outlined">
-                                close
-                            </span>
+            var cartItem = {
+                'name': name,
+                'product_id': productId,
+                'price': price,
+                'image': productImage,
+                'quantity': newQuantity
+            };
+            addToCart(JSON.stringify(cartItem)).then(response => {
+                if (response[name]) {
+                    let newItem = `
+                    <div class='cart-content-product flex flex-cc'>
+                        <div class='cart-content-product-details'>
+                            <div class='cart-product-image'>
+                                <img src="../static/images/${productImage}" alt="cake">
+                                <div class='delete-cart-product flex-cc'>
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </div>
+                            </div>
+                            <div class='cart-product-name'>${name}</div>
                         </div>
+                        <div class='cart-content-product-quantity flex'>
+                            <div class="cart-content-product-quantity-decreament flex">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </div>
+                            <div class="cart-content-product-quantity-value flex-cc">
+                                1
+                            </div>
+                            <div class="cart-content-product-quantity-increament flex">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </div>
+                        </div>
+                        <div class='cart-content-product-price'>${price}</div>
+                        <input type='hidden' name='product_id' value='${productId}' class='product-id-cart'>
+                        <input type='hidden' name='product_price' value='${price}' class='product-price-cart'>
                     </div>
-                    <div class='cart-product-name'>${name}</div>
-                </div>
-                <div class='cart-content-product-quantity flex'>
-                    <div class="cart-content-product-quantity-decreament flex">
-                        <span class="material-symbols-outlined">
-                            remove
-                        </span>
-                    </div>
-                    <div class="cart-content-product-quantity-value flex-cc">
-                        1
-                    </div>
-                    <div class="cart-content-product-quantity-increament flex">
-                        <span class="material-symbols-outlined">
-                            add
-                        </span>
-                    </div>
-                </div>
-                <div class='cart-content-product-price'>${price}</div>
-                <input type='hidden' name='product_id' value='${productId}' class='product-id-cart'>
-                <input type='hidden' name='product_price' value='${price}' class='product-price-cart'>
-            </div>
-            `;
-            cart.append(newItem);
-            newQuantity = 1;
-            cartTotalValue += price;
-            cartTotal.text(cartTotalValue);
+                    `;
+                    cart.append(newItem);
+                    newQuantity = 1;
+                    cartTotalValue += price;
+                    cartTotal.text(cartTotalValue);
+                }
+            });
         }
         // Editing the cookie after adding the items
         for (let i = 0; i < cartData.length; i++) {
@@ -242,34 +282,16 @@ $(document).ready(function(){
                 cartData.splice(i, 1);
             }
         }
-        var cartItem = {
-            'name': name,
-            'product_id': productId,
-            'price': price,
-            'image': productImage,
-            'quantity': newQuantity
-        };
         // adding to cookie
         cartData.push(cartItem);
         setCookie('cartItems', JSON.stringify(cartData), 30);
 
         // updating in server
         if (newQuantity === 1) {
-            addToCart(JSON.stringify(cartItem)).then(response => {
-                if (response.error) {
-                    customAlert("There was a problem adding item to cart");
-                }
-                console.log(response)
-            });
+            addToCart(JSON.stringify(cartItem));
         }else {
-            updateCart(JSON.stringify(cartItem)).then(response =>  {
-                if (response.error) {
-                    customAlert('There was a problem updating the cart');
-                }
-            });
+            updateCart(JSON.stringify(cartItem));
         }
-
-
     });
 
     // empty the cart
