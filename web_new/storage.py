@@ -10,6 +10,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import create_access_token
 from models import storage
 from models.user import User
+from models.product import Product
 
 
 load_dotenv()
@@ -35,29 +36,16 @@ def login(username, password):
 
 def refresh_token(headers):
     """Refreshing access tokens"""
-    try:
-        api_response = requests.get(refresh_url, headers=headers, timeout=5)
-        api_response.raise_for_status()
-    except requests.exceptions.HTTPError as err:
-        return jsonify({'error': err.response.text})
-    except requests.exceptions.ConnectionError:
-        return jsonify({'error': 'Connection Error', 'status_code': 500})
-    except requests.exceptions.Timeout:
-        return jsonify({'error': 'Request Timeout', 'status_code': 500})
-    return jsonify(api_response.json())
+    current_user = get_jwt_identity()
+    user = storage.get_user(current_user)
+    if not user:
+        return jsonify({"error": "Unauthorized", "status_code": 403})
+    access_token = create_access_token(identity=current_user)
+    return jsonify(access_token=access_token)
 
 def get_products():
     """Get all products"""
-    try:
-        pdt_response = requests.get(products_url, timeout=5)
-        pdt_response.raise_for_status()
-    except requests.exceptions.HTTPError as err:
-        return jsonify({'error': err.response.text})
-    except requests.exceptions.ConnectionError:
-        return jsonify({'error': 'Connection Error', 'status_code': 500})
-    except requests.exceptions.Timeout:
-        return jsonify({'error': 'Request Timeout', 'status_code': 500})
-    return jsonify(pdt_response.json())
+    
 
 def get_cart(headers):
     """Getting the items on cart"""
