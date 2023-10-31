@@ -48,7 +48,7 @@ $(document).ready(function(){
                 }
             }
         });
-        console.log(headers);
+        console.log(response);
         return response;
     }
 
