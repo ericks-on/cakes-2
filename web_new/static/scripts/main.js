@@ -132,50 +132,50 @@ $(document).ready(function(){
     var cartTotalValue = parseInt($('#cartTotal').text());
 
     // loading cart items to cart
-    // if (cartData.length > 0) {
-    //     $('.cart-content-products').empty();
-    //     for (let i = 0; i < cartData.length; i++) {
-    //         let item = `
-    //             <div class='cart-content-product flex flex-cc'>
-    //             <div class='cart-content-product-details'>
-    //                 <div class='cart-product-image'>
-    //                     <img src="../static/images/${cartData[i].image}" alt="cake">
-    //                     <div class='delete-cart-product flex-cc'>
-    //                         <span class="material-symbols-outlined">
-    //                             close
-    //                         </span>
-    //                     </div>
-    //                 </div>
-    //                 <div class='cart-product-name'>${cartData[i].name}</div>
-    //             </div>
-    //             <div class='cart-content-product-quantity flex'>
-    //                 <div class="cart-content-product-quantity-decreament flex">
-    //                     <span class="material-symbols-outlined">
-    //                         remove
-    //                     </span>
-    //                 </div>
-    //                 <div class="cart-content-product-quantity-value flex-cc">
-    //                     ${cartData[i].quantity}
-    //                 </div>
-    //                 <div class="cart-content-product-quantity-increament flex">
-    //                     <span class="material-symbols-outlined">
-    //                         add
-    //                     </span>
-    //                 </div>
-    //             </div>
-    //             <div class='cart-content-product-price'>${cartData[i].price * cartData[i].quantity}</div>
-    //             <input type='hidden' name='product_id' value='${cartData[i].product_id}' class='product-id-cart'>
-    //             <input type='hidden' name='product_price' value='${cartData[i].price}' class='product-price-cart'>
-    //         </div>
-    //         `;
-    //         let itemTotal = cartData[i].quantity * cartData[i].price;
-    //         cartTotalValue += itemTotal;
-    //         $('.cart-content-products').append(item);
-    //     }
-    //     cartTotal.text(cartTotalValue);
-    // }else {
-    //     defaultCartDisplayShow()
-    // }
+    if (cartData.length > 0) {
+        $('.cart-content-products').empty();
+        for (let i = 0; i < cartData.length; i++) {
+            let item = `
+                <div class='cart-content-product flex flex-cc'>
+                <div class='cart-content-product-details'>
+                    <div class='cart-product-image'>
+                        <img src="../static/images/${cartData[i].image}" alt="cake">
+                        <div class='delete-cart-product flex-cc'>
+                            <span class="material-symbols-outlined">
+                                close
+                            </span>
+                        </div>
+                    </div>
+                    <div class='cart-product-name'>${cartData[i].name}</div>
+                </div>
+                <div class='cart-content-product-quantity flex'>
+                    <div class="cart-content-product-quantity-decreament flex">
+                        <span class="material-symbols-outlined">
+                            remove
+                        </span>
+                    </div>
+                    <div class="cart-content-product-quantity-value flex-cc">
+                        ${cartData[i].quantity}
+                    </div>
+                    <div class="cart-content-product-quantity-increament flex">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
+                    </div>
+                </div>
+                <div class='cart-content-product-price'>${cartData[i].price * cartData[i].quantity}</div>
+                <input type='hidden' name='product_id' value='${cartData[i].product_id}' class='product-id-cart'>
+                <input type='hidden' name='product_price' value='${cartData[i].price}' class='product-price-cart'>
+            </div>
+            `;
+            let itemTotal = cartData[i].quantity * cartData[i].price;
+            cartTotalValue += itemTotal;
+            $('.cart-content-products').append(item);
+        }
+        cartTotal.text(cartTotalValue);
+    }else {
+        defaultCartDisplayShow()
+    }
 
     // cart items
     function cartCurrentItems() {

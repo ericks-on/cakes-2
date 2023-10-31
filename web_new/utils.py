@@ -87,12 +87,14 @@ def update_cart(quantity, product_id):
         return jsonify({"error": "Unauthorized", "status_code": 403})
     cart = [item for item in storage.all(Cart)
             if item.user_id == user.id]
-    product_name = storage.get(Product, product_id)
+    product = storage.get(Product, product_id)
+    if not product:
+        jsonify({"error": "Not Found", "status_code": 404})
     for item in cart:
         if item.product_id == product_id:
             item.quantity = quantity
             storage.save()
-            return jsonify({product_name: item.to_dict()})
+            return jsonify({product.name: item.to_dict()})
     return jsonify({"error": "Not Found", "status_code": 404})
 
 def delete_cart(product_id):
