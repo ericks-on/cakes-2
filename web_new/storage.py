@@ -1,6 +1,5 @@
 #!usr/bin/python3
-"""Model for the API requests"""
-import requests
+"""Functions to retrieve data from storage"""
 from dotenv import load_dotenv
 from passlib.hash import bcrypt
 from flask import jsonify
@@ -102,7 +101,7 @@ def delete_cart(product_id):
     product_ids = [item.product_id for item in storage.all(Cart)
                    if item.user_id == user.id]
     if product_id not in product_ids:
-        return jsonify({"error": "Not Found", "status_code", 404})
+        return jsonify({"error": "Not Found", "status_code": 404})
     cart = [item for item in storage.all(Cart)
             if item.user_id == user.id]
     product = storage.get(Product, product_id)    
