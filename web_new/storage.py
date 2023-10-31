@@ -43,7 +43,7 @@ def refresh_token():
 
 def get_products():
     """Get all products"""
-    return jsonify({"products": storage.all(Product)})
+    return jsonify({"products": storage.all(Product).to_dict()})
 
 def get_cart():
     """Getting the items on cart"""
