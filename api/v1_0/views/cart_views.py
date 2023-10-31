@@ -37,14 +37,18 @@ def add_cart():
     product_id = request.get_json().get('product_id')
     quantity = request.get_json().get('quantity')
     user = storage.get_user(get_jwt_identity())
-    product_name = storage.get(Product, product_id)
+    if not user:
+        abort(403)
+    product = storage.get(Product, product_id)
+    if not product:
+        abort(400)
     if not product_id or not quantity:
         abort(400)
     
     new_item = Cart(product_id=product_id, quantity=quantity, user_id=user.id)
     storage.add(new_item)
     storage.save()
-    return jsonify({product_name: new_item.to_dict()}), 201
+    return jsonify({product.name: new_item.to_dict()}), 201
 
 @cart_bp.route('/<product_id>', methods=['DELETE'])
 @swag_from('documentation/cart/delete_cart.yml')
@@ -52,18 +56,22 @@ def add_cart():
 def del_cart(product_id):
     """Deleting item from cart"""
     user = storage.get_user(get_jwt_identity())
+    if not user:
+        abort(403)
     product_ids = [item.product_id for item in storage.all(Cart)
                 if item.user_id == user.id]
     cart = [item for item in storage.all(Cart)
             if item.user_id == user.id]
-    product_name = storage.get(Product, product_id)
+    product = storage.get(Product, product_id)
+    if not product:
+        abort(404)
     if product_id not in product_ids:
         abort(404)
     for item in cart:
         if item.product_id == product_id:
             storage.delete(item)
             storage.save()
-            return jsonify({product_name: {}}), 200
+            return jsonify({product.name: {}}), 200
 
 @cart_bp.route('/<product_id>', methods=['PUT'])
 @swag_from('documentation/cart/update_cart.yml')
@@ -72,14 +80,18 @@ def update_cart(product_id):
     """Updating cart item quantity"""
     quantity = request.get_json().get('quantity')
     user = storage.get_user(get_jwt_identity())
+    if not user:
+        abort(403)
     cart = [item for item in storage.all(Cart)
             if item.user_id == user.id]
-    product_name = storage.get(Product, product_id)
+    product = storage.get(Product, product_id)
+    if not product:
+        abort(404)
     if not quantity:
         abort(400)
     for item in cart:
         if item.product_id == product_id:
             item.quantity = quantity
             storage.save()
-            return jsonify({product_name: item.to_dict()}), 200
+            return jsonify({product.name: item.to_dict()}), 200
     abort(404)
