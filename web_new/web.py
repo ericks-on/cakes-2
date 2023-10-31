@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 """Managing the web pages"""
 import os
-import secrets
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, make_response, abort
 from flask import redirect, url_for
-from flask_wtf.csrf import CSRFProtect, generate_csrf
+from flask_wtf.csrf import CSRFProtect
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_jwt_extended import set_access_cookies
@@ -67,6 +66,7 @@ def invalid_token_callback(callback):
     # Invalid Fresh/Non-Fresh Access token in auth header
     resp = make_response(redirect(url_for('index')))
     unset_jwt_cookies(resp)
+    print(callback)
     return resp, 302
 
 @jwt.expired_token_loader
@@ -135,7 +135,7 @@ def cart():
         product_id = request.get_json().get('product_id')
         if not product_id:
             abort(400)
-        response = storage.delete_cart(product_id, headers).get_json()
+        response = storage.delete_cart(product_id).get_json()
         return response
     
 @app.route('/logout', strict_slashes=False)
