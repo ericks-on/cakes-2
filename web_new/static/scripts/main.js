@@ -133,7 +133,7 @@ $(document).ready(function(){
 
     // loading cart items to cart
     if (cartData.length > 0) {
-        $('.cart-content-products').empty();
+        defaultCartDisplayHide();
         for (let i = 0; i < cartData.length; i++) {
             let item = `
                 <div class='cart-content-product flex flex-cc'>
@@ -222,7 +222,7 @@ $(document).ready(function(){
                         'image': productImage,
                         'quantity': newQuantity
                     };
-                    updateCart(JSON.stringify(cartItem)).them(response => {
+                    updateCart(JSON.stringify(cartItem)).then(response => {
                         if (response[name]) {
                             quantityContainer.text(newQuantity);
                             totalContainer.text(newQuantity * price);
@@ -304,7 +304,7 @@ $(document).ready(function(){
         defaultCartDisplayShow();
         cartTotal.text(0);
         for (let i = 0; i < cartData.length; i++) {
-            deleteFromCart(cartData[i]);
+            deleteFromCart(JSON.stringify(cartData[i]));
         }
         deleteCookie('cartItems');
     });
@@ -324,7 +324,7 @@ $(document).ready(function(){
         for (let i = 0; i < cartData.length; i++) {
             if (cartData[i].name === productName) {
                 cartData[i].quantity = currentQuantity + 1;
-                updateCart(cartData[i]);
+                updateCart(JSON.stringify(cartData[i]));
                 break;
             }
         }
@@ -348,7 +348,7 @@ $(document).ready(function(){
             for (let i = 0; i < cartData.length; i++) {
                 if (cartData[i].name === productName) {
                     cartData.splice(i, 1);
-                    deleteFromCart(cartData[i]);
+                    deleteFromCart(JSON.stringify(cartData[i]));
                 }
             }
         }else {
@@ -357,7 +357,7 @@ $(document).ready(function(){
             for (let i = 0; i < cartData.length; i++) {
                 if (cartData[i].name === productName) {
                     cartData[i].quantity = currentQuantity - 1;
-                    updateCart(cartData[i]);
+                    updateCart(JSON.stringify(cartData[i]));
                 }
             }
         }
