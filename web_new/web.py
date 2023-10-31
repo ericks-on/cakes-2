@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """Managing the web pages"""
 import os
-from dotenv import load_dotenv
 import secrets
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
+from dotenv import load_dotenv
 from flask import Flask, render_template, request, make_response, abort
 from flask import redirect, url_for
 from flask_wtf.csrf import CSRFProtect, generate_csrf
@@ -46,11 +46,7 @@ def refresh_expiring_jwts(response):
         target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
         if target_timestamp > exp_timestamp:
             access_token = request.cookies.get('access_token_cookie')
-            headers = {
-                "Authorization": f'Bearer {access_token}',
-                "X-CSRFToken": generate_csrf()
-                }
-            refresh_response = storage.refresh_token(headers)
+            refresh_response = storage.refresh_token()
             if not refresh_response.get_json().get('error'):
                 access_token = refresh_response.get_json().get('access_token')
                 set_access_cookies(response, access_token)
@@ -121,27 +117,19 @@ def home():
 @jwt_required()
 def cart():
     """CRUD operations on cart"""
-    access_token = request.cookies.get('access_token_cookie')
-    headers = {
-        "Authorization": f'Bearer {access_token}',
-        "Content-Type": "Application/json",
-        "X-CSRFToken": generate_csrf()
-        }
     if request.method == 'POST':
         payload = request.get_json()
-        response = storage.add_cart(payload, headers).get_json()
+        response = storage.add_cart(payload).get_json()
         return response
     if request.method == 'GET':
-        headers = {"Authorization": f'Bearer {access_token}'}
-        response = storage.get_cart(headers).get_json()
+        response = storage.get_cart().get_json()
         return response
     if request.method == 'PUT':
         quantity = request.get_json().get('quantity')
         product_id = request.get_json().get('product_id')
         if not quantity or not product_id:
             abort(400)
-        response = storage.update_cart(quantity, product_id,
-                                            headers).get_json()
+        response = storage.update_cart(quantity, product_id).get_json()
         return response
     if request.method == 'DELETE':
         product_id = request.get_json().get('product_id')
