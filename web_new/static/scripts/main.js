@@ -238,6 +238,7 @@ $(document).ready(function(){
             if (checkEmptyCart() === true) {
                 defaultCartDisplayHide();
             }
+            newQuantity = 1;
             var cartItem = {
                 'name': name,
                 'product_id': productId,
@@ -281,7 +282,6 @@ $(document).ready(function(){
                     </div>
                     `;
                     cart.append(newItem);
-                    newQuantity = 1;
                     cartTotalValue += price;
                     cartTotal.text(cartTotalValue);
                 }

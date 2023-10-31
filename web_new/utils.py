@@ -65,6 +65,7 @@ def add_cart(payload):
     """Adding item to cart"""
     product_id = payload.get('product_id')
     quantity = payload.get('quantity')
+    print(payload)
     user = storage.get_user(get_jwt_identity())
     product = storage.get(Product, product_id)
     if not product:
