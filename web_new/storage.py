@@ -3,32 +3,35 @@
 import os
 import requests
 from dotenv import load_dotenv
+from passlib.hash import bcrypt
+from datetime import timedelta
 from flask import jsonify
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import create_access_token
+from models import storage
+from models.user import User
 
 
 load_dotenv()
-api_host = os.environ.get('API_HOST')
-api_port = os.environ.get('API_PORT')
-login_url = f'http://{api_host}:{api_port}/api/v1_0/token/auth'
-products_url = f'http://{api_host}:{api_port}/api/v1_0/products'
-cart_url = f'http://{api_host}:{api_port}/api/v1_0/cart'
-refresh_url = f'http://{api_host}:{api_port}/api/v1_0/token/refresh'
 
 
 def login(username, password):
     """Login verification"""
-    try:
-        api_response = requests.post(login_url,
-                                     json={'username': username,
-                                           'password': password}, timeout=5)
-        api_response.raise_for_status()
-    except requests.exceptions.HTTPError as err:
-        return jsonify({'error': err.response.text})
-    except requests.exceptions.ConnectionError:
-        return jsonify({'error': 'Connection Error', 'status_code': 500})
-    except requests.exceptions.Timeout:
-        return jsonify({'error': 'Request Timeout', 'status_code': 500})
-    return jsonify(api_response.json())
+    all_users = storage.all(User)
+    all_usernames = [user.username for user in all_users]
+    if not username or not password:
+        return jsonify({"msg": "Missing username parameter"}), 400
+
+    if username in all_usernames:
+        user = storage.get_user(username)
+        hashed_pwd = user.password
+        if bcrypt.verify(password, hashed_pwd) is True:
+            access_token = create_access_token(identity=username, fresh=True)
+            return jsonify(access_token=access_token)
+        return jsonify({"error": "Wrong Username or Password",
+                        "status_code": 401})
+    return jsonify({"error": "Wrong Username or Password",
+                    "status_code": 401})
 
 def refresh_token(headers):
     """Refreshing access tokens"""

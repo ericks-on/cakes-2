@@ -16,7 +16,7 @@ from flask_jwt_extended import unset_jwt_cookies
 from flask_jwt_extended import get_jwt
 from flask_jwt_extended import unset_access_cookies
 from flask_cors import CORS
-from web_new import api_requests
+from web_new import storage
 
 
 load_dotenv()
@@ -32,6 +32,7 @@ app.config['JWT_SECRET_KEY'] = jwt_key
 app.config['JWT_COOKIE_CSRF_PROTECT'] = True
 app.config['JWT_CSRF_CHECK_FORM'] = True
 app.config["JWT_TOKEN_LOCATION"] = ["cookies", "headers"]
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 api_host = os.environ.get('API_HOST')
 api_port = os.environ.get('API_PORT')
 
@@ -49,7 +50,7 @@ def refresh_expiring_jwts(response):
                 "Authorization": f'Bearer {access_token}',
                 "X-CSRFToken": generate_csrf()
                 }
-            refresh_response = api_requests.refresh_token(headers)
+            refresh_response = storage.refresh_token(headers)
             if not refresh_response.get_json().get('error'):
                 access_token = refresh_response.get_json().get('access_token')
                 set_access_cookies(response, access_token)
@@ -84,7 +85,7 @@ def expired_token_callback(header, payload):
 @csrf.exempt
 def index():
     """Landing page"""
-    products = api_requests.get_products().get_json().get('products')
+    products = storage.get_products().get_json().get('products')
     if not products:
         message = "error fetching the products"
         return render_template('default.html', products=[],
@@ -100,8 +101,7 @@ def login():
     
     if not username or not password:
         return {'error': 'Incorrect Username or Password'}, 400
-    login_response = api_requests.login(username, password)
-    return_obj = login_response.get_json()
+    return_obj = storage.login(username, password).get_json()
     if not return_obj.get('error'):
         access_token = return_obj.get('access_token')
         response = make_response(redirect(url_for('home')))
@@ -113,7 +113,7 @@ def login():
 @jwt_required()
 def home():
     """After login"""
-    products = api_requests.get_products().get_json().get('products')
+    products = storage.get_products().get_json().get('products')
     return render_template('index.html', products=products)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
@@ -129,25 +129,25 @@ def cart():
         }
     if request.method == 'POST':
         payload = request.get_json()
-        response = api_requests.add_cart(payload, headers).get_json()
+        response = storage.add_cart(payload, headers).get_json()
         return response
     if request.method == 'GET':
         headers = {"Authorization": f'Bearer {access_token}'}
-        response = api_requests.get_cart(headers).get_json()
+        response = storage.get_cart(headers).get_json()
         return response
     if request.method == 'PUT':
         quantity = request.get_json().get('quantity')
         product_id = request.get_json().get('product_id')
         if not quantity or not product_id:
             abort(400)
-        response = api_requests.update_cart(quantity, product_id,
+        response = storage.update_cart(quantity, product_id,
                                             headers).get_json()
         return response
     if request.method == 'DELETE':
         product_id = request.get_json().get('product_id')
         if not product_id:
             abort(400)
-        response = api_requests.delete_cart(product_id, headers).get_json()
+        response = storage.delete_cart(product_id, headers).get_json()
         return response
     
 @app.route('/logout', strict_slashes=False)
