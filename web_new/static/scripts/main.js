@@ -48,6 +48,7 @@ $(document).ready(function(){
                 }
             }
         });
+        console.log(headers);
         return response;
     }
 

@@ -74,7 +74,11 @@
                             </span>
                         </div>
                         <div class="profile-name-container flex">
-                            <div class="profile-name">Login</div>
+                            <div class="profile-name">
+                                {% block profile_name %}
+                                Login
+                                {% endblock %}
+                            </div>
                             <div class="profile-dropdown">
                                 <span class="material-symbols-outlined">
                                     arrow_drop_down

@@ -2,24 +2,29 @@
 {% block main_js %}
 <script src="../static/scripts/main.js"></script>
 {% endblock %}
+{% block profile_name %}
+{{ user_details.first_name + " " + user_details.last_name }}
+{% endblock %}
 {% block profile_details %}
 <div class='profile-details-item flex'>
     <span class="material-symbols-outlined">
         person
     </span>
-    <div class='profile-details-item-label'>Profile</div>
+    <div class='profile-details-item-label'>
+        {{ user_details.first_name + " " + user_details.last_name }}
+    </div>
 </div>
 <div class='profile-details-item flex'>
     <span class="material-symbols-outlined">
         mail
     </span>
-    <div class='profile-details-item-label'>example@email.com</div>
+    <div class='profile-details-item-label'>{{ user_details.email }}</div>
 </div>
 <div class='profile-details-item flex'>
     <span class="material-symbols-outlined">
         phone
     </span>
-    <div class='profile-details-item-label'>+40 123 456 789</div>
+    <div class='profile-details-item-label'>{{ user_details.phone }}</div>
 </div>
 <div class='profile-details-item flex'>
     <span class="material-symbols-outlined">

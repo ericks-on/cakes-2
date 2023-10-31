@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Managing the web pages"""
 import os
+import secrets
 from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
@@ -14,8 +15,10 @@ from flask_jwt_extended import set_access_cookies
 from flask_jwt_extended import unset_jwt_cookies
 from flask_jwt_extended import get_jwt
 from flask_jwt_extended import unset_access_cookies
+from flask_jwt_extended import get_jwt_identity
 from flask_cors import CORS
-from web_new import storage
+from web_new import utils
+from models import storage
 
 
 load_dotenv()
@@ -23,17 +26,15 @@ app = Flask(__name__)
 csrf = CSRFProtect(app)
 jwt = JWTManager(app)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
-# secret_key = secrets.token_hex(16)
-secret_key = os.environ.get('KIMUKA_SECRET_KEY')
-jwt_key = os.environ.get('KIMUKA_JWT_KEY')
+secret_key = secrets.token_hex(16)
+# secret_key = os.environ.get('KIMUKA_SECRET_KEY')
+# jwt_key = os.environ.get('KIMUKA_JWT_KEY')
 app.config['SECRET_KEY'] = secret_key
-app.config['JWT_SECRET_KEY'] = jwt_key
-app.config['JWT_COOKIE_CSRF_PROTECT'] = True
+app.config['JWT_SECRET_KEY'] = secret_key
+app.config['JWT_COOKIE_CSRF_PROTECT'] = False
 app.config['JWT_CSRF_CHECK_FORM'] = True
 app.config["JWT_TOKEN_LOCATION"] = ["cookies", "headers"]
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
-api_host = os.environ.get('API_HOST')
-api_port = os.environ.get('API_PORT')
 
 
 @app.after_request
@@ -45,7 +46,7 @@ def refresh_expiring_jwts(response):
         target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
         if target_timestamp > exp_timestamp:
             access_token = request.cookies.get('access_token_cookie')
-            refresh_response = storage.refresh_token()
+            refresh_response = utils.refresh_token()
             if not refresh_response.get_json().get('error'):
                 access_token = refresh_response.get_json().get('access_token')
                 set_access_cookies(response, access_token)
@@ -81,7 +82,7 @@ def expired_token_callback(header, payload):
 @csrf.exempt
 def index():
     """Landing page"""
-    products = storage.get_products().get_json().get('products')
+    products = utils.get_products().get_json().get('products')
     if not products:
         message = "error fetching the products"
         return render_template('default.html', products=[],
@@ -97,7 +98,7 @@ def login():
     
     if not username or not password:
         return {'error': 'Incorrect Username or Password'}, 400
-    return_obj = storage.login(username, password).get_json()
+    return_obj = utils.login(username, password).get_json()
     if not return_obj.get('error'):
         access_token = return_obj.get('access_token')
         response = make_response(redirect(url_for('home')))
@@ -109,8 +110,10 @@ def login():
 @jwt_required()
 def home():
     """After login"""
-    products = storage.get_products().get_json().get('products')
-    return render_template('index.html', products=products)
+    user_details = storage.get_user(get_jwt_identity()).to_dict()
+    products = utils.get_products().get_json().get('products')
+    return render_template('index.html', products=products,
+                           user_details=user_details)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
@@ -119,23 +122,23 @@ def cart():
     """CRUD operations on cart"""
     if request.method == 'POST':
         payload = request.get_json()
-        response = storage.add_cart(payload).get_json()
+        response = utils.add_cart(payload).get_json()
         return response
     if request.method == 'GET':
-        response = storage.get_cart().get_json()
+        response = utils.get_cart().get_json()
         return response
     if request.method == 'PUT':
         quantity = request.get_json().get('quantity')
         product_id = request.get_json().get('product_id')
         if not quantity or not product_id:
             abort(400)
-        response = storage.update_cart(quantity, product_id).get_json()
+        response = utils.update_cart(quantity, product_id).get_json()
         return response
     if request.method == 'DELETE':
         product_id = request.get_json().get('product_id')
         if not product_id:
             abort(400)
-        response = storage.delete_cart(product_id).get_json()
+        response = utils.delete_cart(product_id).get_json()
         return response
     
 @app.route('/logout', strict_slashes=False)
