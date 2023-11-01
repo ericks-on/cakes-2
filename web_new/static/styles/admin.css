@@ -235,6 +235,13 @@ a {
     margin: 10px auto;
 }
 
+#current-products tbody tr td,
+#products-inventory tbody tr td {
+    max-width: 150px;
+    overflow: clip;
+    text-overflow: ellipsis;
+}
+
 
 /* ==============User Management================= */
 #user-management {

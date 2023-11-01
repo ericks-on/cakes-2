@@ -308,48 +308,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for product in products%}
                         <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>£12.00</td>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.price }}</td>
                             <td><button class="edit">Edit</button></td>
                             <td><button class="remove">Remove</button></td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>£12.00</td>
-                            <td><button class="edit">Edit</button></td>
-                            <td><button class="remove">Remove</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>£12.00</td>
-                            <td><button class="edit">Edit</button></td>
-                            <td><button class="remove">Remove</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>£12.00</td>
-                            <td><button class="edit">Edit</button></td>
-                            <td><button class="remove">Remove</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>£12.00</td>
-                            <td><button class="edit">Edit</button></td>
-                            <td><button class="remove">Remove</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>£12.00</td>
-                            <td><button class="edit">Edit</button></td>
-                            <td><button class="remove">Remove</button></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
