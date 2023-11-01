@@ -1,4 +1,4 @@
-import { customAlert, alertContainer } from "./main.js";
+import { customAlert, alertContainer, setCookie, getCookie, deleteCookie } from "./main.js";
 
 const popupContainer = $('#popups-container');
 
@@ -52,36 +52,42 @@ $(document).ready(function () {
         activePage.hide();
         activePage = $('#products-management');
         activePage.show();
+        setCookie('activePage', '#products-management');
     });
 
     $('#dashboardButton').click(function () {
         activePage.hide();
         activePage = $('#dashboard');
         activePage.show();
+        setCookie('activePage', '#dashboard');
     });
 
     $('#inventoryButton').click(function () {
         activePage.hide();
         activePage = $('#inventory-management');
         activePage.show();
+        setCookie('activePage', '#inventory-management');
     });
 
     $('#userPageButton').click(function () {
         activePage.hide();
         activePage = $('#user-management');
         activePage.show();
+        setCookie('activePage', '#user-management');
     });
 
     $('#ordersButton').click(function () {
         activePage.hide();
         activePage = $('#orders');
         activePage.show();
+        setCookie('activePage', '#orders');
     });
 
     $('#notificationsButton').click(function () {
         activePage.hide();
         activePage = $('#notifications-management');
         activePage.show();
+        setCookie('activePage', '#notifications-management');
     });
 
     $('#addProductsBtn').click(function (event) {
@@ -172,5 +178,16 @@ $(document).ready(function () {
                 customAlert("There was a problem editing the product");
             }
         });
+    });
+
+    $(window).on('load', function () {
+        let active = getCookie('activePage');
+        if (active != ""){
+            activePage.hide();
+            activePage = $(active);
+            activePage.show();
+        }else {
+            activePage.show();
+        }
     });
 });
