@@ -1,124 +1,124 @@
-$(document).ready(function(){
-    const alertContainer = $('#alertPopup .alertPopupMessage');
-    function customAlert(message) {
-        alertContainer.text(message);
-        alertContainer.parent().css('display', 'flex');
-    }
+export const alertContainer = $('#alertPopup .alertPopupMessage');
 
-    function setCookie(name, value, days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        const expires = "expires=" + date.toUTCString();
-        document.cookie = name + "=" + value + "; " + expires;
-    }
+export function customAlert(message) {
+    alertContainer.text(message);
+    alertContainer.parent().css('display', 'flex');
+}
 
-    function getCookie(name) {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.indexOf(name + "=") === 0) {
-                return cookie.substring(name.length + 1, cookie.length);
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = name + "=" + value + "; " + expires;
+}
+
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.indexOf(name + "=") === 0) {
+            return cookie.substring(name.length + 1, cookie.length);
+        }
+    }
+    return "";
+}
+
+function deleteCookie(name) {
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
+// Usage:
+// setCookie("cartItems", JSON.stringify(cartData), 7);
+// const cartData = JSON.parse(getCookie("cartItems"));
+
+
+function addToCart(data) {
+    const headers = {
+        'X-CSRFToken': $('#cart_post_csrf').val(),
+        'Content-Type': 'application/json'
+    };
+    let response = $.ajax({
+        url:'/cart',
+        type: 'POST',
+        data: data,
+        headers: headers,
+        success: function (resp) {
+            if (resp.error) {
+                customAlert('There was a problem adding item to cart')
             }
         }
-        return "";
-    }
+    });
+    console.log(response);
+    return response;
+}
 
-    function deleteCookie(name) {
-        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    }
-
-    // Usage:
-    // setCookie("cartItems", JSON.stringify(cartData), 7);
-    // const cartData = JSON.parse(getCookie("cartItems"));
-
-
-    function addToCart(data) {
-        const headers = {
-            'X-CSRFToken': $('#cart_post_csrf').val(),
-            'Content-Type': 'application/json'
-        };
-        let response = $.ajax({
-            url:'/cart',
-            type: 'POST',
-            data: data,
-            headers: headers,
-            success: function (resp) {
-                if (resp.error) {
-                    customAlert('There was a problem adding item to cart')
-                }
+function updateCart(json) {
+    const headers = {
+        'X-CSRFToken': $('#cart_put_csrf').val(),
+        'Content-Type': 'application/json'
+    };
+    let response = $.ajax({
+        url: '/cart',
+        type: 'PUT',
+        data: json,
+        headers: headers,
+        success: function (resp) {
+            if (resp.error) {
+                customAlert('There was a problem adding item to cart')
             }
-        });
-        console.log(response);
-        return response;
-    }
+        }
+    });
+    return response;
+}
 
-    function updateCart(json) {
-        const headers = {
-            'X-CSRFToken': $('#cart_put_csrf').val(),
-            'Content-Type': 'application/json'
-        };
-        let response = $.ajax({
-            url: '/cart',
-            type: 'PUT',
-            data: json,
-            headers: headers,
-            success: function (resp) {
-                if (resp.error) {
-                    customAlert('There was a problem adding item to cart')
-                }
+function deleteFromCart(json) {
+    const headers = {
+        'X-CSRFToken': $('#cart_delete_csrf').val(),
+        'Content-Type': 'application/json'
+    };
+    let response = $.ajax({
+        url: '/cart',
+        type: 'DELETE',
+        data: json,
+        headers: headers,
+        success: function (resp) {
+            if (resp.error) {
+                customAlert('There was a problem adding item to cart')
             }
-        });
-        return response;
-    }
+        }
+    });
+    return response;
+}
 
-    function deleteFromCart(json) {
-        const headers = {
-            'X-CSRFToken': $('#cart_delete_csrf').val(),
-            'Content-Type': 'application/json'
-        };
-        let response = $.ajax({
-            url: '/cart',
-            type: 'DELETE',
-            data: json,
-            headers: headers,
-            success: function (resp) {
-                if (resp.error) {
-                    customAlert('There was a problem adding item to cart')
-                }
+function getCart() {
+    const headers = {
+        'X-CSRFToken': $('#cart_csrf').val(),
+        'Content-Type': 'application/json'
+    };
+    let response = $.ajax({
+        type: 'GET',
+        url: '/cart',
+        headers: headers,
+        success: function (resp) {
+            if (resp.error){
+                customAlert("There was a problem loading the cart");
             }
-        });
-        return response;
-    }
-
-    function getCart() {
-        const headers = {
-            'X-CSRFToken': $('#cart_csrf').val(),
-            'Content-Type': 'application/json'
-        };
-        let response = $.ajax({
-            type: 'GET',
-            url: '/cart',
-            headers: headers,
-            success: function (resp) {
-                if (resp.error){
-                    customAlert("There was a problem loading the cart");
-                }
-            }
-        });
-        return response;
-    }
+        }
+    });
+    return response;
+}
 
 
-    // default cart display
-    function defaultCartDisplayShow() {
-        $('.cart-content-products').find('*').not('.default-cart-display, .default-cart-display *').remove();
-        $('.default-cart-display').css('display', 'flex');
-    }
+// default cart display
+function defaultCartDisplayShow() {
+    $('.cart-content-products').find('*').not('.default-cart-display, .default-cart-display *').remove();
+    $('.default-cart-display').css('display', 'flex');
+}
 
-    function defaultCartDisplayHide() {
-        $('.default-cart-display').hide();
-    }
-
+function defaultCartDisplayHide() {
+    $('.default-cart-display').hide();
+}
+$(document).ready(function(){
     getCart().then(response => {
         if (response.cart) {
             setCookie('cartItems', JSON.stringify(response.cart), 30);

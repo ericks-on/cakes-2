@@ -1,3 +1,5 @@
+import { customAlert, alertContainer } from "./main.js";
+
 $(document).ready(function () {
     $("#incoming-orders").DataTable({
         "ordering": false,
@@ -78,5 +80,33 @@ $(document).ready(function () {
         activePage.hide();
         activePage = $('#notifications-management');
         activePage.show();
+    });
+
+    $('#addProductsBtn').click(function (event) {
+        event.preventDefault();
+        let CSRFToken = $(this).parent().parent().find('#csrf_token').val();
+        let name = $(this).parent().parent().find('#product-name').val();
+        let price = $(this).parent().parent().find('#product-price').val();
+        let data = {
+            'name': name,
+            'price': price
+        }
+        $.ajax({
+            url: '/products',
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': CSRFToken,
+            },
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (response){
+                console.log(response);
+                customAlert("Product added successfully");
+            },
+            error: function (response) {
+                console.log(response);
+                customAlert("There was a problem Adding the Product");
+            }
+        });
     });
 });
