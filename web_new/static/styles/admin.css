@@ -9,6 +9,10 @@ a {
     color: var(--main-text-color);
 }
 
+input:focus {
+    outline: none;
+}
+
 /* ==================Sidebar================= */
 #sidebar {
     width: 20%;
@@ -435,9 +439,15 @@ a {
     padding: 10px;
     background-color: var(--main-bg-color);
     border-radius: 10px;
+    width: 50%;
 }
 
 .edit-current-value {
     display: flex;
     gap: 20px;
+}
+
+.ec-label{
+    width: 20%;
+    font-weight: bold;
 }

@@ -114,38 +114,63 @@ $(document).ready(function () {
     });
 
     $('.edit-cproduct').click(function () {
-        let fields = $(this).parent().find('td');
-        console.log(fields.text())
+        let fields = $(this).parent().parent().find('td');
         let id = fields.eq(0).text();
+        console.log(id)
         let name = fields.eq(1).text();
         let price = parseInt(fields.eq(2).text());
         let item =`
             <div class='product-edit-popup'>
                 <div class='edit-current-value'>
-                    <div>ID</div>
-                    <div>${id}</div>
+                    <div class='ec-label'>ID</div>
+                    <div class='ec-value' id='ecProductId'>${id}</div>
                 </div>
                 <div class='edit-current-value'>
-                    <div>Name</div>
-                    <div>${name}</div>
+                    <div class='ec-label'>Name</div>
+                    <div class='ec-value'>${name}</div>
                 </div>
                 <div class='edit-current-value'>
-                    <div>Price</div>
-                    <div>${price}</div>
+                    <div class='ec-label'>Price</div>
+                    <div class='ec-value'>${price}</div>
                 </div>
                 <div class='edit-current-value'>
-                    <div>New Name</div>
-                    <input type='text' value='${name}' id='editProductName'>
+                    <div class='ec-label'>New Name</div>
+                    <input class='ec-value' type='text' value='${name}' id='editProductName'>
                 </div>
                 <div class='edit-current-value'>
-                    <div>New Price</div>
-                    <input type='number' value='${price}' id='editProductPrice'>
+                    <div class='ec-label'>New Price</div>
+                    <input class='ec-value' type='number' value=${price} id='editProductPrice'>
                 </div>
-                <button>Edit</button>
+                <button id='submitEdit'>Edit</button>
             </div>
         `
-        popupContainer.find('*').not('#exit-popup').remove();
+        popupContainer.find('*').not('#exit-popup, #exit-popup *').remove();
         popupContainer.append(item);
         popupContainer.css('display', 'flex');
+    });
+
+    popupContainer.on('click', '#submitEdit', function() {
+        let newName = $(this).parent().find('#editProductName').val();
+        let newPrice = parseInt($(this).parent().find('#editProductPrice').val());
+        let id = $(this).parent().find('#ecProductId').text();
+        $.ajax({
+            url: '/products',
+            method: 'PUT',
+            headers: {
+                'X-CSRFToken': $('#csrf_token').val()
+            },
+            data: JSON.stringify({
+                'name': newName,
+                'price': newPrice,
+                'id': id
+            }),
+            contentType: 'application/json',
+            success: function() {
+                customAlert("Product edited successfully");
+            },
+            error: function() {
+                customAlert("There was a problem editing the product");
+            }
+        });
     });
 });
