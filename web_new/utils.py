@@ -26,7 +26,7 @@ def login(username, password):
         hashed_pwd = user.password
         if bcrypt.verify(password, hashed_pwd) is True:
             access_token = create_access_token(identity=username, fresh=True)
-            return jsonify(access_token=access_token)
+            return jsonify(access_token=access_token, user_type=user.user_type)
         return jsonify({"error": "Wrong Username or Password",
                         "status_code": 401})
     return jsonify({"error": "Wrong Username or Password",
