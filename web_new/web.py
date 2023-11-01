@@ -7,7 +7,7 @@ from datetime import timedelta
 from datetime import timezone
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, make_response, abort
-from flask import redirect, url_for
+from flask import redirect, url_for, jsonify
 from flask_wtf.csrf import CSRFProtect
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
@@ -19,6 +19,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_cors import CORS
 from web_new import utils
 from models import storage
+from models.product import Product
 
 
 load_dotenv()
@@ -101,7 +102,10 @@ def login():
     return_obj = utils.login(username, password).get_json()
     if not return_obj.get('error'):
         access_token = return_obj.get('access_token')
-        response = make_response(redirect(url_for('home')))
+        if return_obj.get('user_type') == 'admin':
+            response = make_response(redirect(url_for('admin')))
+        else:
+            response = make_response(redirect(url_for('home')))
         set_access_cookies(response, access_token)
         return response
     return return_obj, return_obj.get('status_code')
@@ -114,6 +118,16 @@ def home():
     products = utils.get_products().get_json().get('products')
     return render_template('index.html', products=products,
                            user_details=user_details)
+    
+@app.route('/admin', strict_slashes=False, methods=['GET'])
+@jwt_required()
+def admin():
+    """The admin page"""
+    user = storage.get_user(get_jwt_identity())
+    user_details = storage.get_user(get_jwt_identity()).to_dict()
+    if user.user_type != "admin":
+        abort(403)
+    return render_template('admin.html', user_details=user_details)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
@@ -147,6 +161,23 @@ def logout():
     response = make_response(redirect(url_for('index')))
     unset_jwt_cookies(response)
     return response
+
+@app.route('/products', strict_slashes=False, methods=['POST'])
+@jwt_required()
+def add_products():
+    """Adding new products"""
+    user = storage.get_user(get_jwt_identity())
+    if user.user_type != 'admin':
+        abort(403)
+    name = request.form.get('product-name')
+    price = request.form.get('product-price')
+    image = 'donut.jpg'
+    if not name or not price:
+        return jsonify({"error": "Bad Request", "status_code": 400})
+    new_pdt = Product(name=name, price=price, image=image)
+    storage.add(new_pdt)
+    storage.save()
+    return jsonify(new_pdt.to_dict()), 201
 
 
 if __name__ == '__main__':
