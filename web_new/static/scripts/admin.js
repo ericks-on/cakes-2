@@ -99,9 +99,10 @@ $(document).ready(function () {
             },
             contentType: 'application/json',
             data: JSON.stringify(data),
-            success: function (response){
-                console.log(response);
+            success: function (){
                 customAlert("Product added successfully");
+                $(this).parent().parent().find('#product-price').val("");
+                $(this).parent().parent().find('#product-name').val("");
             },
             error: function (response) {
                 console.log(response);
