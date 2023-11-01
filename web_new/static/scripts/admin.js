@@ -1,5 +1,7 @@
 import { customAlert, alertContainer } from "./main.js";
 
+const popupContainer = $('#popups-container');
+
 $(document).ready(function () {
     $("#incoming-orders").DataTable({
         "ordering": false,
@@ -113,6 +115,7 @@ $(document).ready(function () {
 
     $('.edit-cproduct').click(function () {
         let fields = $(this).parent().find('td');
+        console.log(fields.text())
         let id = fields.eq(0).text();
         let name = fields.eq(1).text();
         let price = parseInt(fields.eq(2).text());
@@ -130,7 +133,19 @@ $(document).ready(function () {
                     <div>Price</div>
                     <div>${price}</div>
                 </div>
+                <div class='edit-current-value'>
+                    <div>New Name</div>
+                    <input type='text' value='${name}' id='editProductName'>
+                </div>
+                <div class='edit-current-value'>
+                    <div>New Price</div>
+                    <input type='number' value='${price}' id='editProductPrice'>
+                </div>
+                <button>Edit</button>
             </div>
         `
+        popupContainer.find('*').not('#exit-popup').remove();
+        popupContainer.append(item);
+        popupContainer.css('display', 'flex');
     });
 });

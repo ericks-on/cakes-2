@@ -428,6 +428,15 @@ a {
 
 /* =====================popups================= */
 /* -------edit product pupups------- */
+.product-edit-popup {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+}
+
 .edit-current-value {
     display: flex;
     gap: 20px;
