@@ -167,23 +167,38 @@ def logout():
     unset_jwt_cookies(response)
     return response
 
-@app.route('/products', strict_slashes=False, methods=['POST'])
+@app.route('/products', strict_slashes=False, methods=['DELETE', 'POST',
+                                                       'PUT'])
 @jwt_required()
 def add_products():
     """Adding new products"""
     user = storage.get_user(get_jwt_identity())
     if user.user_type != 'admin':
         abort(403)
-    name = request.get_json().get('name')
-    price = request.get_json().get('price')
-    image = 'donut.jpg'
-    if not name or not price:
-        return jsonify({"error": "Bad Request", "status_code": 400}), 400
-    new_pdt = Product(name=name, price=price, image=image)
-    storage.add(new_pdt)
-    storage.save()
-    product = storage.get_product(name)
-    return jsonify(product.to_dict()), 201
+    if request.method == 'POST':
+        name = request.get_json().get('name')
+        price = request.get_json().get('price')
+        image = 'donut.jpg'
+        if not name or not price:
+            return jsonify({"error": "Bad Request", "status_code": 400}), 400
+        new_pdt = Product(name=name, price=price, image=image)
+        storage.add(new_pdt)
+        storage.save()
+        product = storage.get_product(name)
+        return jsonify(product.to_dict()), 201
+    if request.method == 'PUT':
+        name = request.get_json().get('name')
+        price = request.get_json().get('price')
+        id_ = request.get_json().get('id')
+        if not name or not price or not id_:
+            return jsonify({"error": "Bad Request"}), 400
+        product = storage.get(Product, id_)
+        if not product:
+            return jsonify({"error": "Not Found"}), 404
+        product.name = name
+        product.price = price
+        storage.save()
+        return jsonify(storage.get_product(name).to_dict()), 200
 
 
 if __name__ == '__main__':
