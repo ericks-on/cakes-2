@@ -129,8 +129,10 @@ def admin():
     products_form = ProductsForm()
     if user.user_type != "admin":
         abort(403)
+    
+    products = [item.to_dict() for item in storage.all(Product)]
     return render_template('admin.html', user_details=user_details,
-                           products_form=products_form)
+                           products_form=products_form, products=products)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
