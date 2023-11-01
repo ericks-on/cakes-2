@@ -237,7 +237,7 @@ a {
 
 #current-products tbody tr td,
 #products-inventory tbody tr td {
-    max-width: 150px;
+    max-width: 100px;
     overflow: clip;
     text-overflow: ellipsis;
 }

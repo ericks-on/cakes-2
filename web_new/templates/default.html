@@ -147,6 +147,7 @@
     <div id="footer" class="flex-cc d-flex">
     </div>
     <div id="popups-container">
+        {% block popups%}
         <div id='cart-container'>
             <div class='products-container flex-column'>
                 {% for product in products %}
@@ -212,6 +213,7 @@
                 close
             </span>
         </div>
+        {% endblock %}
     </div>
 </body>
 </html>

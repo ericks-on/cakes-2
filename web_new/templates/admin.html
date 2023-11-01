@@ -313,8 +313,8 @@
                             <td>{{ product.id }}</td>
                             <td>{{ product.name }}</td>
                             <td>{{ product.price }}</td>
-                            <td><button class="edit">Edit</button></td>
-                            <td><button class="remove">Remove</button></td>
+                            <td><button class="edit-cproduct">Edit</button></td>
+                            <td><button class="remove-cproduct">Remove</button></td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -494,3 +494,6 @@
     </div>
 </div>
 {% endblock %}
+{% block popups %}
+<div id='edit-popup'></div>
+{% endblock%}
