@@ -20,6 +20,7 @@ from flask_cors import CORS
 from web_new import utils
 from models import storage
 from models.product import Product
+from web_new.forms import ProductsForm
 
 
 load_dotenv()
@@ -125,9 +126,11 @@ def admin():
     """The admin page"""
     user = storage.get_user(get_jwt_identity())
     user_details = storage.get_user(get_jwt_identity()).to_dict()
+    products_form = ProductsForm()
     if user.user_type != "admin":
         abort(403)
-    return render_template('admin.html', user_details=user_details)
+    return render_template('admin.html', user_details=user_details,
+                           products_form=products_form)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
@@ -169,15 +172,16 @@ def add_products():
     user = storage.get_user(get_jwt_identity())
     if user.user_type != 'admin':
         abort(403)
-    name = request.form.get('product-name')
-    price = request.form.get('product-price')
+    name = request.get_json().get('name')
+    price = request.get_json().get('price')
     image = 'donut.jpg'
     if not name or not price:
-        return jsonify({"error": "Bad Request", "status_code": 400})
+        return jsonify({"error": "Bad Request", "status_code": 400}), 400
     new_pdt = Product(name=name, price=price, image=image)
     storage.add(new_pdt)
     storage.save()
-    return jsonify(new_pdt.to_dict()), 201
+    product = storage.get_product(name)
+    return jsonify(product.to_dict()), 201
 
 
 if __name__ == '__main__':
