@@ -110,4 +110,27 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('.edit-cproduct').click(function () {
+        let fields = $(this).parent().find('td');
+        let id = fields.eq(0).text();
+        let name = fields.eq(1).text();
+        let price = parseInt(fields.eq(2).text());
+        let item =`
+            <div class='product-edit-popup'>
+                <div class='edit-current-value'>
+                    <div>ID</div>
+                    <div>${id}</div>
+                </div>
+                <div class='edit-current-value'>
+                    <div>Name</div>
+                    <div>${name}</div>
+                </div>
+                <div class='edit-current-value'>
+                    <div>Price</div>
+                    <div>${price}</div>
+                </div>
+            </div>
+        `
+    });
 });
