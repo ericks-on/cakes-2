@@ -56,7 +56,11 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#products-management');
         activePage.show();
-        setCookie('activePage', '#products-management');
+        historyCookie = JSON.stringify({
+            "page": "#products-management",
+            "button": "#productPageButton"
+        });
+        setCookie('activePage', historyCookie);
     });
 
     $('#dashboardButton').click(function () {
@@ -66,7 +70,11 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#dashboard');
         activePage.show();
-        setCookie('activePage', '#dashboard');
+        historyCookie = JSON.stringify({
+            "page": "#dashboard",
+            "button": "dashboardButton"
+        });
+        setCookie('activePage', historyCookie);
     });
 
     $('#inventoryButton').click(function () {
@@ -76,7 +84,11 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#inventory-management');
         activePage.show();
-        setCookie('activePage', '#inventory-management');
+        historyCookie = JSON.stringify({
+            "page": "#inventory-management",
+            "button": "#inventoryButton"
+        });
+        setCookie('activePage', historyCookie);
     });
 
     $('#userPageButton').click(function () {
@@ -86,7 +98,11 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#user-management');
         activePage.show();
-        setCookie('activePage', '#user-management');
+        historyCookie = JSON.stringify({
+            "page": "#user-management",
+            "button": "#userPageButton"
+        });
+        setCookie('activePage', historyCookie);
     });
 
     $('#ordersButton').click(function () {
@@ -96,7 +112,11 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#orders');
         activePage.show();
-        setCookie('activePage', '#orders');
+        historyCookie = JSON.stringify({
+            "page": "#orders",
+            "button": "#ordersButton"
+        });
+        setCookie('activePage', historyCookie);
     });
 
     $('#notificationsButton').click(function () {
@@ -106,7 +126,11 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#notifications-management');
         activePage.show();
-        setCookie('activePage', '#notifications-management');
+        historyCookie = JSON.stringify({
+            "page": "#notifications-management",
+            "button": "#notificationsButton"
+        });
+        setCookie('activePage', historyCookie);
     });
 
     $('#addProductsBtn').click(function (event) {
@@ -201,10 +225,12 @@ $(document).ready(function () {
     });
 
     $(window).on('load', function () {
-        let active = getCookie('activePage');
+        let active = JSON.parse(getCookie('activePage'));
         if (active != ""){
             activePage.hide();
-            activePage = $(active);
+            activePage = $(active.page);
+            activeButton = $(active.button);
+            activeButton.toggleClass('active-sidebar');
             activePage.show();
         }else {
             activePage.show();
