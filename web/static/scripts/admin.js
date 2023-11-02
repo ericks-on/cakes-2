@@ -266,5 +266,30 @@ $(document).ready(function () {
                 customAlert("There was a problem adding the Notification");
             }
         });
-    })
+    });
+
+    $('#addUserButton').click(function() {
+        let firstName = $('#addUserFirstName');
+        let lastName = $('#addUserLastName');
+        let email = $('#addUserEmail');
+        let phone = $('#addUserPhone');
+        let username = $('#addUserUsername');
+        let password = $('#addUserPassword');
+        $.ajax({
+            url: '/users',
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': $('#csrf_token')
+            },
+            contentType: 'application/json',
+            data: JSON.stringify({
+                'first_name': firstName,
+                'last_name': lastName,
+                'email': email,
+                'phone': phone,
+                'username': username,
+                'password': password
+            }),
+        })
+    });
 });
