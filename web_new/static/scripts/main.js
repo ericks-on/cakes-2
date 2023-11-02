@@ -3,6 +3,9 @@ export const alertContainer = $('#alertPopup .alertPopupMessage');
 export function customAlert(message) {
     alertContainer.text(message);
     alertContainer.parent().css('display', 'flex');
+    setTimeout(function() {
+        alertContainer.parent().css('display', 'none');
+    }, 2000);
 }
 
 export function setCookie(name, value, days) {
