@@ -234,8 +234,8 @@ def users():
     phone = request.get_json().get('phone')
     username = request.get_json().get('username')
     password = request.get_json().get('password')
-    if (not first_name or not last_name or not email or not phone or not
-        username or not password):
+    params = [first_name, last_name, email, phone, username, password]
+    if len(params) < 6:
         return jsonify({"error": "Bad Request"}), 400
     new_user = User(first_name=first_name, last_name=last_name, email=email,
                     phone=phone, username=username, password=password)
