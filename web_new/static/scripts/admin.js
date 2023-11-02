@@ -172,7 +172,8 @@ $(document).ready(function () {
             }),
             contentType: 'application/json',
             success: function() {
-                customAlert("Product edited successfully");
+                alert("Product added Successfully");
+                location.reload();
             },
             error: function() {
                 customAlert("There was a problem editing the product");
