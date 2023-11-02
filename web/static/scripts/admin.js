@@ -63,6 +63,7 @@ $(document).ready(function () {
         setCookie('activePage', historyCookie);
     });
 
+    // ===========Page Navigation============
     $('#dashboardButton').click(function () {
         activePage.hide();
         activePageBtn.toggleClass('active-sidebar');
@@ -224,6 +225,7 @@ $(document).ready(function () {
         });
     });
 
+    // ============handling Refresh============
     $(window).on('load', function () {
         let active = getCookie('activePage');
         if (active != ""){
@@ -242,4 +244,27 @@ $(document).ready(function () {
     $('#logout').click(function() {
         deleteCookie('activePage');
     });
+
+    // ===========adding notification============
+    $('#addNotificationsBtn').click(function() {
+        let message = $('#notification-message').val()
+        $.ajax({
+            url: "/notifications",
+            method: "POST",
+            data: JSON.stringify({
+                "message": message
+            }),
+            headers: {
+                "X-CSRFToken": $('#csrf_token').val()
+            },
+            contentType: "application/json",
+            success: function(){
+                alert("Notification Added successfully");
+                location.reload();
+            },
+            fail: function() {
+                customAlert("There was a problem adding the Notification");
+            }
+        });
+    })
 });
