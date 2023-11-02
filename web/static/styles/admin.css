@@ -13,6 +13,12 @@ input:focus {
     outline: none;
 }
 
+td {
+    max-width: 100px;
+    overflow: clip;
+    text-overflow: ellipsis;
+}
+
 /* ==================Sidebar================= */
 #sidebar {
     width: 20%;
@@ -142,7 +148,7 @@ input:focus {
 }
 
 .current-notifications-container {
-    width: 50%;
+    width: 100%;
     height: 50%;
     padding: 10px;
 }
@@ -303,6 +309,27 @@ input:focus {
     margin: 10px 0;
 }
 
+.add-new-users-container {
+    gap: 20px;
+    height: 50%;
+}
+
+.add-user-row {
+    display: flex;
+    gap: 20px;
+
+}
+.add-user-row-label {
+    width: 20%;
+}
+
+#addUserButton {
+    width: 50%;
+}
+
+.current-users-table {
+    height: 50%;
+}
 
 /* ============Inventory Management============ */
 #inventory-management {
