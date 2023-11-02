@@ -58,6 +58,10 @@ input:focus {
     cursor: pointer;
 }
 
+.active-sidebar {
+    background-color: var(--secondary-bg-color);
+}
+
 #logout {
     width: 80%;
 }

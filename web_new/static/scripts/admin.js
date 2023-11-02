@@ -47,9 +47,13 @@ $(document).ready(function () {
     });
 
     var activePage = $('#dashboard');
+    var activePageBtn = $('#dashboardButton');
 
     $('#productPageButton').click(function () {
         activePage.hide();
+        activePageBtn.toggleClass('active-sidebar');
+        $(this).toggleClass('active-sidebar');
+        activePageBtn = $(this);
         activePage = $('#products-management');
         activePage.show();
         setCookie('activePage', '#products-management');
@@ -57,6 +61,9 @@ $(document).ready(function () {
 
     $('#dashboardButton').click(function () {
         activePage.hide();
+        activePageBtn.toggleClass('active-sidebar');
+        $(this).toggleClass('active-sidebar');
+        activePageBtn = $(this);
         activePage = $('#dashboard');
         activePage.show();
         setCookie('activePage', '#dashboard');
@@ -64,6 +71,9 @@ $(document).ready(function () {
 
     $('#inventoryButton').click(function () {
         activePage.hide();
+        activePageBtn.toggleClass('active-sidebar');
+        $(this).toggleClass('active-sidebar');
+        activePageBtn = $(this);
         activePage = $('#inventory-management');
         activePage.show();
         setCookie('activePage', '#inventory-management');
@@ -71,6 +81,9 @@ $(document).ready(function () {
 
     $('#userPageButton').click(function () {
         activePage.hide();
+        activePageBtn.toggleClass('active-sidebar');
+        $(this).toggleClass('active-sidebar');
+        activePageBtn = $(this);
         activePage = $('#user-management');
         activePage.show();
         setCookie('activePage', '#user-management');
@@ -78,6 +91,9 @@ $(document).ready(function () {
 
     $('#ordersButton').click(function () {
         activePage.hide();
+        activePageBtn.toggleClass('active-sidebar');
+        $(this).toggleClass('active-sidebar');
+        activePageBtn = $(this);
         activePage = $('#orders');
         activePage.show();
         setCookie('activePage', '#orders');
@@ -85,6 +101,9 @@ $(document).ready(function () {
 
     $('#notificationsButton').click(function () {
         activePage.hide();
+        activePageBtn.toggleClass('active-sidebar');
+        $(this).toggleClass('active-sidebar');
+        activePageBtn = $(this);
         activePage = $('#notifications-management');
         activePage.show();
         setCookie('activePage', '#notifications-management');
