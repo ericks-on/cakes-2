@@ -56,7 +56,7 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#products-management');
         activePage.show();
-        historyCookie = JSON.stringify({
+        let historyCookie = JSON.stringify({
             "page": "#products-management",
             "button": "#productPageButton"
         });
@@ -70,7 +70,7 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#dashboard');
         activePage.show();
-        historyCookie = JSON.stringify({
+        let historyCookie = JSON.stringify({
             "page": "#dashboard",
             "button": "dashboardButton"
         });
@@ -84,7 +84,7 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#inventory-management');
         activePage.show();
-        historyCookie = JSON.stringify({
+        let historyCookie = JSON.stringify({
             "page": "#inventory-management",
             "button": "#inventoryButton"
         });
@@ -98,7 +98,7 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#user-management');
         activePage.show();
-        historyCookie = JSON.stringify({
+        let historyCookie = JSON.stringify({
             "page": "#user-management",
             "button": "#userPageButton"
         });
@@ -112,7 +112,7 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#orders');
         activePage.show();
-        historyCookie = JSON.stringify({
+        let historyCookie = JSON.stringify({
             "page": "#orders",
             "button": "#ordersButton"
         });
@@ -126,7 +126,7 @@ $(document).ready(function () {
         activePageBtn = $(this);
         activePage = $('#notifications-management');
         activePage.show();
-        historyCookie = JSON.stringify({
+        let historyCookie = JSON.stringify({
             "page": "#notifications-management",
             "button": "#notificationsButton"
         });
@@ -225,15 +225,17 @@ $(document).ready(function () {
     });
 
     $(window).on('load', function () {
-        let active = JSON.parse(getCookie('activePage'));
+        let active = getCookie('activePage');
         if (active != ""){
+            active = JSON.parse(active);
             activePage.hide();
             activePage = $(active.page);
-            activeButton = $(active.button);
-            activeButton.toggleClass('active-sidebar');
+            activePageBtn = $(active.button);
+            activePageBtn.addClass('active-sidebar');
             activePage.show();
         }else {
             activePage.show();
+            activePageBtn.addClass('active-sidebar');
         }
     });
 
