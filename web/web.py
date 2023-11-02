@@ -20,8 +20,9 @@ from flask_cors import CORS
 from web import utils
 from models import storage
 from models.product import Product
-from web.forms import ProductsForm
 from models.notification import Notification
+from models.user import User
+from web.forms import ProductsForm
 
 
 load_dotenv()
@@ -219,6 +220,28 @@ def add_notifications():
     storage.add(notification)
     storage.save()
     return jsonify(storage.get(Notification, notification.id).to_dict()), 201
+
+@app.route('/users', strict_slashes=False, methods=['POST'])
+@jwt_required()
+def users():
+    """Operations on users"""
+    current_user = storage.get_user(get_jwt_identity())
+    if current_user.user_type != 'admin':
+        abort(403)
+    first_name = request.get_json().get('first_name')
+    last_name = request.get_json().get('last_name')
+    email = request.get_json().get('email')
+    phone = request.get_json().get('phone')
+    username = request.get_json().get('username')
+    password = request.get_json().get('password')
+    if (not first_name or not last_name or not email or not phone or not
+        username or not password):
+        return jsonify({"error": "Bad Request"}), 400
+    new_user = User(first_name=first_name, last_name=last_name, email=email,
+                    phone=phone, username=username, password=password)
+    storage.add(new_user)
+    storage.save()
+    return jsonify(storage.get_user(username).to_dict()), 200
 
 
 if __name__ == '__main__':
