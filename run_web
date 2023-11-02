@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 -m web.kimuka
+python3 -m web.web
