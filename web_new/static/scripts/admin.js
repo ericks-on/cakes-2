@@ -190,4 +190,8 @@ $(document).ready(function () {
             activePage.show();
         }
     });
+
+    $('#logout').click(function() {
+        deleteCookie('activePage');
+    });
 });
