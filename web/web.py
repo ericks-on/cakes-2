@@ -17,10 +17,10 @@ from flask_jwt_extended import get_jwt
 from flask_jwt_extended import unset_access_cookies
 from flask_jwt_extended import get_jwt_identity
 from flask_cors import CORS
-from web_new import utils
+from web import utils
 from models import storage
 from models.product import Product
-from web_new.forms import ProductsForm
+from web.forms import ProductsForm
 
 
 load_dotenv()
