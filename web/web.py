@@ -132,8 +132,10 @@ def admin():
         abort(403)
     
     products = [item.to_dict() for item in storage.all(Product)]
+    notifications = [item.to_dict() for item in storage.all(Notification)]
     return render_template('admin.html', user_details=user_details,
-                           products_form=products_form, products=products)
+                           products_form=products_form, products=products,
+                           notifications=notifications)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
@@ -216,7 +218,7 @@ def add_notifications():
     notification = Notification(message=message)
     storage.add(notification)
     storage.save()
-    return jsonify(storage.get(Notification, notification.id)), 201
+    return jsonify(storage.get(Notification, notification.id).to_dict()), 201
 
 
 if __name__ == '__main__':

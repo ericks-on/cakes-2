@@ -246,36 +246,13 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for item in notifications %}
                         <tr>
-                            <td>1</td>
-                            <td>Message</td>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.message }}</td>
                             <td><button class="remove">Remove</button></td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Message</td>
-                            <td><button class="remove">Remove</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Message</td>
-                            <td><button class="remove">Remove</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Message</td>
-                            <td><button class="remove">Remove</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Message</td>
-                            <td><button class="remove">Remove</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Message</td>
-                            <td><button class="remove">Remove</button></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -395,29 +372,98 @@
     <div id='user-management'>
         <div  class='flex user-management-container'>
             <div class='current-users-container flex-column'>
-                <h2>Current Employees</h2>
-                <table id='current-users' class='compact stripe nowrap hover'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Role</th>
-                            <th>Edit</th>
-                            <th>Remove</th>
-                            <th>Reset Password</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Username</td>
-                            <td>Role</td>
-                            <td><button class="edit">Edit</button></td>
-                            <td><button class="remove">Remove</button></td>
-                            <td><button class="reset">Reset</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="current-users-table">
+                    <h2>Current Employees</h2>
+                    <table id='current-users' class='compact stripe nowrap hover'>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Edit</th>
+                                <th>Remove</th>
+                                <th>Reset Password</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Username</td>
+                                <td>Role</td>
+                                <td><button class="edit">Edit</button></td>
+                                <td><button class="remove">Remove</button></td>
+                                <td><button class="reset">Reset</button></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Username</td>
+                                <td>Role</td>
+                                <td><button class="edit">Edit</button></td>
+                                <td><button class="remove">Remove</button></td>
+                                <td><button class="reset">Reset</button></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Username</td>
+                                <td>Role</td>
+                                <td><button class="edit">Edit</button></td>
+                                <td><button class="remove">Remove</button></td>
+                                <td><button class="reset">Reset</button></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Username</td>
+                                <td>Role</td>
+                                <td><button class="edit">Edit</button></td>
+                                <td><button class="remove">Remove</button></td>
+                                <td><button class="reset">Reset</button></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Username</td>
+                                <td>Role</td>
+                                <td><button class="edit">Edit</button></td>
+                                <td><button class="remove">Remove</button></td>
+                                <td><button class="reset">Reset</button></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Username</td>
+                                <td>Role</td>
+                                <td><button class="edit">Edit</button></td>
+                                <td><button class="remove">Remove</button></td>
+                                <td><button class="reset">Reset</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class='add-new-users-container flex-column'>
+                    <div class='add-user-row'>
+                        <div class='add-user-row-label'>First Name</div>
+                        <input type='text' id='addUserFirstName'>
+                    </div>
+                    <div class='add-user-row'>
+                        <div class='add-user-row-label'>Last Name</div>
+                        <input type='text' id='addUserLastName'>
+                    </div>
+                    <div class='add-user-row'>
+                        <div class='add-user-row-label'>Email</div>
+                        <input type='email' id='addUserEmail'>
+                    </div>
+                    <div class='add-user-row'>
+                        <div class='add-user-row-label'>Phone</div>
+                        <input type='text' id='addUserFirstName'>
+                    </div>
+                    <div class='add-user-row'>
+                        <div class='add-user-row-label'>Username</div>
+                        <input type='text' id='addUserUserName'>
+                    </div>
+                    <div class='add-user-row'>
+                        <div class='add-user-row-label'>Password</div>
+                        <input type='text' id='addUserPassword'>
+                    </div>
+                    <button id="addUserButton">Add user</button>
+                </div>
             </div>
             <div class='user-insights flex-column'>
                 <h2>User Insights</h2>
