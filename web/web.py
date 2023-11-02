@@ -21,6 +21,7 @@ from web import utils
 from models import storage
 from models.product import Product
 from web.forms import ProductsForm
+from models.notification import Notification
 
 
 load_dotenv()
@@ -199,6 +200,23 @@ def add_products():
         product.price = price
         storage.save()
         return jsonify(storage.get_product(name).to_dict()), 200
+    
+@app.route('/notifications', strict_slashes=False, methods=['POST'])
+@jwt_required()
+def add_notifications():
+    """add notifications"""
+    user = storage.get_user(get_jwt_identity())
+    if not user:
+        abort(404)
+    if user.user_type != 'admin':
+        abort(403)
+    message = request.get_json().get('message')
+    if not message:
+        return jsonify({"error": "Bad Request"}), 400
+    notification = Notification(message=message)
+    storage.add(notification)
+    storage.save()
+    return jsonify(storage.get(Notification, notification.id)), 201
 
 
 if __name__ == '__main__':
