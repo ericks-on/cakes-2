@@ -279,17 +279,24 @@ $(document).ready(function () {
             url: '/users',
             method: 'POST',
             headers: {
-                'X-CSRFToken': $('#csrf_token')
+                'X-CSRFToken': $('#csrf_token').val()
             },
             contentType: 'application/json',
             data: JSON.stringify({
-                'first_name': firstName,
-                'last_name': lastName,
-                'email': email,
-                'phone': phone,
-                'username': username,
-                'password': password
+                'first_name': firstName.val(),
+                'last_name': lastName.val(),
+                'email': email.val(),
+                'phone': phone.val(),
+                'username': username.val(),
+                'password': password.val()
             }),
+            success: function() {
+                alert('User added successfully');
+                location.reload();
+            },
+            error: function() {
+                customAlert("There was a problem adding user");
+            }
         })
     });
 });
