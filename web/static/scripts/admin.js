@@ -305,4 +305,30 @@ $(document).ready(function () {
         })
     });
 
+    $('.user-remove').click(function () {
+        if (confirm("You are about to Delete the user")) {
+            let userID = $(this).parent().parent().find('td').eq(0).text();
+            $.ajax({
+                url: "/users",
+                method: "DELETE",
+                headers: {
+                    'X-CSRFToken': $('#csrf_token').val()
+                },
+                data: JSON.stringify({
+                    "userID": userID
+                }),
+                contentType: "application/json",
+                success: function () {
+                    alert("Deleted user successfully");
+                    location.reload();
+                },
+                error: function () {
+                    customAlert("Error Deleting user");
+                }
+            });
+        }else {
+            return;
+        }
+    });
+
 });
