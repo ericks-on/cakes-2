@@ -1,6 +1,6 @@
 {% extends "default.html" %}
 {% block main_js %}
-<script src="../static/scripts/main.js"></script>
+<script src="../static/scripts/main.js" type="module"></script>
 {% endblock %}
 {% block profile_name %}
 {{ user_details.first_name + " " + user_details.last_name }}
