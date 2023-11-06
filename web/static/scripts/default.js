@@ -198,13 +198,16 @@ $(document).ready(function(){
 
     // empty the cart
     $('#emptyCart').click(function() {
-        confirm('Press \'OK\' to clear the shopping Cart');
-        defaultCartDisplay().css('display', 'flex');
-        cartTotal.text(0);
-        $('.cart-content-product').each(function(){
-            $(this).remove();
-        });
-        deleteCookie('cartItems');
+        if (confirm('Press \'OK\' to clear the shopping Cart')) {
+            defaultCartDisplay().css('display', 'flex');
+            cartTotal.text(0);
+            $('.cart-content-product').each(function(){
+                $(this).remove();
+            });
+            deleteCookie('cartItems');
+        }else {
+            return;
+        }
     });
 
     // increase quantity in cart

@@ -303,13 +303,16 @@ $(document).ready(function(){
 
     // empty the cart
     $('#emptyCart').click(function() {
-        confirm('Press \'OK\' to clear the shopping Cart');
-        defaultCartDisplayShow();
-        cartTotal.text(0);
-        for (let i = 0; i < cartData.length; i++) {
-            deleteFromCart(JSON.stringify(cartData[i]));
+        if(confirm('Press \'OK\' to clear the shopping Cart')) {
+            defaultCartDisplayShow();
+            cartTotal.text(0);
+            for (let i = 0; i < cartData.length; i++) {
+                deleteFromCart(JSON.stringify(cartData[i]));
+            }
+            deleteCookie('cartItems');
+        }else {
+            return;
         }
-        deleteCookie('cartItems');
     });
 
     // increase quantity in cart
