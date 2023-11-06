@@ -273,7 +273,7 @@ $(document).ready(function () {
         let lastName = $('#addUserLastName');
         let email = $('#addUserEmail');
         let phone = $('#addUserPhone');
-        let username = $('#addUserUsername');
+        let username = $('#addUserUserName');
         let password = $('#addUserPassword');
         $.ajax({
             url: '/users',
