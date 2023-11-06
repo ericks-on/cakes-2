@@ -370,7 +370,7 @@
         </div>
     </div>
     <div id='user-management'>
-        <div  class='flex user-management-container'>
+        <div  class='user-management-container'>
             <div class='current-users-container flex-column'>
                 <div class="current-users-table">
                     <h2>Current Employees</h2>
@@ -386,73 +386,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% for user in users%}
                             <tr>
-                                <td>1</td>
-                                <td>Username</td>
-                                <td>Role</td>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.user_type }}</td>
                                 <td><button class="edit">Edit</button></td>
                                 <td><button class="remove">Remove</button></td>
                                 <td><button class="reset">Reset</button></td>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Username</td>
-                                <td>Role</td>
-                                <td><button class="edit">Edit</button></td>
-                                <td><button class="remove">Remove</button></td>
-                                <td><button class="reset">Reset</button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Username</td>
-                                <td>Role</td>
-                                <td><button class="edit">Edit</button></td>
-                                <td><button class="remove">Remove</button></td>
-                                <td><button class="reset">Reset</button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Username</td>
-                                <td>Role</td>
-                                <td><button class="edit">Edit</button></td>
-                                <td><button class="remove">Remove</button></td>
-                                <td><button class="reset">Reset</button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Username</td>
-                                <td>Role</td>
-                                <td><button class="edit">Edit</button></td>
-                                <td><button class="remove">Remove</button></td>
-                                <td><button class="reset">Reset</button></td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Username</td>
-                                <td>Role</td>
-                                <td><button class="edit">Edit</button></td>
-                                <td><button class="remove">Remove</button></td>
-                                <td><button class="reset">Reset</button></td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
-                </div>
-                <div class='user-insights flex-column'>
-                    <h2>User Insights</h2>
-                    <div class='user-insights-container'>
-                        <div class='user-insights-item flex'>
-                            <h3>Number of Customers:</h3>
-                            <p>12</p>
-                        </div>
-                        <div class='user-insights-item flex'>
-                            <h3>Number of Staff:</h3>
-                            <p>12</p>
-                        </div>
-                        <div class='user-insights-item flex'>
-                            <h3>Number of Admins:</h3>
-                            <p>12</p>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class='add-new-users-container flex-column'>
@@ -485,6 +430,23 @@
                     <input type='password' id='confirmUserPassword' readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                 </div>
                 <button id="addUserButton">Add user</button>
+            </div>
+            <div class='user-insights flex-column'>
+                <h2>User Insights</h2>
+                <div class='user-insights-container'>
+                    <div class='user-insights-item flex'>
+                        <h3>Number of Customers:</h3>
+                        <p>12</p>
+                    </div>
+                    <div class='user-insights-item flex'>
+                        <h3>Number of Staff:</h3>
+                        <p>12</p>
+                    </div>
+                    <div class='user-insights-item flex'>
+                        <h3>Number of Admins:</h3>
+                        <p>12</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

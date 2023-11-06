@@ -133,10 +133,12 @@ def admin():
         abort(403)
     
     products = [item.to_dict() for item in storage.all(Product)]
+    users = [user.to_dict() for user in storage.all(User) if user.username
+             != get_jwt_identity()]
     notifications = [item.to_dict() for item in storage.all(Notification)]
     return render_template('admin.html', user_details=user_details,
                            products_form=products_form, products=products,
-                           notifications=notifications)
+                           notifications=notifications, users=users)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
