@@ -223,28 +223,39 @@ def add_notifications():
     storage.save()
     return jsonify(storage.get(Notification, notification.id).to_dict()), 201
 
-@app.route('/users', strict_slashes=False, methods=['POST'])
+@app.route('/users', strict_slashes=False, methods=['POST', 'DELETE'])
 @jwt_required()
 def users():
     """Operations on users"""
     current_user = storage.get_user(get_jwt_identity())
     if current_user.user_type != 'admin':
         abort(403)
-    first_name = request.get_json().get('first_name')
-    last_name = request.get_json().get('last_name')
-    email = request.get_json().get('email')
-    phone = request.get_json().get('phone')
-    username = request.get_json().get('username')
-    password = request.get_json().get('password')
-    params = [first_name, last_name, email, phone, username, password]
-    for item in params:
-        if not item:
+    if request.method == 'POST':
+        first_name = request.get_json().get('first_name')
+        last_name = request.get_json().get('last_name')
+        email = request.get_json().get('email')
+        phone = request.get_json().get('phone')
+        username = request.get_json().get('username')
+        password = request.get_json().get('password')
+        params = [first_name, last_name, email, phone, username, password]
+        for item in params:
+            if not item:
+                return jsonify({"error": "Bad Request"}), 400
+        new_user = User(first_name=first_name, last_name=last_name, email=email,
+                        phone=phone, username=username, password=password)
+        storage.add(new_user)
+        storage.save()
+        return jsonify(storage.get_user(username).to_dict()), 200
+    elif request.method == 'DELETE':
+        user_id = request.get_json().get('userID')
+        if not user_id:
             return jsonify({"error": "Bad Request"}), 400
-    new_user = User(first_name=first_name, last_name=last_name, email=email,
-                    phone=phone, username=username, password=password)
-    storage.add(new_user)
-    storage.save()
-    return jsonify(storage.get_user(username).to_dict()), 200
+        user = storage.get(User, user_id)
+        if not user:
+            return jsonify({"error": "Not Found"}), 404
+        storage.delete(user)
+        storage.save()
+        return jsonify({})
 
 
 if __name__ == '__main__':
