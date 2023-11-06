@@ -235,8 +235,9 @@ def users():
     username = request.get_json().get('username')
     password = request.get_json().get('password')
     params = [first_name, last_name, email, phone, username, password]
-    if len(params) < 6:
-        return jsonify({"error": "Bad Request"}), 400
+    for item in params:
+        if not item:
+            return jsonify({"error": "Bad Request"}), 400
     new_user = User(first_name=first_name, last_name=last_name, email=email,
                     phone=phone, username=username, password=password)
     storage.add(new_user)
