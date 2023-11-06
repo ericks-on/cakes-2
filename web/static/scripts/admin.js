@@ -276,7 +276,7 @@ $(document).ready(function () {
         let username = $('#addUserUserName');
         let password = $('#addUserPassword');
         let confirmPassword = $('#confirmUserPassword');
-        if (password != confirmPassword){
+        if (password.val() !== confirmPassword.val()){
             alert("The two passwords must be the same");
             return;
         }
