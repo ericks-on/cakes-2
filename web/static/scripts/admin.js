@@ -241,6 +241,7 @@ $(document).ready(function () {
         }
     });
 
+    // ======Delete cookie after logout=========
     $('#logout').click(function() {
         deleteCookie('activePage');
     });
@@ -268,6 +269,7 @@ $(document).ready(function () {
         });
     });
 
+    // ===========adding new users==============
     $('#addUserButton').click(function() {
         let firstName = $('#addUserFirstName');
         let lastName = $('#addUserLastName');
@@ -305,6 +307,7 @@ $(document).ready(function () {
         })
     });
 
+    // =============deleting users=================
     $('.user-remove').click(function () {
         if (confirm("You are about to Delete the user")) {
             let userID = $(this).parent().parent().find('td').eq(0).text();
