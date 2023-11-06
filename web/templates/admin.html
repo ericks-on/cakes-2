@@ -437,50 +437,54 @@
                         </tbody>
                     </table>
                 </div>
-                <div class='add-new-users-container flex-column'>
-                    <div class='add-user-row'>
-                        <div class='add-user-row-label'>First Name</div>
-                        <input type='text' id='addUserFirstName'>
+                <div class='user-insights flex-column'>
+                    <h2>User Insights</h2>
+                    <div class='user-insights-container'>
+                        <div class='user-insights-item flex'>
+                            <h3>Number of Customers:</h3>
+                            <p>12</p>
+                        </div>
+                        <div class='user-insights-item flex'>
+                            <h3>Number of Staff:</h3>
+                            <p>12</p>
+                        </div>
+                        <div class='user-insights-item flex'>
+                            <h3>Number of Admins:</h3>
+                            <p>12</p>
+                        </div>
                     </div>
-                    <div class='add-user-row'>
-                        <div class='add-user-row-label'>Last Name</div>
-                        <input type='text' id='addUserLastName'>
-                    </div>
-                    <div class='add-user-row'>
-                        <div class='add-user-row-label'>Email</div>
-                        <input type='email' id='addUserEmail'>
-                    </div>
-                    <div class='add-user-row'>
-                        <div class='add-user-row-label'>Phone</div>
-                        <input type='text' id='addUserPhone'>
-                    </div>
-                    <div class='add-user-row'>
-                        <div class='add-user-row-label'>Username</div>
-                        <input type='text' id='addUserUserName'>
-                    </div>
-                    <div class='add-user-row'>
-                        <div class='add-user-row-label'>Password</div>
-                        <input type='password' id='addUserPassword'>
-                    </div>
-                    <button id="addUserButton">Add user</button>
                 </div>
             </div>
-            <div class='user-insights flex-column'>
-                <h2>User Insights</h2>
-                <div class='user-insights-container'>
-                    <div class='user-insights-item flex'>
-                        <h3>Number of Customers:</h3>
-                        <p>12</p>
-                    </div>
-                    <div class='user-insights-item flex'>
-                        <h3>Number of Staff:</h3>
-                        <p>12</p>
-                    </div>
-                    <div class='user-insights-item flex'>
-                        <h3>Number of Admins:</h3>
-                        <p>12</p>
-                    </div>
+            <div class='add-new-users-container flex-column'>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>First Name</div>
+                    <input type='text' id='addUserFirstName'>
                 </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Last Name</div>
+                    <input type='text' id='addUserLastName'>
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Email</div>
+                    <input type='email' id='addUserEmail'>
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Phone</div>
+                    <input type='text' id='addUserPhone'>
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Username</div>
+                    <input type='text' id='addUserUserName' readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Password</div>
+                    <input type='password' id='addUserPassword' readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Confirm Password</div>
+                    <input type='password' id='confirmUserPassword' readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                </div>
+                <button id="addUserButton">Add user</button>
             </div>
         </div>
     </div>

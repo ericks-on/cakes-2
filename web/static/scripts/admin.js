@@ -275,6 +275,11 @@ $(document).ready(function () {
         let phone = $('#addUserPhone');
         let username = $('#addUserUserName');
         let password = $('#addUserPassword');
+        let confirmPassword = $('#confirmUserPassword');
+        if (password != confirmPassword){
+            alert("The two passwords must be the same");
+            return;
+        }
         $.ajax({
             url: '/users',
             method: 'POST',
@@ -299,4 +304,5 @@ $(document).ready(function () {
             }
         })
     });
+
 });

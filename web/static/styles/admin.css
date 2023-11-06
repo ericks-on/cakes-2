@@ -80,9 +80,12 @@ td {
 /* ===============Active-page================== */
 #active-page {
     width: 75%;
-    height: 100%;
+    height: 100vh;
     border-radius: 10px;
     padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: var(--main-bg-color);
 }
 
 /* =================Incoming Orders============== */
@@ -264,7 +267,6 @@ td {
     width: 100%;
     height: 100%;
     display: none;
-    background-color: var(--main-bg-color);
 }
 
 .user-management-container {
@@ -282,12 +284,12 @@ td {
     width: 50%;
     height: 100%;
     padding: 10px;
+    border-right: 1px solid var(--secondary-text-color);
 }
 
 .user-insights {
-    width: 50%;
+    width: 100%;
     height: 100%;
-    border-left: 1px solid var(--secondary-text-color);
     padding: 10px;
 }
 
@@ -312,6 +314,7 @@ td {
 .add-new-users-container {
     gap: 20px;
     height: 50%;
+    padding: 10px;
 }
 
 .add-user-row {
@@ -320,7 +323,7 @@ td {
 
 }
 .add-user-row-label {
-    width: 20%;
+    width: 40%;
 }
 
 #addUserButton {
