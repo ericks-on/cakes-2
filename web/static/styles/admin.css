@@ -493,3 +493,15 @@ td {
     width: 20%;
     font-weight: bold;
 }
+
+/* -------reset password------ */
+#submitReset {
+    width: 40%;
+    margin: 0 auto;
+}
+.user-reset-popup {
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    padding: 10px;
+    gap: 20px;
+}

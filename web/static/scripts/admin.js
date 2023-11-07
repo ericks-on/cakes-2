@@ -1,4 +1,4 @@
-import { customAlert, alertContainer, setCookie, getCookie, deleteCookie } from "./main.js";
+import { customAlert, alertContainer, setCookie, getCookie, deleteCookie, showPopup } from "./main.js";
 
 const popupContainer = $('#popups-container');
 
@@ -334,4 +334,77 @@ $(document).ready(function () {
         }
     });
 
+    // ==========users password reset popup=========
+    $('.user-reset').click(function () {
+        let userID = $(this).parent().parent().find('td').eq(0).text();
+        $.ajax({
+            url: `/users/${userID}`,
+            methods: "GET",
+            headers: {
+                "X-CSRFToken": $('#csrf_token').val()
+            },
+            success: function(response) {
+                let item =`
+                    <div class='user-reset-popup flex-column'>
+                        <div class='edit-current-value'>
+                            <div class='ec-label'>ID</div>
+                            <div class='ec-value' id='ecUserId'>${response.id}</div>
+                        </div>
+                        <div class='edit-current-value'>
+                            <div class='ec-label'>Name</div>
+                            <div class='ec-value'>${response.first_name + " " + response.last_name}</div>
+                        </div>
+                        <div class='edit-current-value'>
+                            <div class='ec-label'>Email</div>
+                            <div class='ec-value'>${response.email}</div>
+                        </div>
+                        <div class='edit-current-value'>
+                            <div class='ec-label'>New Password</div>
+                            <input class='ec-value' type='password' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                        </div>
+                        <div class='edit-current-value'>
+                            <div class='ec-label'>Confirm Password</div>
+                            <input class='ec-value' type='password' id='confirmPasswordReset'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                        </div>
+                        <button id='submitReset'>Edit</button>
+                    </div>
+                `
+                $('#popups-container').append(item);
+                showPopup();
+            }
+        });
+    });
+
+    // ==========reset request===========
+    $('#popups-container').on('click', '.user-reset-popup #submitReset', function() {
+        let userID = $(this).parent().find('#ecUserId').text();
+        let password = $(this).parent().find("#resetPassword").val();
+        let confirm = $(this).parent().find("#confirmPasswordReset").val();
+        if (!password || !confirm) {
+            alert("Please fill all the entries");
+            return;
+        }
+        if (password !== confirm) {
+            alert("The two passwords must be the same");
+            return;
+        }else {
+            $.ajax({
+                url: "/users",
+                method: "PUT",
+                headers: {
+                    "X-CSRFToken": $("#csrf_token").val()
+                },
+                data: JSON.stringify({
+                    "password": password
+                }),
+                success: function() {
+                    alert("Password reset was successful");
+                    location.reload()
+                },
+                error: function() {
+                    customAlert("Error resseting password");
+                }
+            });
+        }
+    });
 });

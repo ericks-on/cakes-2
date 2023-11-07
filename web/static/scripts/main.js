@@ -34,6 +34,10 @@ export function deleteCookie(name) {
 // setCookie("cartItems", JSON.stringify(cartData), 7);
 // const cartData = JSON.parse(getCookie("cartItems"));
 
+export function showPopup() {
+    $('#popups-container').css('display', 'flex');
+}
+
 
 function addToCart(data) {
     const headers = {
