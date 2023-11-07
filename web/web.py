@@ -223,12 +223,16 @@ def add_notifications():
     storage.save()
     return jsonify(storage.get(Notification, notification.id).to_dict()), 201
 
-@app.route('/users', strict_slashes=False, methods=['POST', 'DELETE'])
+@app.route('/users', strict_slashes=False, methods=['POST', 'DELETE', 'GET'])
 @jwt_required()
 def users():
     """Operations on users"""
     current_user = storage.get_user(get_jwt_identity())
+    if not current_user:
+        return jsonify({"error": "Not Found"})
     if current_user.user_type != 'admin':
+        if request.method == "GET":
+            return jsonify(current_user.to_dict())
         abort(403)
     if request.method == 'POST':
         first_name = request.get_json().get('first_name')
@@ -246,7 +250,7 @@ def users():
         storage.add(new_user)
         storage.save()
         return jsonify(storage.get_user(username).to_dict()), 200
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
         user_id = request.get_json().get('userID')
         if not user_id:
             return jsonify({"error": "Bad Request"}), 400
@@ -256,6 +260,18 @@ def users():
         storage.delete(user)
         storage.save()
         return jsonify({})
+    
+@app.route('/users/<user_id>', strict_slashes=False, methods=['POST', 'DELETE', 'GET'])
+@jwt_required()
+def get_users(user_id):
+    """Operations on users"""
+    current_user = storage.get_user(get_jwt_identity())
+    if not current_user:
+        return jsonify({"error": "Not Found"}), 404
+    if current_user.user_type != 'admin':
+        abort(403)
+    user = storage.get(User, user_id)
+    return jsonify(user.to_dict())
 
 
 if __name__ == '__main__':
