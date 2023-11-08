@@ -389,14 +389,16 @@ $(document).ready(function () {
             return;
         }else {
             $.ajax({
-                url: "/users",
+                url: `/users/${userID}`,
                 method: "PUT",
                 headers: {
                     "X-CSRFToken": $("#csrf_token").val()
                 },
                 data: JSON.stringify({
+                    "edit_password": "True",
                     "password": password
                 }),
+                contentType: 'application/json',
                 success: function() {
                     alert("Password reset was successful");
                     location.reload()
