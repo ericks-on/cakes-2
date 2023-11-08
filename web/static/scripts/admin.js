@@ -422,12 +422,12 @@ $(document).ready(function () {
             success: function(response) {
                 let item =`
                     <div class='user-edit-popup flex-column'>
-                        <div class="user-edit-popup-header">
+                        <div class="user-edit-popup-header flex">
                             <div class="edit-header-column"></div>
                             <div class="edit-header-column">Current</div>
                             <div class="edit-header-column">New</div>
                         </div>
-                        <div class='user-edit-container'>
+                        <div class='user-edit-container flex-column'>
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>First Name</div>
                                 <div class="user-edit-value'>${response.first_name}</div>

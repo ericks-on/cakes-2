@@ -527,6 +527,10 @@ td {
     width: 100%;
 }
 
+.user-edit-row {
+    display: flex;
+}
+
 .user-edit-label,
 .user-edit-value,
 .user-edit-new-value {
