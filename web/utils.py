@@ -19,7 +19,7 @@ def login(username, password):
     all_users = storage.all(User)
     all_usernames = [user.username for user in all_users]
     if not username or not password:
-        return jsonify({"msg": "Missing username parameter"}), 400
+        return jsonify({"error": "Bad Request", "status_code": 400})
 
     if username in all_usernames:
         user = storage.get_user(username)
@@ -27,15 +27,17 @@ def login(username, password):
         if bcrypt.verify(password, hashed_pwd) is True:
             access_token = create_access_token(identity=username, fresh=True)
             return jsonify(access_token=access_token, user_type=user.user_type)
-        return jsonify({"error": "Wrong Username or Password"}), 401
-    return jsonify({"error": "Wrong Username or Password"}), 401
+        return jsonify({"error": "Wrong Username or Password",
+                        "status_code": 401})
+    return jsonify({"error": "Wrong Username or Password",
+                    "status_code": 401})
 
 def refresh_token():
     """Refreshing access tokens"""
     current_user = get_jwt_identity()
     user = storage.get_user(current_user)
     if not user:
-        return jsonify({"error": "Unauthorized"}), 403
+        return jsonify({"error": "Unauthorized", "status_code": 403})
     access_token = create_access_token(identity=current_user)
     return jsonify(access_token=access_token)
 
@@ -48,7 +50,7 @@ def get_cart():
     """Getting the items on cart"""
     user = storage.get_user(get_jwt_identity())
     if not user:
-        return jsonify({"error": "Unauthorized"}), 403
+        return jsonify({"error": "Unauthorized", "status_code": 403})
     cart_items = [item for item in storage.all(Cart)
                   if item.user_id == user.id]
     cart = [{"product_id": item.product_id,
@@ -67,11 +69,11 @@ def add_cart(payload):
     user = storage.get_user(get_jwt_identity())
     product = storage.get(Product, product_id)
     if not product:
-        return jsonify({"error": "Not Found"}), 404
+        return jsonify({"error": "Not Found", "status_code": 404})
     if not user:
-        return jsonify({"error": "Unauthorized"}), 403
+        return jsonify({"error": "Unauthorized", "status_code": 403})
     if not product_id or not quantity:
-        return jsonify({"error": "Bad Request"}), 400
+        return jsonify({"error": "Bad Request", "status_code": 400})
     
     new_item = Cart(product_id=product_id, quantity=quantity, user_id=user.id)
     storage.add(new_item)
@@ -82,28 +84,28 @@ def update_cart(quantity, product_id):
     """Updating item quantity on Cart"""
     user = storage.get_user(get_jwt_identity())
     if not user:
-        return jsonify({"error": "Unauthorized"}), 403
+        return jsonify({"error": "Unauthorized", "status_code": 403})
     cart = [item for item in storage.all(Cart)
             if item.user_id == user.id]
     product = storage.get(Product, product_id)
     if not product:
-        return jsonify({"error": "Not Found"}), 404
+        jsonify({"error": "Not Found", "status_code": 404})
     for item in cart:
         if item.product_id == product_id:
             item.quantity = quantity
             storage.save()
             return jsonify({product.name: item.to_dict()})
-    return jsonify({"error": "Not Found"}), 404
+    return jsonify({"error": "Not Found", "status_code": 404})
 
 def delete_cart(product_id):
     """Deleting item in cart"""
     user = storage.get_user(get_jwt_identity())
     if not user:
-        return jsonify({"error": "Unauthorized"}), 403
+        return jsonify({"error": "Unauthorized", "status_code": 403})
     product_ids = [item.product_id for item in storage.all(Cart)
                    if item.user_id == user.id]
     if product_id not in product_ids:
-        return jsonify({"error": "Not Found"}), 404
+        return jsonify({"error": "Not Found", "status_code": 404})
     cart = [item for item in storage.all(Cart)
             if item.user_id == user.id]
     product = storage.get(Product, product_id)    
