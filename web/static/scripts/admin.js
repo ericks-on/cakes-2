@@ -409,4 +409,57 @@ $(document).ready(function () {
             });
         }
     });
+
+    // =======edit user details=========
+    $(".user-edit").click(function() {
+        let userID = $(this).parent().parent().find('td').eq(0).text();
+        $.ajax({
+            url: `/users/${userID}`,
+            methods: "GET",
+            headers: {
+                "X-CSRFToken": $('#csrf_token').val()
+            },
+            success: function(response) {
+                let item =`
+                    <div class='user-edit-popup flex-column'>
+                        <div class="user-edit-popup-header">
+                            <div class="edit-header-column"></div>
+                            <div class="edit-header-column">Current</div>
+                            <div class="edit-header-column">New</div>
+                        </div>
+                        <div class='user-edit-container'>
+                            <div class="user-edit-row">
+                                <div class='user-edit-label'>First Name</div>
+                                <div class="user-edit-value'>${response.first_name}</div>
+                                <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                            </div>
+                            <div class="user-edit-row">
+                                <div class='user-edit-label'>Last name</div>
+                                <div class="user-edit-value'>${response.last_name}</div>
+                                <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                            </div>
+                            <div class="user-edit-row">
+                                <div class='user-edit-label'>Email</div>
+                                <div class="user-edit-value'>${response.email}</div>
+                                <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                            </div>
+                            <div class="user-edit-row">
+                                <div class='user-edit-label'>Username</div>
+                                <div class="user-edit-value'>${response.username}</div>
+                                <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                            </div>
+                            <div class="user-edit-row">
+                                <div class='user-edit-label'>Phone</div>
+                                <div class="user-edit-value'>${response.phone}</div>
+                                <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                            </div>
+                        </div>
+                        <button id='submitReset'>Edit</button>
+                    </div>
+                `
+                $('#popups-container').append(item);
+                showPopup();
+            }
+        });
+    });
 });

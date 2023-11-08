@@ -505,3 +505,30 @@ td {
     padding: 10px;
     gap: 20px;
 }
+
+
+/* =------edit user popup=-------- */
+.user-edit-popup {
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    width: 70%;
+}
+
+.edit-header-column {
+    width: 30%;
+    font-weight: bold;
+}
+
+.user-edit-popup-header {
+    width: 100%;
+}
+
+.user-edit-container {
+    width: 100%;
+}
+
+.user-edit-label,
+.user-edit-value,
+.user-edit-new-value {
+    width: 30%;
+}
