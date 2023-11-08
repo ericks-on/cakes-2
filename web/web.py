@@ -6,6 +6,7 @@ from datetime import datetime
 from datetime import timedelta
 from datetime import timezone
 from dotenv import load_dotenv
+from passlib.hash import bcrypt
 from flask import Flask, render_template, request, make_response, abort
 from flask import redirect, url_for, jsonify
 from flask_wtf.csrf import CSRFProtect
@@ -261,9 +262,9 @@ def users():
         storage.save()
         return jsonify({})
     
-@app.route('/users/<user_id>', strict_slashes=False, methods=['POST', 'DELETE', 'GET'])
+@app.route('/users/<user_id>', strict_slashes=False, methods=['PUT', 'DELETE', 'GET'])
 @jwt_required()
-def get_users(user_id):
+def edit_users(user_id):
     """Operations on users"""
     current_user = storage.get_user(get_jwt_identity())
     if not current_user:
@@ -271,7 +272,18 @@ def get_users(user_id):
     if current_user.user_type != 'admin':
         abort(403)
     user = storage.get(User, user_id)
-    return jsonify(user.to_dict())
+    if not user:
+        return jsonify({"error": "Not Found"})
+    if request.method == 'GET':
+        return jsonify(user.to_dict())
+    if request.method == 'PUT':
+        if request.get_json().get("edit_password"):
+            password = request.get_json().get('password')
+            if not password:
+                return jsonify({"error": "Bad Request"}), 400
+            user.password = bcrypt.hash(password)
+            storage.save()
+            return jsonify(user.to_dict())
 
 
 if __name__ == '__main__':
