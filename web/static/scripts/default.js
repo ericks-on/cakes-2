@@ -29,17 +29,23 @@ $(document).ready(function(){
     // login
     $('#login-button').click(function(event){
         event.preventDefault();
-        $.post('/', {
-            username: $('#login-username').val(),
-            password: $('#login-password').val()
-        },
-            function(data, status){
-                if (data.error) {
-                    alert(JSON.parse(data.error)['msg']);
-                }else {
-                    $('#loginForm').submit();
-                }
-        });
+        $.ajax({
+            url: '/',
+            method: 'POST',
+            data: JSON.stringify({
+                username: $('#login-username').val(),
+                password: $('#login-password').val()
+            }),
+            contentType: "application/json",
+            success: function(){
+                $('#loginForm').submit();
+            },
+            error: function(data) {
+                console.log(data.status)
+                alert(data.responseJSON.error);
+                return;
+            }
+            });
     });
 
     if (getCookie('cartItems') === "") {
