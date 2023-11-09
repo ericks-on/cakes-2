@@ -423,6 +423,7 @@ $(document).ready(function () {
                 let item =`
                     <div class='user-edit-popup flex-column'>
                         <h2>Edit User</h2>
+                        <p>***Only Enter values for the fields you wish to edit and leave the others blank</p>
                         <input type='hidden' id='editUserId' value='${response.id}'>
                         <div class="user-edit-popup-header flex">
                             <div class="edit-header-column"></div>
