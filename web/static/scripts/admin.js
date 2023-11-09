@@ -465,8 +465,8 @@ $(document).ready(function () {
             }
         });
     });
-    $("#submitUserEdit").click(function() {
-        let userID = $(this).parent().find('#editUserId').text();
+    $('#popups-container').on('click', "#submitUserEdit", function() {
+        let userID = $(this).parent().find('#editUserId').val();
         let firstName = $(this).parent().find('#userEditFirstName').val();
         let lastName = $(this).parent().find('#userEditLastName').val();
         let email = $(this).parent().find('#userEditEmail').val();
@@ -477,7 +477,7 @@ $(document).ready(function () {
         let editCount = 0;
         for (var i = 0; i < data.length; i++) {
             if (data[i]) {
-                message += `${data[i]}\n`;
+                message += `-${data[i]}\n`;
                 editCount++;
             }
         }

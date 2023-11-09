@@ -299,7 +299,7 @@ def edit_users(user_id):
             return jsonify(user.to_dict())
         fields = ["first_name", "last_name", "email", "phone", "username"]
         data = request.get_json()
-        for key in data.keys:
+        for key in data.keys():
             if key not in fields:
                 return jsonify({"error": "Bad Request"}), 400
         for key, value in data.items():
