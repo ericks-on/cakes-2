@@ -141,9 +141,17 @@ def admin():
     users = [user.to_dict() for user in storage.all(User) if user.username
              != get_jwt_identity()]
     notifications = [item.to_dict() for item in storage.all(Notification)]
+    no_of_customers = len([user for user in storage.all(User)
+                           if user.user_type == "normal"])
+    no_of_admins = len([user for user in storage.all(User)
+                        if user.user_type == "admin"])
+    no_of_staff = len([user for user in storage.all(User)
+                       if user.user_type == "staff"])
     return render_template('admin.html', user_details=user_details,
                            products_form=products_form, products=products,
-                           notifications=notifications, users=users)
+                           notifications=notifications, users=users,
+                           admins=no_of_admins, customers=no_of_customers,
+                           staff=no_of_staff)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
