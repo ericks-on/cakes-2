@@ -512,11 +512,19 @@ td {
     background-color: var(--main-bg-color);
     border-radius: 10px;
     width: 70%;
+    padding: 10px;
+    gap: 10px;
+}
+
+.user-edit-popup h2 {
+    margin: 20px auto;
 }
 
 .edit-header-column {
     width: 30%;
     font-weight: bold;
+    text-align: center;
+    font-size: 20px;
 }
 
 .user-edit-popup-header {
@@ -525,14 +533,25 @@ td {
 
 .user-edit-container {
     width: 100%;
+    gap: 20px;
 }
 
 .user-edit-row {
     display: flex;
+    height: 50px;
 }
 
 .user-edit-label,
 .user-edit-value,
 .user-edit-new-value {
     width: 30%;
+}
+
+.user-edit-label {
+    font-weight: bold;
+}
+
+#submitUserEdit {
+    width: 40%;
+    margin: 0 auto;
 }
