@@ -98,8 +98,12 @@ def index():
 @csrf.exempt
 def login():
     """Login verification"""
-    username = request.get_json().get('username')
-    password = request.get_json().get('password')
+    if request.mimetype == 'application/json':
+        username = request.get_json().get('username')
+        password = request.get_json().get('password')
+    else:
+        username = request.form.get('username')
+        password = request.form.get('password')
     
     if not username or not password:
         return jsonify({'error': 'Incorrect Username or Password'}), 400
@@ -111,7 +115,7 @@ def login():
         else:
             response = make_response(redirect(url_for('home')))
         set_access_cookies(response, access_token)
-        return response
+        return response, 302
     return jsonify(return_obj), return_obj.get('status_code')
 
 @app.route('/home', strict_slashes=False, methods=['GET'])
