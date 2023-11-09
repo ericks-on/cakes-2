@@ -472,27 +472,44 @@ $(document).ready(function () {
         let email = $(this).parent().find('#userEditEmail').val();
         let username = $(this).parent().find('#userEditUsername').val();
         let phone = $(this).parent().find('#userEditPhone').val();
-        $.ajax({
-            url: `/users/${userID}`,
-            method: "PUT",
-            headers: {
-                "X-CSRFToken": $("#csrf_token").val()
-            },
-            data: JSON.stringify({
-                "first_name": firstName,
-                "last_name": lastName,
-                "email": email,
-                "username": username,
-                "phone": phone
-            }),
-            contentType: 'application/json',
-            success: function() {
-                alert("User details edited successfully");
-                location.reload()
-            },
-            error: function() {
-                customAlert("Error editing user details");
+        var data = [firstName, lastName, email, username, phone];
+        let message = "You are about to edit the following fields:\n";
+        let editCount = 0;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i]) {
+                message += `${data[i]}\n`;
+                editCount++;
             }
-        });
+        }
+        if (editCount === 0) {
+            alert("Please fill at least one field");
+            return;
+        }
+        if (confirm(message)) {
+            $.ajax({
+                url: `/users/${userID}`,
+                method: "PUT",
+                headers: {
+                    "X-CSRFToken": $("#csrf_token").val()
+                },
+                data: JSON.stringify({
+                    "first_name": firstName,
+                    "last_name": lastName,
+                    "email": email,
+                    "username": username,
+                    "phone": phone
+                }),
+                contentType: 'application/json',
+                success: function() {
+                    alert("User details edited successfully");
+                    location.reload()
+                },
+                error: function() {
+                    customAlert("Error editing user details");
+                }
+            });
+        }else {
+            return;
+        }
     });
 });
