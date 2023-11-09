@@ -520,6 +520,11 @@ td {
     margin: 20px auto;
 }
 
+.user-edit-popup p {
+    font-size: 20px;
+    color: red;
+}
+
 .edit-header-column {
     width: 30%;
     font-weight: bold;

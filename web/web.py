@@ -274,7 +274,8 @@ def users():
         storage.save()
         return jsonify({})
     
-@app.route('/users/<user_id>', strict_slashes=False, methods=['PUT', 'DELETE', 'GET'])
+@app.route('/users/<user_id>', strict_slashes=False,
+           methods=['PUT', 'DELETE', 'GET'])
 @jwt_required()
 def edit_users(user_id):
     """Operations on users"""
@@ -296,6 +297,16 @@ def edit_users(user_id):
             user.password = bcrypt.hash(password)
             storage.save()
             return jsonify(user.to_dict())
+        fields = ["first_name", "last_name", "email", "phone", "username"]
+        data = request.get_json()
+        for key in data.keys:
+            if key not in fields:
+                return jsonify({"error": "Bad Request"}), 400
+        for key, value in data.items():
+            if value != "":
+                setattr(user, key, value)
+        storage.save()
+        return jsonify(user.to_dict())
 
 
 if __name__ == '__main__':
