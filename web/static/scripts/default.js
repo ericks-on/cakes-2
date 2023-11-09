@@ -41,7 +41,6 @@ $(document).ready(function(){
                 $('#loginForm').submit();
             },
             error: function(data) {
-                console.log(data.status)
                 alert(data.responseJSON.error);
                 return;
             }
