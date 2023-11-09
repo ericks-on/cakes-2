@@ -422,6 +422,7 @@ $(document).ready(function () {
             success: function(response) {
                 let item =`
                     <div class='user-edit-popup flex-column'>
+                        <h2>Edit User</h2>
                         <div class="user-edit-popup-header flex">
                             <div class="edit-header-column"></div>
                             <div class="edit-header-column">Current</div>
@@ -430,31 +431,31 @@ $(document).ready(function () {
                         <div class='user-edit-container flex-column'>
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>First Name</div>
-                                <div class="user-edit-value'>${response.first_name}</div>
+                                <div class='user-edit-value'>${response.first_name}</div>
                                 <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                             </div>
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>Last name</div>
-                                <div class="user-edit-value'>${response.last_name}</div>
+                                <div class='user-edit-value'>${response.last_name}</div>
                                 <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                             </div>
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>Email</div>
-                                <div class="user-edit-value'>${response.email}</div>
+                                <div class='user-edit-value'>${response.email}</div>
                                 <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                             </div>
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>Username</div>
-                                <div class="user-edit-value'>${response.username}</div>
+                                <div class='user-edit-value'>${response.username}</div>
                                 <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                             </div>
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>Phone</div>
-                                <div class="user-edit-value'>${response.phone}</div>
+                                <div class='user-edit-value'>${response.phone}</div>
                                 <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                             </div>
                         </div>
-                        <button id='submitReset'>Edit</button>
+                        <button id='submitUserEdit'>Edit</button>
                     </div>
                 `
                 $('#popups-container').append(item);
