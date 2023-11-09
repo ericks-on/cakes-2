@@ -423,6 +423,7 @@ $(document).ready(function () {
                 let item =`
                     <div class='user-edit-popup flex-column'>
                         <h2>Edit User</h2>
+                        <input type='hidden' id='editUserId' value='${response.id}'>
                         <div class="user-edit-popup-header flex">
                             <div class="edit-header-column"></div>
                             <div class="edit-header-column">Current</div>
@@ -432,27 +433,27 @@ $(document).ready(function () {
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>First Name</div>
                                 <div class='user-edit-value'>${response.first_name}</div>
-                                <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                                <input class='user-edit-new-value' value="" type='text' id='userEditFirstName'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                             </div>
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>Last name</div>
                                 <div class='user-edit-value'>${response.last_name}</div>
-                                <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                                <input class='user-edit-new-value' value="" type='text' id='userEditLastName'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                             </div>
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>Email</div>
                                 <div class='user-edit-value'>${response.email}</div>
-                                <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                                <input class='user-edit-new-value' value="" type='text' id='userEditEmail'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                             </div>
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>Username</div>
                                 <div class='user-edit-value'>${response.username}</div>
-                                <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                                <input class='user-edit-new-value' value="" type='text' id='userEditUsername'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                             </div>
                             <div class="user-edit-row">
                                 <div class='user-edit-label'>Phone</div>
                                 <div class='user-edit-value'>${response.phone}</div>
-                                <input class='user-edit-new-value' value="" type='text' id='resetPassword'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                                <input class='user-edit-new-value' value="" type='text' id='userEditPhone'  readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
                             </div>
                         </div>
                         <button id='submitUserEdit'>Edit</button>
@@ -460,6 +461,36 @@ $(document).ready(function () {
                 `
                 $('#popups-container').append(item);
                 showPopup();
+            }
+        });
+    });
+    $("#submitUserEdit").click(function() {
+        let userID = $(this).parent().find('#editUserId').text();
+        let firstName = $(this).parent().find('#userEditFirstName').val();
+        let lastName = $(this).parent().find('#userEditLastName').val();
+        let email = $(this).parent().find('#userEditEmail').val();
+        let username = $(this).parent().find('#userEditUsername').val();
+        let phone = $(this).parent().find('#userEditPhone').val();
+        $.ajax({
+            url: `/users/${userID}`,
+            method: "PUT",
+            headers: {
+                "X-CSRFToken": $("#csrf_token").val()
+            },
+            data: JSON.stringify({
+                "first_name": firstName,
+                "last_name": lastName,
+                "email": email,
+                "username": username,
+                "phone": phone
+            }),
+            contentType: 'application/json',
+            success: function() {
+                alert("User details edited successfully");
+                location.reload()
+            },
+            error: function() {
+                customAlert("Error editing user details");
             }
         });
     });
