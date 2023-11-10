@@ -512,4 +512,58 @@ $(document).ready(function () {
             return;
         }
     });
+
+    // =============Inventory================
+    // ------adding inventory item-----------
+    $("#add-new-inventory").click(function() {
+        let item = `
+            <div class='inventory-add-popup flex-column'>
+                <h2>Add New Inventory Item</h2>
+                <div class='inventory-add-row'>
+                    <div class='inventory-add-label'>Name</div>
+                    <input class='inventory-add-value' type='text' id='inventoryAddName'>
+                </div>
+                <div class='inventory-add-row'>
+                    <div class='inventory-add-label'>Quantity</div>
+                    <input class='inventory-add-value' type='number' id='inventoryAddQuantity'>
+                </div>
+                <div class='inventory-add-row'>
+                    <div class='inventory-add-label'>Cost(Per unit)</div>
+                    <input class='inventory-add-value' type='number' id='inventoryAddCost'>
+                </div>
+                <button id='submitInventoryAdd'>Add</button>
+            </div>
+        `
+        $('#popups-container').append(item);
+        showPopup();
+    });
+    $('#popups-container').on('click', '#submitInventoryAdd', function() {
+        let name = $(this).parent().find('#inventoryAddName').val();
+        let quantity = $(this).parent().find('#inventoryAddQuantity').val();
+        let cost = $(this).parent().find('#inventoryAddCost').val();
+        if (!name || !quantity || !cost) {
+            alert("Please fill all the entries");
+            return;
+        }
+        $.ajax({
+            url: "/inventory",
+            method: "POST",
+            headers: {
+                "X-CSRFToken": $("#csrf_token").val()
+            },
+            data: JSON.stringify({
+                "name": name,
+                "quantity": quantity,
+                "cost": cost
+            }),
+            contentType: "application/json",
+            success: function() {
+                alert("Inventory item added successfully");
+                location.reload();
+            },
+            error: function() {
+                customAlert("Error adding inventory item");
+            }
+        });
+    });
 });
