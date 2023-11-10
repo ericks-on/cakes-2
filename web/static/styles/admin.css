@@ -17,6 +17,7 @@ td {
     max-width: 100px;
     overflow: clip;
     text-overflow: ellipsis;
+    font-size: 15px;
 }
 
 /* ==================Sidebar================= */
