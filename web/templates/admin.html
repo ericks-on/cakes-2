@@ -465,36 +465,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for item in inventory %}
                         <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>12</td>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.quantity }}</td>
                             <td><button class="edit">Edit</button></td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>12</td>
-                            <td><button class="edit">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>12</td>
-                            <td><button class="edit">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>12</td>
-                            <td><button class="edit">Edit</button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Product Name</td>
-                            <td>12</td>
-                            <td><button class="edit">Edit</button></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

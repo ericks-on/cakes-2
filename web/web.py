@@ -23,6 +23,8 @@ from models import storage
 from models.product import Product
 from models.notification import Notification
 from models.user import User
+from models.inventory import Inventory
+from models.input import Input
 from web.forms import ProductsForm
 
 
@@ -147,11 +149,12 @@ def admin():
                         if user.user_type == "admin"])
     no_of_staff = len([user for user in storage.all(User)
                        if user.user_type == "staff"])
+    inventory = [item.to_dict() for item in storage.all(Inventory)]
     return render_template('admin.html', user_details=user_details,
                            products_form=products_form, products=products,
                            notifications=notifications, users=users,
                            admins=no_of_admins, customers=no_of_customers,
-                           staff=no_of_staff)
+                           staff=no_of_staff, inventory=inventory)
 
 @app.route('/cart', strict_slashes=False, methods=['POST', 'GET', 'PUT',
                                                    'DELETE'])
@@ -278,7 +281,7 @@ def users():
            methods=['PUT', 'DELETE', 'GET'])
 @jwt_required()
 def edit_users(user_id):
-    """Operations on users"""
+    """Operations on users specified by id"""
     current_user = storage.get_user(get_jwt_identity())
     if not current_user:
         return jsonify({"error": "Not Found"}), 404
@@ -307,6 +310,53 @@ def edit_users(user_id):
                 setattr(user, key, value)
         storage.save()
         return jsonify(user.to_dict())
+    
+@app.route('/inventory', strict_slashes=False,
+           methods=['POST', 'GET', 'PUT', 'DELETE'])
+def inventory():
+    """Operations on inventory"""
+    if request.method == 'POST':
+        name = request.get_json().get('name')
+        cost = request.get_json().get('cost')
+        quantity = request.get_json().get('quantity')
+        if not name or not cost or not quantity:
+            return jsonify({"error": "Bad Request"}), 400
+        new_input = Input(name=name, cost=cost)
+        storage.add(new_input)
+        storage.save()
+        new_item = Inventory(name=name, quantity=quantity,
+                             input_id=new_input.id)
+        storage.add(new_item)
+        storage.save()
+        return jsonify(storage.get(Inventory, new_item.id).to_dict()), 201
+    if request.method == 'GET':
+        products = [item.to_dict() for item in storage.all(Product)]
+        return jsonify({"products": products})
+    if request.method == 'PUT':
+        name = request.get_json().get('name')
+        price = request.get_json().get('price')
+        quantity = request.get_json().get('quantity')
+        id_ = request.get_json().get('id')
+        if not name or not price or not quantity or not id_:
+            return jsonify({"error": "Bad Request"}), 400
+        product = storage.get(Product, id_)
+        if not product:
+            return jsonify({"error": "Not Found"}), 404
+        product.name = name
+        product.price = price
+        product.quantity = quantity
+        storage.save()
+        return jsonify(storage.get_product(name).to_dict()), 200
+    if request.method == 'DELETE':
+        product_id = request.get_json().get('product_id')
+        if not product_id:
+            return jsonify({"error": "Bad Request"}), 400
+        product = storage.get(Product, product_id)
+        if not product:
+            return jsonify({"error": "Not Found"}), 404
+        storage.delete(product)
+        storage.save()
+        return jsonify({})
 
 
 if __name__ == '__main__':

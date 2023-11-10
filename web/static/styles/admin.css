@@ -560,3 +560,16 @@ td {
     width: 40%;
     margin: 0 auto;
 }
+
+/* ======inventory=========== */
+/* -----add new inventory popup------ */
+#submitInventory {
+    width: 40%;
+    margin: 0 auto;
+}
+.inventory-add-popup {
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    padding: 10px;
+    gap: 20px;
+}
