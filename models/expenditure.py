@@ -2,7 +2,7 @@
 """Contains the Expenditure model"""
 from sqlalchemy import Column, String, ForeignKey, Integer, CheckConstraint
 from sqlalchemy.orm import relationship
-from models.item import Item
+from models.inventory import Inventory
 from models.base_model import Basemodel, Base
 
 
@@ -13,7 +13,7 @@ class Expenditure(Basemodel, Base):
     description = Column(String(1024), nullable=False)
     amount = Column(Integer, nullable=False)
 
-    items = relationship(Item, backref='expenditure', cascade='all, delete')
+    items = relationship(Inventory, backref='expenditure', cascade='all, delete')
     __table_args__ = (
             CheckConstraint('amount >= 0', name='positive_expenditure_amt'),
             )
