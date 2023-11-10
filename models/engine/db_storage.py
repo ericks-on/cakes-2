@@ -10,7 +10,7 @@ from models.user import User
 from models.cash import Cash
 from models.mpesa import Mpesa
 from models.transaction import Transaction
-from models.expenditure import Expenditure
+from models.input import Input
 from models.inventory import Inventory
 from models.order import Order
 from models.product import Product
@@ -21,7 +21,7 @@ from models.notification import Notification
 
 load_dotenv()
 tables = [User.__table__, Product.__table__, Transaction.__table__,
-          Expenditure.__table__, Inventory.__table__,
+          Input.__table__, Inventory.__table__,
           Order.__table__, ProductSales.__table__, Cash.__table__,
           Mpesa.__table__, Notification.__table__, Cart.__table__]
 

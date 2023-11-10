@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship
 from models.base_model import Basemodel, Base
 from models.transaction import Transaction
 from models.order import Order
-from models.expenditure import Expenditure
 from models.cart import Cart
 
 
@@ -20,6 +19,5 @@ class User(Basemodel, Base):
     username = Column(String(60), nullable=False, unique=True)
     password = Column(String(128), nullable=False)
     transactions = relationship(Transaction, backref='users')
-    expenditures = relationship(Expenditure, backref='user')
     orders = relationship(Order, backref='orders', cascade='all, delete')
     cart = relationship(Cart, backref='user', cascade='all, delete')
