@@ -313,6 +313,7 @@ def edit_users(user_id):
     
 @app.route('/inventory', strict_slashes=False,
            methods=['POST', 'GET', 'PUT', 'DELETE'])
+@jwt_required()
 def inventory():
     """Operations on inventory"""
     if request.method == 'POST':
