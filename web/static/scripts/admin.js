@@ -566,4 +566,40 @@ $(document).ready(function () {
             }
         });
     });
+
+    // -----------editing inventory item-----------
+    $('.inventory-edit').click(function() {
+        let fields = $(this).parent().parent().find('td');
+        let id = fields.eq(0).text();
+        let name = fields.eq(1).text();
+        let quantity = parseInt(fields.eq(2).text());
+        let cost = parseInt(fields.eq(3).text());
+        let item = `
+            <div class='inventory-edit-popup flex-column'>
+                <h2>Edit Inventory Item</h2>
+                <div class='inventory-edit-row'>
+                    <div class='inventory-edit-label'>ID</div>
+                    <div class='inventory-edit-value' id='inventoryEditId'>${id}</div>
+                </div>
+                <div class='inventory-edit-row'>
+                    <div class='inventory-edit-label'>Name</div>
+                    <div class='inventory-edit-value'>${name}</div>
+                    <input class='inventory-edit-new-value' type='text' id='inventoryEditName'>
+                </div>
+                <div class='inventory-edit-row'>
+                    <div class='inventory-edit-label'>Quantity</div>
+                    <div class='inventory-edit-value'>${quantity}</div>
+                    <input class='inventory-edit-new-value' type='number' id='inventoryEditQuantity'>
+                </div>
+                <div class='inventory-edit-row'>
+                    <div class='inventory-edit-label'>Cost(Per unit)</div>
+                    <div class='inventory-edit-value'>${cost}</div>
+                    <input class='inventory-edit-new-value' type='number' id='inventoryEditCost'>
+                </div>
+                <button id='submitInventoryEdit'>Edit</button>
+            </div>
+        `
+        $('#popups-container').append(item);
+        showPopup();
+    });
 });
