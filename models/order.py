@@ -10,7 +10,8 @@ class Order(Basemodel, Base):
     """the Order model"""
     __tablename__ = 'orders'
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
-    status = Column(String(60), nullable=False, default='pending')
+    order_status = Column(String(60), nullable=False, default='pending')
+    payment_status = Column(String(60), nullable=False, default='not paid')
     order_value = Column(Integer, nullable=False)
 
     products = relationship(ProductSales, backref='order')
