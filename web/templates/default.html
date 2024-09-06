@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../static/styles/main_style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="../static/styles/google-fonts.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="../static/scripts/jquery_3.7.1.js"></script>
+    <script src="../static/scripts/buttons.js"></script>
+    {% block main_js %}
+    <script src="../static/scripts/default.js"></script>
+    {% endblock %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <title>{% block title %}{% endblock %}</title>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <div id="content" class="d-flex-column">
+        {% block header %}
+        <div class="header-container flex">
+            <div class='logo-container'>
+                <a href="/">
+                    <img src="../static/images/cakes_logo.png" alt="logo" class="logo">
+                </a>
+            </div>
+            <div class='action-buttons flex-column'>
+                {% block action_buttons %}
+                <div class='action-buttons-container flex'>
+                    <div class='action-button flex-cc'>
+                        <span class="material-symbols-outlined">
+                            history
+                        </span>
+                    </div>
+                    <div class='action-button cart-notifications flex-cc' id='cart-ab'>
+                        <span class="material-symbols-outlined">
+                            shopping_cart
+                        </span>
+                        <div class='new-items'>
+                        </div>
+                    </div>
+                    <div class='action-button flex-cc notifications'>
+                        <span class="material-symbols-outlined">
+                            notifications
+                        </span>
+                        <div class='new-notifications'>
+                        </div>
+                    </div>
+                </div>
+                <div class='action-buttons-popup'>
+                    {% block action_buttons_popups %}
+                    {% endblock %}
+                    <div class='exit-button'>
+                        <span class='material-symbols-outlined'>
+                            close
+                        </span>
+                    </div>
+                </div>
+                {% endblock %}
+            </div>
+            <div class='profile-container flex-column'>
+                <div class='profile-button-container'>
+                    <div class='profile-button flex'>
+                        <div class="profile-image-container">
+                            <span class="material-symbols-outlined">
+                                person
+                            </span>
+                        </div>
+                        <div class="profile-name-container flex">
+                            <div class="profile-name">
+                                {% block profile_name %}
+                                Login
+                                {% endblock %}
+                            </div>
+                            <div class="profile-dropdown">
+                                <span class="material-symbols-outlined">
+                                    arrow_drop_down
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='profile-details'>
+                    {% block profile_details %}
+                    <form action="/" method="POST" id='loginForm'>
+                        <div class='login-container flex-column'>
+                            <div class='login-title'>Login</div>
+                            <div class='login-inputs flex-column'>
+                                <div class='login-input-container flex-column'>
+                                    <div class='login-input-label'>Username</div>
+                                    <input type="text" name="username" class='login-input' id='login-username'>
+                                </div>
+                                <div class='login-input-container flex-column'>
+                                    <div class='login-input-label'>Password</div>
+                                    <input type="password" name="password" class='login-input' id='login-password'>
+                                </div>
+                            </div>
+                            <div class='login-button-container flex-cc'>
+                                <button id='login-button'>Login</button>
+                            </div>
+                        </div>
+                    </form>
+                    {% endblock %}
+                    <div class='exit-button' id='profile-close'>
+                        <span class='material-symbols-outlined'>
+                            close
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        <div id="main-content" class='flex'>
+            {% block main_content %}
+            <div class='products-description'>
+                <div class='products-description-content flex-column'>
+                    <div class='products-description-title'>
+                        Donut Delights: Hole-y Moly, You're in for a Treat!
+                    </div>
+                    <div class='products-description-text'>
+                        At our donut paradise, we do hole-y things with our dough.
+                        Step right in, and let's glaze over your sweetest desires!"
+                    </div>
+                    <div class='products-description-button-container flex-cc'>
+                        <button id='order-now' class='products-description-button'>Order now</button>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            <div id='alertPopup'>
+                <div class='alertPopupMessage flex-cc'>
+                </div>
+                <div id='alertClose' class='flex-cc'>
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+            </div>
+    </div>
+    <div id="footer" class="flex-cc d-flex">
+    </div>
+    <div id="popups-container">
+        {% block popups%}
+        <div id='cart-container'>
+            <div class='products-container flex-column'>
+                {% for product in products %}
+                <div class='product'>
+                    <div class='product-image-container'>
+                        <img src="../static/images/{{ product.image }}" alt="cake" class="product-image">
+                    </div>
+                    <div class='product-details flex'>
+                        <div class='product-name'>{{ product.name }}</div>
+                        <div class='product-price'>KSH {{ product.price }}</div>
+                        <input type="hidden" name="product_id" value="{{ product.id }}" class='product-id-cart'>
+                        <input type='hidden' name="product_image" value='{{ product.image }}' class='product-image-cart'>
+                    </div>
+                    <div class='product-add-to-cart flex-cc flex'>
+                        <span class="material-symbols-outlined">
+                            add_shopping_cart
+                        </span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class='cart'>
+                <div class='cart-header flex'>
+                    <div class='cart-header-title'>Cart</div>
+                    <div class='clear-cart flex-cc' id='emptyCart'>
+                        <span class="material-symbols-outlined">
+                            remove_shopping_cart
+                        </span>
+                        <span class='clear-cart-label'>Empty cart</span>
+                    </div>
+                </div>
+                <br>
+                <div class='cart-content'>
+                    <div class='cart-content-product-title flex'>
+                        <div class='cart-content-product-name'>Product</div>
+                        <div class='cart-content-product-quantity'>Quantity</div>
+                        <div class='cart-content-product-price'>Total</div>
+                    </div>
+                    <div class='cart-content-products'>
+                        {% block cart %}
+                        {% endblock %}
+                        <div class='default-cart-display'>
+                            <span class='material-symbols-outlined'>
+                                shopping_cart
+                            </span>
+                            <p>Cart is currently empty</p>
+                        </div>
+                    </div>
+                    <div class='cart-footer flex'>
+                        <div class='total-price-container flex'>
+                            <div class='total-price-label'>Total price:</div>
+                            <div class='total-price-value' id='cartTotal'>0</div>
+                        </div>
+                        <div class='checkout-button-container'>
+                            <button class='checkout-button'>Checkout >></button>
+                        </div>
+                    </div>
+                    {% block cart_csrf %}{% endblock %}
+            </div>
+        </div>
+        {% endblock %}
+        <div class='exit-popup flex-cc' id='exit-popup'>
+            <span class="material-symbols-outlined">
+                close
+            </span>
+        </div>
+    </div>
+</body>
+</html>

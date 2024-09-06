@@ -1,0 +1,671 @@
+:root{
+    --main-bg-color: #F4A460;
+    --main-text-color: #000;
+    --secondary-bg-color: #D9DAD2;
+    --secondary-text-color: #fff;
+    --dark-bg-color: #000;
+    --main-btn-color: #000;
+    --secondary-btn-color: #228B22;
+    --gold-color: #FFD700;
+    --silver-color: #C0C0C0;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    background-color: var(--secondary-bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    height: 5%;
+    background-color: var(--dark-bg-color);
+}
+
+.grid {
+    display: grid;
+}
+
+.flex{
+    display: flex;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-cc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.exit-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: var(--secondary-text-color);
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body{
+    color: var(--main-text-color);
+}
+
+#content{
+    height: 100vh;
+}
+
+/* ==============The Header ============== */
+
+.header-container{
+    background-color: var(--main-bg-color);
+    height: 60px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+ 
+/* ------logo--------- */
+.logo-container{
+    height: 80%;
+    width: 100px;
+}
+
+.logo-container img {
+    height: 100%;
+    width: 100%;
+}
+
+
+/* -----------login--------- */
+.login-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.login-input-container {
+    margin: 5px 0;
+}
+
+.login-input:focus {
+    outline: none;
+}
+
+#login-button {
+    width: 70%;
+    margin: 10px 0;
+    background-color: var(--dark-bg-color);
+    color: var(--secondary-text-color);
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* ---------profile--------- */
+.profile-container {
+    z-index: 1;
+    margin-top: auto;
+}
+
+.profile-button-container {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-button {
+    height: 30px;
+    border-radius: 5px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+}
+
+.profile-details {
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    position: relative;
+    padding-top: 20px;
+}
+
+.profile-button:hover {
+    background-color: var(--dark-bg-color);
+    cursor: pointer;
+    color: var(--secondary-text-color);
+}
+
+.profile-details-item {
+    width: 100%;
+    height: 50px;
+    padding: 0 5px;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-details-item-label {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.profile-edit,
+.profile-logout {
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    margin: 5px 0;
+    border-radius: 5px;
+    background-color: var(--secondary-btn-color);
+    color: var(--main-text-color);
+}
+
+.profile-edit:hover,
+.profile-logout:hover {
+    background-color: var(--dark-bg-color);
+    cursor: pointer;
+    color: var(--secondary-text-color);
+    transition: all ease 0.3s;
+}
+
+.profile-image-container{
+    height: 20px;
+    width: 20px;
+}
+
+.profile-name-container {
+    height: 20px;
+    margin-left: 5px;
+    padding: 0 5px;
+    border-radius: 5px;
+}
+
+.profile-name {
+    overflow-x: clip;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100px;
+}
+
+.profile-dropdown {
+    width: 20px;
+}
+
+/* --------action buttons----------- */
+
+.action-buttons {
+    z-index: 1;
+    margin-top: auto;
+    align-items: center;
+}
+.action-buttons-container {
+    width: 100px;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+.action-button:hover {
+    cursor: pointer;
+    transition: all ease 0.4s;
+    transform: translateY(-5px);
+}
+
+.notifications, .cart-notifications {
+    position: relative;
+}
+
+.new-notifications, .new-items {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 5px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+/* --------action buttons popup---------- */
+
+.action-buttons-popup {
+    width: 50vh;
+    height: 50vh;
+    display: none;
+    flex-direction: column;
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    padding-top: 25px;
+    position: relative;
+}
+
+/* --------notifications popup----------- */
+.notifications-popup h2 {
+    border-bottom: 1px solid var(--secondary-text-color);
+}
+
+.notification-item {
+    border-bottom: 1px solid var(--secondary-text-color);
+    height: 50px;
+    width: 100%;
+    padding: 5px;
+}
+
+.notification-container {
+    width: 100%;
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.notification-item-content {
+    width: 100%;
+}
+
+.notification-item-description {
+    width: 100%;
+    font-size: 10px;
+    overflow-x: clip;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ====================The main content======================= */
+
+#main-content {
+    width: 100%;
+    height: calc(100vh - 60px);
+    justify-content: center;
+    align-items: center;
+    background-image: url(../images/donut_bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+
+
+/* ===========================Product Description=================== */
+
+.products-description {
+    background-image: url(../images/donut_bg.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 80%;
+    height: 100%;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 5px;
+}
+
+.products-description-content {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    color: var(--secondary-text-color);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.products-description-title {
+    font-size: 50px;
+    font-weight: bold;
+    color: var(--gold-color);
+
+}
+
+.products-description-text {
+    font-size: 20px;
+    max-width: 50%;
+    margin: 20px 0;
+    font-weight: 500;
+    color: var(--secondary-text-color);
+}
+
+.products-description-button {
+    background-color: var(--dark-bg-color);
+    color: var(--gold-color);
+    cursor: pointer;
+    width: 100px;
+    height: 50px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+
+}
+
+.products-description-button-container {
+    margin-top: 100px;
+
+}
+
+
+
+
+/* ========================popups============================== */
+
+#popups-container {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.8);
+    display: none;
+}
+
+.exit-popup {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    color: var(--secondary-text-color);
+    border-radius: 50%;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ===============Products container========= */
+
+.products-container {
+    height: 100%;
+    width: 20%;
+    gap: 10px;
+    padding: 5px;
+    text-align: center;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    background-color: var(--main-bg-color);
+    border-right: 1px solid var(--dark-bg-color);
+}
+
+.product {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.product-details {
+    justify-content: space-between;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.product-name {
+    width: 50%;
+    overflow-x: clip;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.product-price {
+    width: 50%;
+    overflow-x: clip;
+    text-overflow: ellipsis;
+    text-align: right;
+}
+
+.product-image-container {
+    width: 100%;
+    height: 100px;
+}
+
+.product-image-container img {
+    width: 100%;
+    height: 100%;
+}
+
+.product-add-to-cart {
+    text-align: center;
+    width: 70px;
+    background-color: var(--dark-bg-color);
+    color: var(--secondary-text-color);
+    border-radius: 5px;
+    margin-right: auto;
+}
+
+.product-add-to-cart:hover {
+    background-color: var(--secondary-btn-color);
+    color: var(--main-text-color);
+    box-shadow: 0 0 2px 2px rgba(0,0,0,0.3);
+    cursor: pointer;
+}
+
+
+
+/* ======================cart container====================== */
+
+
+#cart-container {
+    width: 60%;
+    height: 80%;
+    padding: 5px;
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    display: none;
+}
+
+/*---------------- the cart ----------*/
+.cart {
+    border-radius: 10px;
+    margin: 10px 0;
+    height: 100%;
+    width: 60%;
+    padding: 5px;
+    margin: 0 auto;
+}
+
+.cart-header {
+    justify-content: space-between;
+}
+
+.clear-cart {
+    color: red;
+}
+
+.clear-cart:hover {
+    cursor: pointer;
+}
+
+.cart-header-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.cart-product-image img {
+    width: 50px;
+    height: 50px;
+}
+
+.cart-product-image {
+    position: relative;
+}
+
+.delete-cart-product {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: var(--secondary-text-color);
+    border-radius: 50%;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.delete-cart-product:hover {
+    cursor: pointer;
+}
+
+.cart-content {
+    height: 90%;
+    overflow-y: auto;
+    padding: 5px;
+    padding-top: 0;
+}
+
+.cart-content-products {
+    position: relative;
+    height: 80%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.cart-content-product {
+    justify-content: space-between;
+    text-align: left;
+    border-top: 1px solid var(--main-text-color);
+    padding: 5px;
+}
+
+.cart-content-product-title {
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    justify-content: space-between;
+    background-color: var(--main-bg-color);
+    position: sticky;
+    top: 0;
+}
+
+.cart-content-product-quantity-decreament,
+.cart-content-product-quantity-increament,
+.cart-content-product-quantity-value {
+    margin: auto 0;
+}
+
+.cart-content-product-quantity-decreament:hover,
+.cart-content-product-quantity-increament:hover {
+    cursor: pointer;
+}
+
+.total-price-container {
+    width: 70%;
+}
+
+.checkout-button-container {
+    width: 30%;
+    height: 30px;
+}
+
+.checkout-button-container button {
+    width: 100%;
+    height: 100%;
+    background-color: var(--dark-bg-color);
+    color: var(--secondary-text-color);
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.checkout-button-container button:hover {
+    background-color: var(--secondary-btn-color);
+    color: var(--main-text-color);
+    cursor: pointer;
+}
+
+.total-price-label {
+    margin-right: 5px;
+}
+
+.total-price-value {
+    overflow-x: clip;
+    text-overflow: ellipsis;
+}
+
+.cart-content-product-quantity-value {
+    width: 50px;
+    border: 1px solid var(--main-text-color);
+    height: 50px;
+    margin: auto 0;
+    text-align: center;
+}
+
+.cart-content-product-title {
+    border-bottom: 1px solid var(--dark-bg-color);
+}
+
+.cart-footer {
+    justify-content: space-between;
+    align-items: center;
+    height: 10%;
+    border-top: 1px solid var(--main-text-color);
+}
+
+#emptyCart:hover {
+    cursor: pointer;
+}
+
+.default-cart-display {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============alert popup========== */
+#alertPopup {
+    background-color: var(--secondary-bg-color);
+    position: absolute;
+    z-index: 1000;
+    bottom: 10px;
+    right: 20px;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    padding: 10px;
+    display: none;
+}
+
+#alertClose {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    cursor: pointer;
+}
+
+.alertPopupMessage {
+    width: 90%;
+    text-align: center;
+}
+
+#logout-btn {
+    text-decoration: none;
+}

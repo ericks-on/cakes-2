@@ -1,0 +1,576 @@
+#main-content {
+    width: 100%;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: var(--main-text-color);
+}
+
+input:focus {
+    outline: none;
+}
+
+td {
+    max-width: 100px;
+    overflow: clip;
+    text-overflow: ellipsis;
+    font-size: 15px;
+}
+
+/* ==================Sidebar================= */
+#sidebar {
+    width: 20%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: var(--main-bg-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-container-side {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-container-side img {
+    width: 150px;
+    height: 70px;
+}
+
+.sidebar-items {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.sidebar-item {
+    width: 80%;
+    display: flex;
+    height: 50px;
+    gap: 20px;
+    transition: all 0.3s ease-in-out;
+    align-items: center;
+    padding: 10px;
+}
+
+.sidebar-item:hover {
+    background-color: var(--secondary-bg-color);
+    cursor: pointer;
+}
+
+.active-sidebar {
+    background-color: var(--secondary-bg-color);
+}
+
+#logout {
+    width: 80%;
+}
+#logout .sidebar-item{
+    width: 100%;
+}
+
+/* ===============Active-page================== */
+#active-page {
+    width: 75%;
+    height: 100vh;
+    border-radius: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* =================Incoming Orders============== */
+#orders {
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-bg-color);
+    display: none;
+}
+.orders-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.incoming-orders-container {
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    border-right: 1px solid var(--secondary-text-color);
+}
+
+#incoming-orders {
+    height: 80%;
+    width: 100%;
+    font-size: 15px;
+}
+
+.incoming-orders-container h2 {
+    margin: 20px auto;
+}
+
+.auto-assign-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.auto-assign-btn  button{
+    height: 50px;
+    width: 200px;
+    border-radius: 10px;
+    background-color: var(--dark-bg-color);
+    color: var(--secondary-text-color);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* -================Notifications================= */
+#notifications-management {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: var(--main-bg-color);
+    display: none;
+}
+
+.notifications-management-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    justify-content: space-between;
+}
+
+.current-notifications-container {
+    width: 100%;
+    height: 50%;
+    padding: 10px;
+}
+
+.current-notifications-container h2 {
+    font-size: 20px;
+    margin: 10px auto;
+}
+
+.add-new-notifications {
+    width: 50%;
+    height: 40%;
+    padding: 10px;
+}
+.add-new-notifications h2 {
+    font-size: 20px;
+    margin: 20px auto;
+}
+
+.add-notifications {
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.add-notifications-btn button {
+    width: 100px;
+    height: 40px;
+    background-color: var(--dark-bg-color);
+    color: var(--secondary-text-color);
+    border-radius: 10px;
+}
+
+#notification-message {
+    border-radius: 10px;
+}
+
+#notification-message:focus {
+    outline: none;
+}
+
+/* ==================Products================= */
+#products-management {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: none;
+    background-color: var(--main-bg-color);
+}
+
+.products-management-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    justify-content: space-between;
+    grid-template-columns: 50% 50%;
+    gap: 10px;
+}
+
+.current-products-container {
+    width: 100%;
+}
+
+#products-management h2 {
+    font-size: 20px;
+    margin: 10px auto;
+}
+
+#products-management input:focus {
+    outline: none;
+}
+
+.new-product-name,
+.new-product-price {
+    margin: 5px 0;
+}
+
+.add-new-products {
+    width: 50%;
+    height: 40%;
+    padding: 10px;
+}
+
+.add-product-btn button{
+    width: 100px;
+    height: 30px;
+    background-color: var(--dark-bg-color);
+    color: var(--secondary-text-color);
+    border-radius: 10px;
+}
+
+.products-inventory {
+    padding: 10px;
+    grid-column: 2;
+    grid-row: 1 / 3;
+    border-left: 1px solid var(--secondary-text-color);
+}
+
+.products-inventory h2 {
+    font-size: 20px;
+    margin: 10px auto;
+}
+
+#current-products tbody tr td,
+#products-inventory tbody tr td {
+    max-width: 100px;
+    overflow: clip;
+    text-overflow: ellipsis;
+}
+
+
+/* ==============User Management================= */
+#user-management {
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: var(--main-bg-color);
+}
+
+.user-management-container {
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+#user-management h2 {
+    font-size: 20px;
+    margin: 10px auto;
+}
+
+.current-users-container {
+    width: 100%;
+    height: 55vh;
+    padding: 10px;
+    grid-row: 2;
+    grid-column: 1 / 3;
+    text-align: center;
+}
+
+.user-insights {
+    width: 100%;
+    padding: 10px;
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.user-insights h3 {
+    font-size: 15px;
+}
+
+.user-insights h2 {
+    font-size: 20px;
+    margin: 10px auto;
+}
+
+.user-insights p {
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+.user-insights-item {
+    margin: 10px 0;
+}
+
+.add-new-users-container {
+    gap: 20px;
+    padding: 10px;
+    overflow: auto;
+    grid-row: 1;
+    grid-column: 2;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
+}
+
+.add-user-row {
+    display: flex;
+    gap: 20px;
+
+}
+.add-user-row-label {
+    width: 40%;
+}
+
+#addUserButton {
+    width: 50%;
+}
+
+
+/* ============Inventory Management============ */
+#inventory-management {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: var(--main-bg-color);
+    display: none;
+}
+
+.inventory-management-container {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#inventory-management h2 {
+    font-size: 20px;
+    margin: 10px auto;
+}
+
+.current-inventory-container {
+    width: 100%;
+}
+
+.inventory-actions {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.inventory-actions button {
+    height: 30px;
+    background-color: var(--dark-bg-color);
+    color: var(--secondary-text-color);
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/* ==============Dashboard================ */
+#dashboard {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+.dashboard-container {
+    width: 100%;
+    height: 100%;
+}
+
+.dashboard-insights {
+    width: 50%;
+    gap: 10px;
+    height: auto;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.dashboard-insight {
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    text-align: center;
+}
+
+.dashboard-insight:hover{
+    cursor: pointer;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease-in-out;
+}
+
+.dashboard-insight-title{
+    margin: 5px auto;
+    text-align: center;
+}
+
+.dashboard-insight-title h2 {
+    font-size: 20px;
+}
+
+.dashboard-insight-title p {
+    font-size: 10px;
+}
+
+
+.di-data-title h3 {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.di-data-value {
+    font-size: 15px;
+}
+
+.dashboard-insight-data {
+    margin: 2px 0;
+}
+
+/* ----dashboard insights--- */
+#revenue-insight {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#profit-insight {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#orders-insight {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#products-insight {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#sales-insight {
+    grid-column: 3;
+    grid-row: 1 / 3;
+}
+
+/* =====================popups================= */
+/* -------edit product pupups------- */
+.product-edit-popup {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    width: 50%;
+}
+
+.edit-current-value {
+    display: flex;
+    gap: 20px;
+}
+
+.ec-label{
+    width: 20%;
+    font-weight: bold;
+}
+
+/* -------reset password------ */
+#submitReset {
+    width: 40%;
+    margin: 0 auto;
+}
+.user-reset-popup {
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    padding: 10px;
+    gap: 20px;
+}
+
+
+/* =------edit user popup=-------- */
+.user-edit-popup {
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    width: 70%;
+    padding: 10px;
+    gap: 10px;
+}
+
+.user-edit-popup h2 {
+    margin: 20px auto;
+}
+
+.user-edit-popup p {
+    font-size: 20px;
+    color: red;
+}
+
+.edit-header-column {
+    width: 30%;
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
+}
+
+.user-edit-popup-header {
+    width: 100%;
+}
+
+.user-edit-container {
+    width: 100%;
+    gap: 20px;
+}
+
+.user-edit-row {
+    display: flex;
+    height: 50px;
+}
+
+.user-edit-label,
+.user-edit-value,
+.user-edit-new-value {
+    width: 30%;
+}
+
+.user-edit-label {
+    font-weight: bold;
+}
+
+#submitUserEdit {
+    width: 40%;
+    margin: 0 auto;
+}
+
+/* ======inventory=========== */
+/* -----add new inventory popup------ */
+#submitInventory {
+    width: 40%;
+    margin: 0 auto;
+}
+.inventory-add-popup {
+    background-color: var(--main-bg-color);
+    border-radius: 10px;
+    padding: 10px;
+    gap: 20px;
+}

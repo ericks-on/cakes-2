@@ -1,0 +1,2 @@
+#!/bin/bash
+python3 -m api.v1_0.app

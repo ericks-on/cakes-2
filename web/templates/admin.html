@@ -1,0 +1,489 @@
+{% extends 'default.html' %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/admin.css') }}">
+<script src="{{ url_for('static', filename='scripts/admin.js') }}" type='module'></script>
+{% endblock %}
+{% block header%}
+{% endblock %}
+{% block main_content %}
+<div id='sidebar'>
+    <div class='sidebar-container'>
+        <div class='logo-container-side'>
+            <a href="/">
+                <img src="../static/images/cakes_logo.png" alt="logo" class="logo">
+            </a>
+        </div>
+        <div class='sidebar-items'>
+            <div class='sidebar-item' id='dashboardButton'>
+                <span class='material-symbols-outlined'>
+                    dashboard
+                </span>
+                <p>Dashboard</p>
+            </div>
+            <div class='sidebar-item' id='inventoryButton'>
+                <span class='material-symbols-outlined'>
+                    inventory
+                </span>
+                <p>Inventory</p>
+            </div>
+            <div class='sidebar-item' id='productPageButton'>
+                <span class='material-symbols-outlined'>
+                    category
+                </span>
+                <p>Products</p>
+            </div>
+            <div class='sidebar-item' id='userPageButton'>
+                <span class='material-symbols-outlined'>
+                    person
+                </span>
+                <p>Users</p>
+            </div>
+            <div class='sidebar-item' id='ordersButton'>
+                <span class='material-symbols-outlined'>
+                    orders
+                </span>
+                <p>Orders</p>
+            </div>
+            <div class='sidebar-item' id='notificationsButton'>
+                <span class='material-symbols-outlined'>
+                    notifications
+                </span>
+                <p>Notifications</p>
+            </div>
+            <a href='/logout' id='logout'><div class='sidebar-item'>
+                <span class='material-symbols-outlined'>
+                    logout
+                </span>
+                <p>Logout</p>
+            </div></a>
+        </div>
+    </div>
+</div>
+<div id='active-page'>
+    <div id='dashboard'>
+        <div class="dashboard-container">
+            <div class='dashboard-insights flex-cc'>
+                <div class='dashboard-insight' id='sales-insight'>
+                    <div class='dashboard-insight-title'>
+                        <h2 class='flex-cc'>
+                            <span class="material-symbols-outlined g-light">
+                                shopping_basket
+                            </span>
+                            Sales
+                        </h2>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Total Sales</h3></div>
+                        <div class='di-data-value'><p>KSH 3,000</p></div>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Monthly sales, July</h3></div>
+                        <div class='di-data-value'><p>KSH 3,000</p></div>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Today's Sales</h3></div>
+                        <div class='di-data-value'><p>KSH 3,000</p></div>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Average Order Value</h3></div>
+                        <div class='di-data-value'><p>KSH 3,000</p></div>
+                    </div>
+                </div>
+                <div class='dashboard-insight' id='revenue-insight'>
+                    <div class='dashboard-insight-title'>
+                        <h2 class='flex-cc'>
+                            <span class="material-symbols-outlined g-light">
+                                trending_up
+                            </span>
+                            Revenue
+                        </h2>
+                        <p>July, 2023</p>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Total Revenue</h3></div>
+                        <div class='di-data-value'><p>KSH 5,000</p></div>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Total Expenses</h3></div>
+                        <div class='di-data-value'><p>KSH 2,000</p></div>
+                    </div>
+                </div>
+                <div class='dashboard-insight' id='profit-insight'>
+                    <div class='dashboard-insight-title'>
+                        <h2 class='flex-cc'>
+                            <span class="material-symbols-outlined g-light">
+                                trending_up
+                            </span>
+                            Profit
+                        </h2>
+                        <p>July, 2023</p>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Total Profit</h3></div>
+                        <div class='di-data-value'><p>KSH 5,000</p></div>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Profit Margin</h3></div>
+                        <div class='di-data-value'><p>3%</p></div>
+                    </div>
+                </div>
+                <div class='dashboard-insight' id='orders-insight'>
+                    <div class='dashboard-insight-title'>
+                        <h2 class='flex-cc'>
+                            <span class="material-symbols-outlined g-light">
+                                shopping_cart
+                            </span>
+                            Orders
+                        </h2>
+                        <p>July, 2023</p>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Total Orders</h3></div>
+                        <div class='di-data-value'><p>5</p></div>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Orders Delivered</h3></div>
+                        <div class='di-data-value'><p>3</p></div>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>Orders Pending</h3></div>
+                        <div class='di-data-value'><p>2</p></div>
+                    </div>
+                </div>
+                <div class='dashboard-insight' id='products-insight'>
+                    <div class='dashboard-insight-title'>
+                        <h2 class='flex-cc'>
+                            <span class="material-symbols-outlined g-light">
+                                inventory
+                            </span>
+                            Available
+                        </h2>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>12-pack</h3></div>
+                        <div class='di-data-value'><p>5</p></div>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>15-pack</h3></div>
+                        <div class='di-data-value'><p>3</p></div>
+                    </div>
+                    <div class='dashboard-insight-data'>
+                        <div class='di-data-title'><h3>7-pack</h3></div>
+                        <div class='di-data-value'><p>2</p></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+    <div id='orders'>
+        <div class='orders-container'>
+            <div class="incoming-orders-container flex-column">
+                <h2>Incoming Orders</h2>
+                <table id="incoming-orders" class='compact stripe nowrap hover'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Products</th>
+                            <th>Assign</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>12/12/2019</td>
+                            <td>£12.00</td>
+                            <td>2</td>
+                            <td><button class="assign">Assign</button></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>12/12/2019</td>
+                            <td>£12.00</td>
+                            <td>2</td>
+                            <td><button class="assign">Assign</button></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>12/12/2019</td>
+                            <td>£12.00</td>
+                            <td>2</td>
+                            <td><button class="assign">Assign</button></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>12/12/2019</td>
+                            <td>£12.00</td>
+                            <td>2</td>
+                            <td><button class="assign">Assign</button></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>12/12/2019</td>
+                            <td>£12.00</td>
+                            <td>2</td>
+                            <td><button class="assign">Assign</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class='auto-assign-btn'>
+                    <button>Auto Assign Orders</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='notifications-management'>
+        <div class='flex-column notifications-management-container'>
+            <div class='current-notifications-container flex-column'>
+                <h2>Current Notifications</h2>
+                <table id="current-notifications" class='compact stripe nowrap hover'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Message</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in notifications %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.message }}</td>
+                            <td><button class="remove">Remove</button></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class='add-new-notifications flex-column'>
+                <h2>Add Notification</h2>
+                <div class='add-notifications flex'>
+                    <div class='new-notification-message flex-column'>
+                        <label for='notification-message'>Message:</label>
+                        <textarea id='notification-message' name='notification-message' cols="30" rows="4"></textarea>
+                    </div>
+                    <div class='add-notifications-btn'>
+                        <button id='addNotificationsBtn'>Add Notification</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='products-management'>
+        <div class='grid products-management-container'>
+            <div class='current-products-container flex-column'>
+                <h2>Current Products</h2>
+                <table id='current-products' class='compact stripe nowrap hover'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Edit</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products%}
+                        <tr>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.price }}</td>
+                            <td><button class="edit-cproduct">Edit</button></td>
+                            <td><button class="remove-cproduct">Remove</button></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class='add-new-products flex-column'>
+                <h2>Add New Product</h2>
+                <div class='add-new-product flex-column'>
+                    <form method='POST' action='/products'>
+                        {{ products_form.csrf_token }}
+                        <div class='new-product-name flex-column'>
+                            <label for='product-name'>Name:</label>
+                            <input type='text' id='product-name' name='product-name'>
+                        </div>
+                        <div class='new-product-price flex-column'>
+                            <label for='product-price'>Price:</label>
+                            <input type='number' id='product-price' name='product-price'>
+                        </div>
+                        <div class='add-product-btn'>
+                            <input type='submit' value='Add Product' id='addProductsBtn'>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class='products-inventory flex-column'>
+                <h2>Products Inventory</h2>
+                <table id='products-inventory' class='compact stripe nowrap hover'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Available</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Product Name</td>
+                            <td>12</td>
+                            <td><button class="edit">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Product Name</td>
+                            <td>12</td>
+                            <td><button class="edit">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Product Name</td>
+                            <td>12</td>
+                            <td><button class="edit">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Product Name</td>
+                            <td>12</td>
+                            <td><button class="edit">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Product Name</td>
+                            <td>12</td>
+                            <td><button class="edit">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Product Name</td>
+                            <td>12</td>
+                            <td><button class="edit">Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id='user-management'>
+        <div  class='user-management-container'>
+            <div class='current-users-container flex-column'>
+                <div class="current-users-table">
+                    <h2>Current Employees</h2>
+                    <table id='current-users' class='compact stripe nowrap hover'>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Edit</th>
+                                <th>Remove</th>
+                                <th>Reset Password</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users%}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.user_type }}</td>
+                                <td><button class="user-edit">Edit</button></td>
+                                <td><button class="user-remove">Remove</button></td>
+                                <td><button class="user-reset">Reset</button></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class='add-new-users-container flex-column'>
+                <h2>Add Users</h2>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>First Name</div>
+                    <input type='text' id='addUserFirstName'>
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Last Name</div>
+                    <input type='text' id='addUserLastName'>
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Email</div>
+                    <input type='email' id='addUserEmail'>
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Phone</div>
+                    <input type='text' id='addUserPhone'>
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Username</div>
+                    <input type='text' id='addUserUserName' readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Password</div>
+                    <input type='password' id='addUserPassword' readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                </div>
+                <div class='add-user-row'>
+                    <div class='add-user-row-label'>Confirm Password</div>
+                    <input type='password' id='confirmUserPassword' readonly onfocus="this.removeAttribute('readonly');" onblur="this.setAttribute('readonly','');">
+                </div>
+                <button id="addUserButton">Add user</button>
+            </div>
+            <div class='user-insights flex-column'>
+                <h2>User Insights</h2>
+                <div class='user-insights-container'>
+                    <div class='user-insights-item flex'>
+                        <h3>Number of Customers:</h3>
+                        <p>{{ customers }}</p>
+                    </div>
+                    <div class='user-insights-item flex'>
+                        <h3>Number of Staff:</h3>
+                        <p>{{ staff }}</p>
+                    </div>
+                    <div class='user-insights-item flex'>
+                        <h3>Number of Admins:</h3>
+                        <p>{{ admins }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='inventory-management'>
+        <div class='inventory-management-container'>
+            <div class='current-inventory-container flex-column'>
+                <h2>Current Inventory</h2>
+                <table id='current-inventory' class='compact stripe nowrap hover'>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Available</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in inventory %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td><button class="inventory-edit">Edit</button></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class='inventory-actions flex-column'>
+                <button id='restock-inventory'>Restock Inventory</button>
+                <button id='add-new-inventory'>Add New Inventory</button>
+                <button id='remove-inventory'>Remove Inventory</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block popups %}
+{% endblock%}

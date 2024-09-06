@@ -1,0 +1,10 @@
+{
+    "terminal.integrated.env": {
+		"KIMUKA_SQL_PWD":"kimuka_pwd",
+        "KIMUKA_SQL_DB":"kimuka_cakes",
+        "KIMUKA_SQL_HOST":"192.168.0.12",
+        "KIMUKA_SQL_USER":"kimuka"
+  },
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true
+}
